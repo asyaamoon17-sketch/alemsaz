@@ -13,31 +13,26 @@ const lessons = [
   { n: 5, done: false }
 ];
 
-/*
-  АУДИО ВИКТОРИНЫ
-
-  Первый вопрос:
-  correct = 1 → Балбырауын
-  Варианты:
-  0 Сарыарқа
-  1 Балбырауын
-  2 Адай
-  3 Ақсақ құлан
-
-  Второй вопрос:
-  correct = 0 → Курманғазы
-*/
-
 const quiz = [
   {
+    audio: "/Saryarka.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 1,
-    audio: "/audio/Balbyraun.mp3"
+    correct: 0
   },
   {
-    answers: ["Курманғазы", "Шоқан", "Абай", "Ыбырай"],
-    correct: 0,
-    audio: "/audio/kurmangazyAdai.mp3"
+    audio: "/Balbyraun.mp3",
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 1
+  },
+  {
+    audio: "/kurmangazyAdai.mp3",
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 2
+  },
+  {
+    audio: "/Aksakkulan.mp3",
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 3
   }
 ];
 
@@ -440,12 +435,7 @@ export default function Home() {
   const [isPlaying, setIsPlaying] =
     useState(false);
 
-  /*
-    Отдельный audio element именно для ВИКТОРИНЫ.
-    Это главное исправление.
-  */
-  const quizAudioRef =
-    useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const t = translations[lang];
 
@@ -460,11 +450,11 @@ export default function Home() {
   ];
 
   /*
-    Когда вопрос меняется, останавливаем
-    старое аудио и очищаем его.
-  */
+   * Каждый раз, когда меняется вопрос,
+   * полностью останавливаем старое аудио.
+   */
   useEffect(() => {
-    const audio = quizAudioRef.current;
+    const audio = audioRef.current;
 
     if (audio) {
       audio.pause();
@@ -475,12 +465,12 @@ export default function Home() {
   }, [quizIndex]);
 
   /*
-    Когда пользователь уходит из викторины,
-    обязательно останавливаем аудио.
-  */
+   * Когда уходим из викторины,
+   * аудио тоже останавливается.
+   */
   useEffect(() => {
     if (tab !== "quiz") {
-      const audio = quizAudioRef.current;
+      const audio = audioRef.current;
 
       if (audio) {
         audio.pause();
@@ -491,54 +481,29 @@ export default function Home() {
     }
   }, [tab]);
 
-  /*
-    Проигрывание аудио викторины.
-  */
-  async function toggleQuizAudio() {
-    const currentQuiz = quiz[quizIndex];
+  function toggleQuizAudio() {
+    const audio = audioRef.current;
 
-    if (!quizAudioRef.current) {
-      quizAudioRef.current =
-        new Audio(currentQuiz.audio);
-
-      quizAudioRef.current.addEventListener(
-        "ended",
-        () => {
-          setIsPlaying(false);
-        }
-      );
-    }
-
-    const audio = quizAudioRef.current;
-
-    /*
-      Если по какой-то причине сейчас
-      загружен другой файл — меняем его.
-    */
-    if (!audio.src.endsWith(currentQuiz.audio)) {
-      audio.src = currentQuiz.audio;
-      audio.load();
-    }
+    if (!audio) return;
 
     if (audio.paused) {
-      try {
-        await audio.play();
-        setIsPlaying(true);
-      } catch (error) {
-        console.error(
-          "Ошибка воспроизведения аудио:",
-          error
-        );
-        setIsPlaying(false);
-      }
+      audio.play()
+        .then(() => {
+          setIsPlaying(true);
+        })
+        .catch(() => {
+          setIsPlaying(false);
+        });
     } else {
       audio.pause();
       setIsPlaying(false);
     }
   }
 
-  function stopQuizAudio() {
-    const audio = quizAudioRef.current;
+  function answerQuiz(i: number) {
+    if (quizDone) return;
+
+    const audio = audioRef.current;
 
     if (audio) {
       audio.pause();
@@ -546,12 +511,6 @@ export default function Home() {
     }
 
     setIsPlaying(false);
-  }
-
-  function answerQuiz(i: number) {
-    if (quizDone) return;
-
-    stopQuizAudio();
 
     const correct =
       i === quiz[quizIndex].correct;
@@ -571,9 +530,15 @@ export default function Home() {
     }
   }
 
-  function resetQuiz() {
-    stopQuizAudio();
+  function restartQuiz() {
+    const audio = audioRef.current;
 
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    setIsPlaying(false);
     setQuizIndex(0);
     setQuizScore(0);
     setQuizDone(false);
@@ -612,9 +577,7 @@ export default function Home() {
 
           <div>
 
-            <b>
-              Álem.Music
-            </b>
+            <b>Álem.Music</b>
 
             <span>
               Ұлттық әуен әлемі
@@ -1079,6 +1042,15 @@ export default function Home() {
 
               <div className="quiz-card">
 
+                <audio
+                  ref={audioRef}
+                  src={quiz[quizIndex].audio}
+                  preload="auto"
+                  onEnded={() =>
+                    setIsPlaying(false)
+                  }
+                />
+
                 <button
                   type="button"
                   className="audio-circle"
@@ -1104,23 +1076,21 @@ export default function Home() {
 
                       <span
                         style={{
-                          display: "block",
                           width: "4px",
                           height: "20px",
-                          background:
-                            "currentColor",
-                          borderRadius: "2px"
+                          background: "currentColor",
+                          borderRadius: "2px",
+                          display: "block"
                         }}
                       />
 
                       <span
                         style={{
-                          display: "block",
                           width: "4px",
                           height: "20px",
-                          background:
-                            "currentColor",
-                          borderRadius: "2px"
+                          background: "currentColor",
+                          borderRadius: "2px",
+                          display: "block"
                         }}
                       />
 
@@ -1213,7 +1183,7 @@ export default function Home() {
 
                 <button
                   className="primary"
-                  onClick={resetQuiz}
+                  onClick={restartQuiz}
                 >
 
                   {t.again}
@@ -1530,8 +1500,17 @@ export default function Home() {
                   : ""
               }
               onClick={() => {
+
                 if (id !== "quiz") {
-                  stopQuizAudio();
+                  const audio =
+                    audioRef.current;
+
+                  if (audio) {
+                    audio.pause();
+                    audio.currentTime = 0;
+                  }
+
+                  setIsPlaying(false);
                 }
 
                 setTab(id);
@@ -1641,8 +1620,7 @@ function LessonModal({
                     display: "block",
                     width: "5px",
                     height: "24px",
-                    background:
-                      "currentColor",
+                    background: "currentColor",
                     borderRadius: "2px"
                   }}
                 />
@@ -1652,8 +1630,7 @@ function LessonModal({
                     display: "block",
                     width: "5px",
                     height: "24px",
-                    background:
-                      "currentColor",
+                    background: "currentColor",
                     borderRadius: "2px"
                   }}
                 />
