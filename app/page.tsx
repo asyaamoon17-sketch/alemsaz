@@ -567,17 +567,28 @@ export default function Home() {
 
               </div>
 
-              <div className="instrument-art">
+              <div
+                className="instrument-art"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden"
+                }}
+              >
 
-                <div className="sun"></div>
-
-                <div className="dombra">
-                  ♫
-                </div>
-
-                <div className="ornament">
-                  қошқар мүйіз · қошқар мүйіз · қошқар мүйіз
-                </div>
+                <img
+                  src="/hero.jpeg"
+                  alt="Kazakh traditional music"
+                  style={{
+                    width: "100%",
+                    maxWidth: "520px",
+                    height: "360px",
+                    objectFit: "cover",
+                    borderRadius: "28px",
+                    display: "block"
+                  }}
+                />
 
               </div>
 
@@ -1191,8 +1202,25 @@ export default function Home() {
 
             <div className="profile-card">
 
-              <div className="avatar">
-                A
+              <div
+                className="avatar"
+                style={{
+                  overflow: "hidden"
+                }}
+              >
+
+                <img
+                  src="/avatar.jpeg"
+                  alt="Profile"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                    borderRadius: "50%"
+                  }}
+                />
+
               </div>
 
               <h3>
@@ -1454,4 +1482,3 @@ function LessonModal({
 
   );
 }
-    
