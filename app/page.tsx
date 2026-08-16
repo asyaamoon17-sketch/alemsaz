@@ -1,6 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState
+} from "react";
 
 type Language = "Қазақша" | "Русский" | "English";
 type Instrument = "dombra" | "kobyz" | "sazsyrnai";
@@ -13,21 +17,32 @@ const lessons = [
   { n: 5, done: false }
 ];
 
+/* =========================================================
+   QUIZ AUDIO
+   Каждый вопрос имеет собственный аудиофайл.
+   Файлы находятся в /public/audio/
+========================================================= */
+
 const quiz = [
   {
-    audio: "/audio/saryarka.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 0
+    answers: [
+      "Сарыарқа",
+      "Балбырауын",
+      "Адай",
+      "Ақсақ құлан"
+    ],
+    correct: 1,
+    audio: "/audio/saryarka.mp3"
   },
   {
-    audio: "/audio/balbyrauyn.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 1
-  },
-  {
-    audio: "/audio/adai.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 2
+    answers: [
+      "Құрманғазы",
+      "Шоқан",
+      "Абай",
+      "Ыбырай"
+    ],
+    correct: 0,
+    audio: "/audio/adai.mp3"
   }
 ];
 
@@ -56,9 +71,11 @@ const translations = {
     quizCard: "Quiz кюев",
     quizCardText: "Угадай мелодию и автора",
     encyclopediaCard: "Энциклопедия",
-    encyclopediaCardText: "История, инструменты, кюйши",
+    encyclopediaCardText:
+      "История, инструменты, кюйши",
     achievements: "Достижения",
-    achievementsText: "12 дней серии • 7 бейджей",
+    achievementsText:
+      "12 дней серии • 7 бейджей",
 
     learningPath: "LEARNING PATH",
     lessonsTitle: "Уроки",
@@ -111,9 +128,11 @@ const translations = {
     tenKuis: "10 кюев",
 
     module: "МОДУЛЬ 3 · УРОК 2",
-    repeatSequence: "Повтори последовательность и следи за ритмом.",
+    repeatSequence:
+      "Повтори последовательность и следи за ритмом.",
     video: "Видео-демонстрация",
-    finishLesson: "✓ Завершить урок · +100 XP",
+    finishLesson:
+      "✓ Завершить урок · +100 XP",
     understandable: "Понятно",
 
     articlePlaceholder:
@@ -144,9 +163,11 @@ const translations = {
     quizCard: "Күйлер викторинасы",
     quizCardText: "Әуен мен авторды тап",
     encyclopediaCard: "Энциклопедия",
-    encyclopediaCardText: "Тарих, аспаптар, күйші-композиторлар",
+    encyclopediaCardText:
+      "Тарих, аспаптар, күйші-композиторлар",
     achievements: "Жетістіктер",
-    achievementsText: "12 күндік серия • 7 белгі",
+    achievementsText:
+      "12 күндік серия • 7 белгі",
 
     learningPath: "LEARNING PATH",
     lessonsTitle: "Сабақтар",
@@ -172,7 +193,8 @@ const translations = {
 
     kyuiQuiz: "KYUI QUIZ",
     guessKyui: "Күйді тап",
-    question: "Бұл үзіндіде қандай күй орындалады?",
+    question:
+      "Бұл үзіндіде қандай күй орындалады?",
     questionLabel: "Сұрақ",
     of: "ішінен",
     wonderful: "Тамаша!",
@@ -199,9 +221,11 @@ const translations = {
     tenKuis: "10 күй",
 
     module: "3-МОДУЛЬ · 2-САБАҚ",
-    repeatSequence: "Реттілікті қайталап, ырғаққа назар аудар.",
+    repeatSequence:
+      "Реттілікті қайталап, ырғаққа назар аудар.",
     video: "Бейне-демонстрация",
-    finishLesson: "✓ Сабақты аяқтау · +100 XP",
+    finishLesson:
+      "✓ Сабақты аяқтау · +100 XP",
     understandable: "Түсінікті",
 
     articlePlaceholder:
@@ -230,11 +254,14 @@ const translations = {
     progress: "3 of 5 modules • 42% progress",
 
     quizCard: "Kui Quiz",
-    quizCardText: "Guess the melody and composer",
+    quizCardText:
+      "Guess the melody and composer",
     encyclopediaCard: "Encyclopedia",
-    encyclopediaCardText: "History, instruments and kuiishi",
+    encyclopediaCardText:
+      "History, instruments and kuiishi",
     achievements: "Achievements",
-    achievementsText: "12 day streak • 7 badges",
+    achievementsText:
+      "12 day streak • 7 badges",
 
     learningPath: "LEARNING PATH",
     lessonsTitle: "Lessons",
@@ -260,7 +287,8 @@ const translations = {
 
     kyuiQuiz: "KYUI QUIZ",
     guessKyui: "Guess the kui",
-    question: "Which kui is playing in the excerpt?",
+    question:
+      "Which kui is playing in the excerpt?",
     questionLabel: "Question",
     of: "of",
     wonderful: "Great!",
@@ -287,9 +315,11 @@ const translations = {
     tenKuis: "10 kui",
 
     module: "MODULE 3 · LESSON 2",
-    repeatSequence: "Repeat the sequence and follow the rhythm.",
+    repeatSequence:
+      "Repeat the sequence and follow the rhythm.",
     video: "Video demonstration",
-    finishLesson: "✓ Complete lesson · +100 XP",
+    finishLesson:
+      "✓ Complete lesson · +100 XP",
     understandable: "Got it",
 
     articlePlaceholder:
@@ -401,15 +431,20 @@ const articleData = {
 };
 
 export default function Home() {
-  const [lang, setLang] = useState<Language>("Русский");
+  const [lang, setLang] =
+    useState<Language>("Русский");
+
   const [instrument, setInstrument] =
     useState<Instrument>("dombra");
 
-  const [tab, setTab] = useState("home");
+  const [tab, setTab] =
+    useState("home");
 
-  const [xp, setXp] = useState(2450);
+  const [xp, setXp] =
+    useState(2450);
 
-  const [streak] = useState(12);
+  const [streak] =
+    useState(12);
 
   const [lessonOpen, setLessonOpen] =
     useState(false);
@@ -426,15 +461,12 @@ export default function Home() {
   const [article, setArticle] =
     useState<string | null>(null);
 
-  /*
-   * ВАЖНО:
-   * Теперь audio хранится отдельно от состояния кнопки.
-   * Один HTMLAudioElement используется для всей викторины.
-   */
-  const quizAudioRef =
-    useRef<HTMLAudioElement | null>(null);
+  /* Отдельное состояние для урока */
+  const [lessonPlaying, setLessonPlaying] =
+    useState(false);
 
-  const [isPlaying, setIsPlaying] =
+  /* Отдельное состояние для ВИКТОРИНЫ */
+  const [quizPlaying, setQuizPlaying] =
     useState(false);
 
   const t = translations[lang];
@@ -449,175 +481,11 @@ export default function Home() {
     [t.lesson5, t.lesson5Sub]
   ];
 
-  /*
-   * Создаём audio один раз.
-   */
-  useEffect(() => {
-    const audio = new Audio();
-
-    audio.preload = "auto";
-
-    quizAudioRef.current = audio;
-
-    /*
-     * Когда музыка закончилась —
-     * кнопка снова показывает ▶.
-     */
-    const handleEnded = () => {
-      setIsPlaying(false);
-    };
-
-    /*
-     * Если браузер остановил audio,
-     * состояние тоже обновляем.
-     */
-    const handlePause = () => {
-      setIsPlaying(false);
-    };
-
-    audio.addEventListener(
-      "ended",
-      handleEnded
-    );
-
-    audio.addEventListener(
-      "pause",
-      handlePause
-    );
-
-    return () => {
-      audio.pause();
-
-      audio.removeEventListener(
-        "ended",
-        handleEnded
-      );
-
-      audio.removeEventListener(
-        "pause",
-        handlePause
-      );
-
-      audio.src = "";
-
-      quizAudioRef.current = null;
-    };
-  }, []);
-
-  /*
-   * Каждый раз, когда меняется вопрос,
-   * полностью останавливаем старое аудио.
-   */
-  useEffect(() => {
-    const audio = quizAudioRef.current;
-
-    if (!audio) return;
-
-    audio.pause();
-
-    audio.currentTime = 0;
-
-    audio.src = "";
-
-    setIsPlaying(false);
-  }, [quizIndex]);
-
-  /*
-   * Когда пользователь уходит из Quiz,
-   * музыка обязательно останавливается.
-   */
-  useEffect(() => {
-    if (tab !== "quiz") {
-      const audio = quizAudioRef.current;
-
-      if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-      }
-
-      setIsPlaying(false);
-    }
-  }, [tab]);
-
-  /*
-   * ГЛАВНАЯ ФУНКЦИЯ ВОСПРОИЗВЕДЕНИЯ.
-   *
-   * Она каждый раз заново устанавливает src.
-   * Поэтому после первого вопроса следующий
-   * тоже гарантированно сможет проиграться.
-   */
-  async function toggleQuizAudio() {
-    const audio = quizAudioRef.current;
-
-    if (!audio) return;
-
-    /*
-     * Если сейчас играет —
-     * останавливаем.
-     */
-    if (isPlaying) {
-      audio.pause();
-
-      setIsPlaying(false);
-
-      return;
-    }
-
-    /*
-     * Берём аудио текущего вопроса.
-     */
-    const currentAudio =
-      quiz[quizIndex].audio;
-
-    try {
-      /*
-       * Сначала полностью сбрасываем старый трек.
-       */
-      audio.pause();
-
-      audio.currentTime = 0;
-
-      /*
-       * Устанавливаем НОВЫЙ src.
-       */
-      audio.src = currentAudio;
-
-      /*
-       * Загружаем его заново.
-       */
-      audio.load();
-
-      /*
-       * Запускаем.
-       */
-      await audio.play();
-
-      setIsPlaying(true);
-    } catch (error) {
-      console.error(
-        "Ошибка воспроизведения аудио:",
-        error
-      );
-
-      setIsPlaying(false);
-    }
-  }
-
   function answerQuiz(i: number) {
     if (quizDone) return;
 
-    /*
-     * Перед переходом к следующему вопросу
-     * останавливаем текущее аудио.
-     */
-    const audio = quizAudioRef.current;
-
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-
-    setIsPlaying(false);
+    /* Останавливаем текущее аудио перед переходом */
+    setQuizPlaying(false);
 
     const correct =
       i === quiz[quizIndex].correct;
@@ -630,10 +498,7 @@ export default function Home() {
       x + (correct ? 50 : 10)
     );
 
-    if (
-      quizIndex ===
-      quiz.length - 1
-    ) {
+    if (quizIndex === quiz.length - 1) {
       setQuizDone(true);
     } else {
       setQuizIndex(
@@ -642,16 +507,16 @@ export default function Home() {
     }
   }
 
-  function restartQuiz() {
-    const audio = quizAudioRef.current;
+  function openQuiz() {
+    setQuizPlaying(false);
+    setQuizIndex(0);
+    setQuizScore(0);
+    setQuizDone(false);
+    setTab("quiz");
+  }
 
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-      audio.src = "";
-    }
-
-    setIsPlaying(false);
+  function resetQuiz() {
+    setQuizPlaying(false);
     setQuizIndex(0);
     setQuizScore(0);
     setQuizDone(false);
@@ -664,9 +529,7 @@ export default function Home() {
 
         <div
           className="brand"
-          onClick={() =>
-            setTab("home")
-          }
+          onClick={() => setTab("home")}
         >
 
           <div
@@ -721,6 +584,7 @@ export default function Home() {
                 e.target.value as Language
               )
             }
+            aria-label="Language"
           >
 
             <option value="Русский">
@@ -742,6 +606,10 @@ export default function Home() {
       </header>
 
       <section className="content">
+
+        {/* =================================================
+            HOME
+        ================================================= */}
 
         {tab === "home" && (
 
@@ -777,6 +645,7 @@ export default function Home() {
                     className="primary"
                     onClick={() => {
                       setTab("lessons");
+                      setLessonPlaying(false);
                       setLessonOpen(true);
                     }}
                   >
@@ -894,10 +763,8 @@ export default function Home() {
                         if (idx <= 2) {
 
                           setTab("lessons");
-
-                          setLessonOpen(
-                            true
-                          );
+                          setLessonPlaying(false);
+                          setLessonOpen(true);
 
                         }
 
@@ -931,9 +798,7 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() =>
-                  setTab("quiz")
-                }
+                onClick={openQuiz}
               >
 
                 <span>
@@ -997,6 +862,10 @@ export default function Home() {
           </>
 
         )}
+
+        {/* =================================================
+            LESSONS
+        ================================================= */}
 
         {tab === "lessons" && (
 
@@ -1074,9 +943,11 @@ export default function Home() {
                   >
 
                     <div className="lesson-icon">
+
                       {l.done
                         ? "✓"
                         : l.n}
+
                     </div>
 
                     <div>
@@ -1095,7 +966,7 @@ export default function Home() {
                       className="primary small"
                       disabled={i > 2}
                       onClick={() => {
-                        setIsPlaying(false);
+                        setLessonPlaying(false);
                         setLessonOpen(true);
                       }}
                     >
@@ -1119,16 +990,20 @@ export default function Home() {
 
               <LessonModal
                 t={t}
-                isPlaying={isPlaying}
-                setIsPlaying={setIsPlaying}
+                isPlaying={lessonPlaying}
+                setIsPlaying={setLessonPlaying}
                 close={() => {
-                  setIsPlaying(false);
+                  setLessonPlaying(false);
                   setLessonOpen(false);
                 }}
                 onComplete={() => {
+
                   setXp(x => x + 100);
-                  setIsPlaying(false);
+
+                  setLessonPlaying(false);
+
                   setLessonOpen(false);
+
                 }}
               />
 
@@ -1138,9 +1013,9 @@ export default function Home() {
 
         )}
 
-        {/* ========================= */}
-        {/*         QUIZ               */}
-        {/* ========================= */}
+        {/* =================================================
+            QUIZ
+        ================================================= */}
 
         {tab === "quiz" && (
 
@@ -1158,69 +1033,15 @@ export default function Home() {
 
               <div className="quiz-card">
 
-                {/* AUDIO BUTTON */}
+                {/* НОВЫЙ АУДИОПЛЕЕР */}
 
-                <button
-                  type="button"
-                  className="audio-circle"
-                  onClick={toggleQuizAudio}
-                  aria-label={
-                    isPlaying
-                      ? "Pause audio"
-                      : "Play audio"
+                <QuizAudioPlayer
+                  src={
+                    quiz[quizIndex].audio
                   }
-                >
-
-                  {isPlaying ? (
-
-                    /*
-                     * ИМЕННО ТЕ САМЫЕ ДВЕ ПОЛОСКИ:
-                     * ▮ ▮
-                     */
-
-                    <span
-                      style={{
-                        display: "flex",
-                        gap: "5px",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        height: "22px"
-                      }}
-                    >
-
-                      <span
-                        style={{
-                          display: "block",
-                          width: "4px",
-                          height: "20px",
-                          background:
-                            "currentColor",
-                          borderRadius: "2px"
-                        }}
-                      />
-
-                      <span
-                        style={{
-                          display: "block",
-                          width: "4px",
-                          height: "20px",
-                          background:
-                            "currentColor",
-                          borderRadius: "2px"
-                        }}
-                      />
-
-                    </span>
-
-                  ) : (
-
-                    <span>
-                      ▶
-                    </span>
-
-                  )}
-
-                </button>
+                  isPlaying={quizPlaying}
+                  setIsPlaying={setQuizPlaying}
+                />
 
                 <p className="quiz-q">
                   {t.question}
@@ -1240,10 +1061,10 @@ export default function Home() {
                   {quiz[
                     quizIndex
                   ].answers.map(
-                    (answer, i) => (
+                    (a, i) => (
 
                       <button
-                        key={answer}
+                        key={a}
                         onClick={() =>
                           answerQuiz(i)
                         }
@@ -1252,7 +1073,7 @@ export default function Home() {
                         {String.fromCharCode(
                           65 + i
                         )}
-                        ) {answer}
+                        ) {a}
 
                       </button>
 
@@ -1299,7 +1120,7 @@ export default function Home() {
 
                 <button
                   className="primary"
-                  onClick={restartQuiz}
+                  onClick={resetQuiz}
                 >
                   {t.again}
                 </button>
@@ -1311,6 +1132,10 @@ export default function Home() {
           </div>
 
         )}
+
+        {/* =================================================
+            ENCYCLOPEDIA
+        ================================================= */}
 
         {tab === "encyclopedia" && (
 
@@ -1393,8 +1218,10 @@ export default function Home() {
                       </p>
 
                       <small>
+
                         {t.read} · 5{" "}
                         {t.minutes}
+
                       </small>
 
                     </div>
@@ -1463,6 +1290,10 @@ export default function Home() {
           </div>
 
         )}
+
+        {/* =================================================
+            PROFILE
+        ================================================= */}
 
         {tab === "profile" && (
 
@@ -1589,6 +1420,10 @@ export default function Home() {
 
       </section>
 
+      {/* =================================================
+          BOTTOM NAV
+      ================================================= */}
+
       <nav className="bottom-nav">
 
         {[
@@ -1611,9 +1446,15 @@ export default function Home() {
                   ? "active"
                   : ""
               }
-              onClick={() =>
-                setTab(id)
-              }
+              onClick={() => {
+
+                if (id === "quiz") {
+                  setQuizPlaying(false);
+                }
+
+                setTab(id);
+
+              }}
             >
 
               <span>
@@ -1634,6 +1475,288 @@ export default function Home() {
     </main>
   );
 }
+
+/* =========================================================
+   QUIZ AUDIO PLAYER
+   ========================================================= */
+
+function QuizAudioPlayer({
+  src,
+  isPlaying,
+  setIsPlaying
+}: {
+  src: string;
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
+}) {
+
+  const audioRef =
+    useRef<HTMLAudioElement | null>(null);
+
+  /*
+   * Когда меняется вопрос, меняется src.
+   * Старое аудио полностью останавливается.
+   */
+  useEffect(() => {
+
+    const audio =
+      audioRef.current;
+
+    if (!audio) return;
+
+    audio.pause();
+
+    audio.currentTime = 0;
+
+    audio.src = src;
+
+    audio.load();
+
+    setIsPlaying(false);
+
+  }, [src, setIsPlaying]);
+
+  /*
+   * Если isPlaying изменился:
+   *
+   * true  -> запускаем
+   * false -> останавливаем
+   */
+  useEffect(() => {
+
+    const audio =
+      audioRef.current;
+
+    if (!audio) return;
+
+    if (isPlaying) {
+
+      audio.currentTime = 0;
+
+      const playPromise =
+        audio.play();
+
+      if (
+        playPromise !== undefined
+      ) {
+
+        playPromise.catch(() => {
+          setIsPlaying(false);
+        });
+
+      }
+
+    } else {
+
+      audio.pause();
+
+    }
+
+  }, [isPlaying, setIsPlaying]);
+
+  /*
+   * Когда музыка закончилась,
+   * возвращаем кнопку ▶.
+   */
+  useEffect(() => {
+
+    const audio =
+      audioRef.current;
+
+    if (!audio) return;
+
+    const handleEnded = () => {
+
+      setIsPlaying(false);
+
+      audio.currentTime = 0;
+
+    };
+
+    const handleError = () => {
+
+      console.error(
+        "Не удалось загрузить аудио:",
+        src
+      );
+
+      setIsPlaying(false);
+
+    };
+
+    audio.addEventListener(
+      "ended",
+      handleEnded
+    );
+
+    audio.addEventListener(
+      "error",
+      handleError
+    );
+
+    return () => {
+
+      audio.removeEventListener(
+        "ended",
+        handleEnded
+      );
+
+      audio.removeEventListener(
+        "error",
+        handleError
+      );
+
+    };
+
+  }, [src, setIsPlaying]);
+
+  function toggleAudio() {
+
+    const audio =
+      audioRef.current;
+
+    if (!audio) return;
+
+    if (isPlaying) {
+
+      audio.pause();
+
+      setIsPlaying(false);
+
+    } else {
+
+      /*
+       * Каждый новый запуск начинается
+       * с начала текущего аудиофайла.
+       */
+      audio.currentTime = 0;
+
+      const playPromise =
+        audio.play();
+
+      if (
+        playPromise !== undefined
+      ) {
+
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(error => {
+
+            console.error(
+              "Ошибка воспроизведения:",
+              error
+            );
+
+            setIsPlaying(false);
+
+          });
+
+      } else {
+
+        setIsPlaying(true);
+
+      }
+
+    }
+
+  }
+
+  return (
+
+    <>
+
+      <audio
+        ref={audioRef}
+        preload="auto"
+      />
+
+      <div
+        className="audio-circle"
+        onClick={toggleAudio}
+        role="button"
+        tabIndex={0}
+        aria-label={
+          isPlaying
+            ? "Pause audio"
+            : "Play audio"
+        }
+        onKeyDown={e => {
+
+          if (
+            e.key === "Enter" ||
+            e.key === " "
+          ) {
+
+            e.preventDefault();
+            toggleAudio();
+
+          }
+
+        }}
+      >
+
+        {isPlaying ? (
+
+          /*
+           * ИМЕННО ТЕ САМЫЕ ДВЕ ПОЛОСКИ:
+           *
+           * ▮ ▮
+           */
+
+          <span
+            style={{
+              display: "flex",
+              gap: "5px",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "22px"
+            }}
+          >
+
+            <span
+              style={{
+                width: "4px",
+                height: "20px",
+                background:
+                  "currentColor",
+                borderRadius: "2px"
+              }}
+            />
+
+            <span
+              style={{
+                width: "4px",
+                height: "20px",
+                background:
+                  "currentColor",
+                borderRadius: "2px"
+              }}
+            />
+
+          </span>
+
+        ) : (
+
+          <span>
+            ▶
+          </span>
+
+        )}
+
+      </div>
+
+    </>
+
+  );
+}
+
+/* =========================================================
+   LESSON MODAL
+   ========================================================= */
 
 function LessonModal({
   t,
@@ -1763,9 +1886,11 @@ function LessonModal({
         <div className="tab-view">
 
           <div>
+
             1-шек&nbsp;&nbsp;&nbsp;
             2-шек&nbsp;&nbsp;&nbsp;
             3-шек
+
           </div>
 
           <div className="strings">
