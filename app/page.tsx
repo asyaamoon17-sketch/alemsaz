@@ -391,20 +391,16 @@ const articleData = {
 };
 
 export default function Home() {
-  const [lang, setLang] =
-    useState<Language>("Русский");
+  const [lang, setLang] = useState<Language>("Русский");
 
   const [instrument, setInstrument] =
     useState<Instrument>("dombra");
 
-  const [tab, setTab] =
-    useState("home");
+  const [tab, setTab] = useState("home");
 
-  const [xp, setXp] =
-    useState(2450);
+  const [xp, setXp] = useState(2450);
 
-  const [streak] =
-    useState(12);
+  const [streak] = useState(12);
 
   const [lessonOpen, setLessonOpen] =
     useState(false);
@@ -423,8 +419,7 @@ export default function Home() {
 
   const t = translations[lang];
 
-  const instruments =
-    instrumentNames[lang];
+  const instruments = instrumentNames[lang];
 
   const lessonTitles = [
     [t.lesson1, t.lesson1Sub],
@@ -448,15 +443,10 @@ export default function Home() {
       x + (correct ? 50 : 10)
     );
 
-    if (
-      quizIndex ===
-      quiz.length - 1
-    ) {
+    if (quizIndex === quiz.length - 1) {
       setQuizDone(true);
     } else {
-      setQuizIndex(
-        i2 => i2 + 1
-      );
+      setQuizIndex(i2 => i2 + 1);
     }
   }
 
@@ -467,26 +457,19 @@ export default function Home() {
 
         <div
           className="brand"
-          onClick={() =>
-            setTab("home")
-          }
+          onClick={() => setTab("home")}
         >
 
           <div className="brand-mark">
-            <img
-              src="/avatar.jpeg"
-              alt="ÁlemSaz"
-            />
+            Á
           </div>
 
           <div>
-
             <b>ÁlemSaz</b>
 
             <span>
               Ұлттық әуен әлемі
             </span>
-
           </div>
 
         </div>
@@ -564,13 +547,8 @@ export default function Home() {
                   <button
                     className="primary"
                     onClick={() => {
-
                       setTab("lessons");
-
-                      setLessonOpen(
-                        true
-                      );
-
+                      setLessonOpen(true);
                     }}
                   >
                     {t.continue}
@@ -579,9 +557,7 @@ export default function Home() {
                   <button
                     className="secondary"
                     onClick={() =>
-                      setTab(
-                        "encyclopedia"
-                      )
+                      setTab("encyclopedia")
                     }
                   >
                     {t.openEncyclopedia}
@@ -593,11 +569,15 @@ export default function Home() {
 
               <div className="instrument-art">
 
-                <img
-                  src="/hero.jpeg"
-                  alt="ÁlemSaz"
-                  className="hero-image"
-                />
+                <div className="sun"></div>
+
+                <div className="dombra">
+                  ♫
+                </div>
+
+                <div className="ornament">
+                  қошқар мүйіз · қошқар мүйіз · қошқар мүйіз
+                </div>
 
               </div>
 
@@ -635,15 +615,8 @@ export default function Home() {
                 <div>
 
                   <span className="pill">
-
                     🎵{" "}
-
-                    {
-                      instruments[
-                        instrument
-                      ]
-                    }
-
+                    {instruments[instrument]}
                   </span>
 
                   <h3>
@@ -678,17 +651,11 @@ export default function Home() {
                       }`}
                       onClick={() => {
 
-                        if (
-                          idx <= 2
-                        ) {
+                        if (idx <= 2) {
 
-                          setTab(
-                            "lessons"
-                          );
+                          setTab("lessons");
 
-                          setLessonOpen(
-                            true
-                          );
+                          setLessonOpen(true);
 
                         }
 
@@ -696,27 +663,17 @@ export default function Home() {
                     >
 
                       <span>
-
                         {l.done
                           ? "✓"
                           : l.n}
-
                       </span>
 
                       <b>
-                        {
-                          lessonTitles[
-                            idx
-                          ][0]
-                        }
+                        {lessonTitles[idx][0]}
                       </b>
 
                       <small>
-                        {
-                          lessonTitles[
-                            idx
-                          ][1]
-                        }
+                        {lessonTitles[idx][1]}
                       </small>
 
                     </button>
@@ -754,9 +711,7 @@ export default function Home() {
               <button
                 className="feature-card"
                 onClick={() =>
-                  setTab(
-                    "encyclopedia"
-                  )
+                  setTab("encyclopedia")
                 }
               >
 
@@ -769,9 +724,7 @@ export default function Home() {
                 </b>
 
                 <small>
-                  {
-                    t.encyclopediaCardText
-                  }
+                  {t.encyclopediaCardText}
                 </small>
 
               </button>
@@ -792,9 +745,7 @@ export default function Home() {
                 </b>
 
                 <small>
-                  {
-                    t.achievementsText
-                  }
+                  {t.achievementsText}
                 </small>
 
               </button>
@@ -818,15 +769,8 @@ export default function Home() {
                 </span>
 
                 <h2>
-
                   {t.lessonsTitle} ·{" "}
-
-                  {
-                    instruments[
-                      instrument
-                    ]
-                  }
-
+                  {instruments[instrument]}
                 </h2>
 
               </div>
@@ -898,32 +842,20 @@ export default function Home() {
                     <div>
 
                       <b>
-                        {
-                          lessonTitles[
-                            i
-                          ][0]
-                        }
+                        {lessonTitles[i][0]}
                       </b>
 
                       <p>
-                        {
-                          lessonTitles[
-                            i
-                          ][1]
-                        }
+                        {lessonTitles[i][1]}
                       </p>
 
                     </div>
 
                     <button
                       className="primary small"
-                      disabled={
-                        i > 2
-                      }
+                      disabled={i > 2}
                       onClick={() =>
-                        setLessonOpen(
-                          true
-                        )
+                        setLessonOpen(true)
                       }
                     >
 
@@ -947,19 +879,13 @@ export default function Home() {
               <LessonModal
                 t={t}
                 close={() =>
-                  setLessonOpen(
-                    false
-                  )
+                  setLessonOpen(false)
                 }
                 onComplete={() => {
 
-                  setXp(
-                    x => x + 100
-                  );
+                  setXp(x => x + 100);
 
-                  setLessonOpen(
-                    false
-                  );
+                  setLessonOpen(false);
 
                 }}
               />
@@ -1004,44 +930,35 @@ export default function Home() {
                 <div className="quiz-progress">
 
                   {t.questionLabel}{" "}
-
                   {quizIndex + 1}{" "}
-
                   {t.of}{" "}
-
                   {quiz.length}
 
                 </div>
 
                 <div className="answers">
 
-                  {
-                    quiz[
-                      quizIndex
-                    ].answers.map(
-                      (a, i) => (
+                  {quiz[
+                    quizIndex
+                  ].answers.map(
+                    (a, i) => (
 
-                        <button
-                          key={a}
-                          onClick={() =>
-                            answerQuiz(
-                              i
-                            )
-                          }
-                        >
+                      <button
+                        key={a}
+                        onClick={() =>
+                          answerQuiz(i)
+                        }
+                      >
 
-                          {
-                            String.fromCharCode(
-                              65 + i
-                            )
-                          }
-                          ) {a}
+                        {String.fromCharCode(
+                          65 + i
+                        )}
+                        ) {a}
 
-                        </button>
+                      </button>
 
-                      )
                     )
-                  }
+                  )}
 
                 </div>
 
@@ -1073,14 +990,10 @@ export default function Home() {
                 <b>
 
                   +
-                  {
-                    quizScore * 50 +
-                    (
-                      quiz.length -
-                      quizScore
-                    ) * 10
-                  }{" "}
-
+                  {quizScore * 50 +
+                    (quiz.length -
+                      quizScore) *
+                      10}{" "}
                   XP
 
                 </b>
@@ -1089,17 +1002,11 @@ export default function Home() {
                   className="primary"
                   onClick={() => {
 
-                    setQuizIndex(
-                      0
-                    );
+                    setQuizIndex(0);
 
-                    setQuizScore(
-                      0
-                    );
+                    setQuizScore(0);
 
-                    setQuizDone(
-                      false
-                    );
+                    setQuizDone(false);
 
                   }}
                 >
@@ -1136,9 +1043,7 @@ export default function Home() {
 
               <input
                 className="search"
-                placeholder={
-                  t.search
-                }
+                placeholder={t.search}
               />
 
             </div>
@@ -1169,23 +1074,14 @@ export default function Home() {
 
             <div className="article-grid">
 
-              {articleData[
-                lang
-              ].map(
-                ([
-                  title,
-                  sub,
-                  icon,
-                  text
-                ]) => (
+              {articleData[lang].map(
+                ([title, sub, icon, text]) => (
 
                   <button
                     className="article-card"
                     key={title}
                     onClick={() =>
-                      setArticle(
-                        title
-                      )
+                      setArticle(title)
                     }
                   >
 
@@ -1210,7 +1106,6 @@ export default function Home() {
                       <small>
 
                         {t.read} · 5{" "}
-
                         {t.minutes}
 
                       </small>
@@ -1229,9 +1124,7 @@ export default function Home() {
               <div
                 className="overlay"
                 onClick={() =>
-                  setArticle(
-                    null
-                  )
+                  setArticle(null)
                 }
               >
 
@@ -1245,9 +1138,7 @@ export default function Home() {
                   <button
                     className="close"
                     onClick={() =>
-                      setArticle(
-                        null
-                      )
+                      setArticle(null)
                     }
                   >
                     ×
@@ -1262,9 +1153,7 @@ export default function Home() {
                   </h2>
 
                   <p>
-                    {
-                      t.articlePlaceholder
-                    }
+                    {t.articlePlaceholder}
                   </p>
 
                   <div className="placeholder-lines"></div>
@@ -1272,9 +1161,7 @@ export default function Home() {
                   <button
                     className="primary"
                     onClick={() =>
-                      setArticle(
-                        null
-                      )
+                      setArticle(null)
                     }
                   >
                     {t.understandable}
@@ -1305,12 +1192,7 @@ export default function Home() {
             <div className="profile-card">
 
               <div className="avatar">
-
-                <img
-                  src="/avatar.jpeg"
-                  alt="Avatar"
-                />
-
+                A
               </div>
 
               <h3>
@@ -1318,17 +1200,8 @@ export default function Home() {
               </h3>
 
               <p>
-
-                {
-                  instruments[
-                    instrument
-                  ]
-                }{" "}
-
-                ·{" "}
-
+                {instruments[instrument]} ·{" "}
                 {t.beginner}
-
               </p>
 
               <div className="stats">
@@ -1432,31 +1305,15 @@ export default function Home() {
       <nav className="bottom-nav">
 
         {[
-          [
-            "home",
-            "⌂",
-            t.home
-          ],
-          [
-            "lessons",
-            "♪",
-            t.lessons
-          ],
-          [
-            "quiz",
-            "?",
-            t.quiz
-          ],
+          ["home", "⌂", t.home],
+          ["lessons", "♪", t.lessons],
+          ["quiz", "?", t.quiz],
           [
             "encyclopedia",
             "▤",
             t.encyclopedia
           ],
-          [
-            "profile",
-            "◉",
-            t.profile
-          ]
+          ["profile", "◉", t.profile]
         ].map(
           ([id, icon, text]) => (
 
@@ -1586,9 +1443,7 @@ function LessonModal({
 
         <button
           className="primary full"
-          onClick={
-            onComplete
-          }
+          onClick={onComplete}
         >
           {t.finishLesson}
         </button>
@@ -1599,5 +1454,4 @@ function LessonModal({
 
   );
 }
-    
     
