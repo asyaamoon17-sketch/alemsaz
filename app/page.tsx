@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Language = "Қазақша" | "Русский" | "English";
 type Instrument = "dombra" | "kobyz" | "sazsyrnai";
@@ -13,26 +13,31 @@ const lessons = [
   { n: 5, done: false }
 ];
 
+/*
+  АУДИО ВИКТОРИНЫ
+
+  Первый вопрос:
+  correct = 1 → Балбырауын
+  Варианты:
+  0 Сарыарқа
+  1 Балбырауын
+  2 Адай
+  3 Ақсақ құлан
+
+  Второй вопрос:
+  correct = 0 → Курманғазы
+*/
+
 const quiz = [
   {
-    audio: "/Saryarka.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 0
+    correct: 1,
+    audio: "/audio/Balbyraun.mp3"
   },
   {
-    audio: "/Balbyraun.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 1
-  },
-  {
-    audio: "/kurmangazyAdai.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 2
-  },
-  {
-    audio: "/Aksakkulan.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 3
+    answers: ["Курманғазы", "Шоқан", "Абай", "Ыбырай"],
+    correct: 0,
+    audio: "/audio/kurmangazyAdai.mp3"
   }
 ];
 
@@ -406,20 +411,16 @@ const articleData = {
 };
 
 export default function Home() {
-  const [lang, setLang] =
-    useState<Language>("Русский");
+  const [lang, setLang] = useState<Language>("Русский");
 
   const [instrument, setInstrument] =
     useState<Instrument>("dombra");
 
-  const [tab, setTab] =
-    useState("home");
+  const [tab, setTab] = useState("home");
 
-  const [xp, setXp] =
-    useState(2450);
+  const [xp, setXp] = useState(2450);
 
-  const [streak] =
-    useState(12);
+  const [streak] = useState(12);
 
   const [lessonOpen, setLessonOpen] =
     useState(false);
@@ -439,13 +440,16 @@ export default function Home() {
   const [isPlaying, setIsPlaying] =
     useState(false);
 
-  const audioRef =
+  /*
+    Отдельный audio element именно для ВИКТОРИНЫ.
+    Это главное исправление.
+  */
+  const quizAudioRef =
     useRef<HTMLAudioElement | null>(null);
 
   const t = translations[lang];
 
-  const instruments =
-    instrumentNames[lang];
+  const instruments = instrumentNames[lang];
 
   const lessonTitles = [
     [t.lesson1, t.lesson1Sub],
@@ -455,57 +459,99 @@ export default function Home() {
     [t.lesson5, t.lesson5Sub]
   ];
 
-  function stopAudio() {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+  /*
+    Когда вопрос меняется, останавливаем
+    старое аудио и очищаем его.
+  */
+  useEffect(() => {
+    const audio = quizAudioRef.current;
+
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+
+    setIsPlaying(false);
+  }, [quizIndex]);
+
+  /*
+    Когда пользователь уходит из викторины,
+    обязательно останавливаем аудио.
+  */
+  useEffect(() => {
+    if (tab !== "quiz") {
+      const audio = quizAudioRef.current;
+
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+
+      setIsPlaying(false);
+    }
+  }, [tab]);
+
+  /*
+    Проигрывание аудио викторины.
+  */
+  async function toggleQuizAudio() {
+    const currentQuiz = quiz[quizIndex];
+
+    if (!quizAudioRef.current) {
+      quizAudioRef.current =
+        new Audio(currentQuiz.audio);
+
+      quizAudioRef.current.addEventListener(
+        "ended",
+        () => {
+          setIsPlaying(false);
+        }
+      );
+    }
+
+    const audio = quizAudioRef.current;
+
+    /*
+      Если по какой-то причине сейчас
+      загружен другой файл — меняем его.
+    */
+    if (!audio.src.endsWith(currentQuiz.audio)) {
+      audio.src = currentQuiz.audio;
+      audio.load();
+    }
+
+    if (audio.paused) {
+      try {
+        await audio.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error(
+          "Ошибка воспроизведения аудио:",
+          error
+        );
+        setIsPlaying(false);
+      }
+    } else {
+      audio.pause();
+      setIsPlaying(false);
+    }
+  }
+
+  function stopQuizAudio() {
+    const audio = quizAudioRef.current;
+
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
     }
 
     setIsPlaying(false);
   }
 
-  function toggleQuizAudio() {
-    if (!audioRef.current) {
-      audioRef.current =
-        new Audio(quiz[quizIndex].audio);
-
-      audioRef.current.onended = () => {
-        setIsPlaying(false);
-      };
-    }
-
-    const currentSrc =
-      audioRef.current.src;
-
-    const newSrc =
-      new URL(
-        quiz[quizIndex].audio,
-        window.location.href
-      ).href;
-
-    if (currentSrc !== newSrc) {
-      audioRef.current.pause();
-      audioRef.current =
-        new Audio(quiz[quizIndex].audio);
-
-      audioRef.current.onended = () => {
-        setIsPlaying(false);
-      };
-    }
-
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  }
-
   function answerQuiz(i: number) {
     if (quizDone) return;
 
-    stopAudio();
+    stopQuizAudio();
 
     const correct =
       i === quiz[quizIndex].correct;
@@ -523,6 +569,14 @@ export default function Home() {
     } else {
       setQuizIndex(i2 => i2 + 1);
     }
+  }
+
+  function resetQuiz() {
+    stopQuizAudio();
+
+    setQuizIndex(0);
+    setQuizScore(0);
+    setQuizDone(false);
   }
 
   return (
@@ -939,9 +993,11 @@ export default function Home() {
                   >
 
                     <div className="lesson-icon">
+
                       {l.done
                         ? "✓"
                         : l.n}
+
                     </div>
 
                     <div>
@@ -1023,19 +1079,15 @@ export default function Home() {
 
               <div className="quiz-card">
 
-                <div
+                <button
+                  type="button"
                   className="audio-circle"
                   onClick={toggleQuizAudio}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={e => {
-                    if (
-                      e.key === "Enter" ||
-                      e.key === " "
-                    ) {
-                      toggleQuizAudio();
-                    }
-                  }}
+                  aria-label={
+                    isPlaying
+                      ? "Pause"
+                      : "Play"
+                  }
                 >
 
                   {isPlaying ? (
@@ -1055,7 +1107,8 @@ export default function Home() {
                           display: "block",
                           width: "4px",
                           height: "20px",
-                          background: "currentColor",
+                          background:
+                            "currentColor",
                           borderRadius: "2px"
                         }}
                       />
@@ -1065,7 +1118,8 @@ export default function Home() {
                           display: "block",
                           width: "4px",
                           height: "20px",
-                          background: "currentColor",
+                          background:
+                            "currentColor",
                           borderRadius: "2px"
                         }}
                       />
@@ -1080,7 +1134,7 @@ export default function Home() {
 
                   )}
 
-                </div>
+                </button>
 
                 <p className="quiz-q">
                   {t.question}
@@ -1159,17 +1213,7 @@ export default function Home() {
 
                 <button
                   className="primary"
-                  onClick={() => {
-
-                    stopAudio();
-
-                    setQuizIndex(0);
-
-                    setQuizScore(0);
-
-                    setQuizDone(false);
-
-                  }}
+                  onClick={resetQuiz}
                 >
 
                   {t.again}
@@ -1486,13 +1530,11 @@ export default function Home() {
                   : ""
               }
               onClick={() => {
-
                 if (id !== "quiz") {
-                  stopAudio();
+                  stopQuizAudio();
                 }
 
                 setTab(id);
-
               }}
             >
 
@@ -1599,7 +1641,8 @@ function LessonModal({
                     display: "block",
                     width: "5px",
                     height: "24px",
-                    background: "currentColor",
+                    background:
+                      "currentColor",
                     borderRadius: "2px"
                   }}
                 />
@@ -1609,7 +1652,8 @@ function LessonModal({
                     display: "block",
                     width: "5px",
                     height: "24px",
-                    background: "currentColor",
+                    background:
+                      "currentColor",
                     borderRadius: "2px"
                   }}
                 />
