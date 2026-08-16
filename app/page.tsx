@@ -1,27 +1,27 @@
- "use client";
+"use client";
 
 import { useState } from "react";
 
-type Language = "Русский" | "Қазақша" | "English";
-type Instrument = "Домбра" | "Қобыз" | "Шаңқобыз";
+type Language = "Қазақша" | "Русский" | "English";
+type Instrument = "dombra" | "kobyz" | "sazsyrnai";
 
 const lessons = [
   { n: 1, done: true },
   { n: 2, done: true },
   { n: 3, done: false },
   { n: 4, done: false },
-  { n: 5, done: false },
+  { n: 5, done: false }
 ];
 
 const quiz = [
   {
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 1,
+    correct: 1
   },
   {
-    answers: ["Құрманғазы", "Шоқан", "Абай", "Ыбырай"],
-    correct: 0,
-  },
+    answers: ["Курманғазы", "Шоқан", "Абай", "Ыбырай"],
+    correct: 0
+  }
 ];
 
 const translations = {
@@ -32,92 +32,72 @@ const translations = {
     encyclopedia: "Энциклопедия",
     profile: "Профиль",
 
-    brandSubtitle: "Мир национальной музыки",
-
-    heroEyebrow: "ОБУЧЕНИЕ КАЗАХСКОЙ МУЗЫКЕ",
+    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
     heroTitle1: "Музыка, которую",
     heroTitle2: "чувствуешь.",
     heroText:
       "Учись играть на казахских национальных инструментах, открывай кюи и знакомься с музыкальной историей Казахстана.",
-
-    continueLearning: "Продолжить обучение →",
+    continue: "Продолжить обучение →",
     openEncyclopedia: "Открыть энциклопедию",
 
-    journey: "ТВОЙ ПУТЬ",
+    journey: "YOUR JOURNEY",
     courseMap: "Карта курса",
     allLessons: "Все уроки →",
     masteryPath: "Путь к мастерству",
     progress: "3 из 5 модулей • 42% прогресса",
 
-    quizCard: "Викторина кюев",
+    quizCard: "Quiz кюев",
     quizCardText: "Угадай мелодию и автора",
-
     encyclopediaCard: "Энциклопедия",
-    encyclopediaCardText: "История, инструменты и кюйши",
-
+    encyclopediaCardText: "История, инструменты, кюйши",
     achievements: "Достижения",
-    achievementsText: "12 дней серии • 7 достижений",
+    achievementsText: "12 дней серии • 7 бейджей",
 
-    learningPath: "ПУТЬ ОБУЧЕНИЯ",
+    learningPath: "LEARNING PATH",
     lessonsTitle: "Уроки",
-
-    beginner: "Начинающий",
-    intermediate: "Средний",
-    advanced: "Продвинутый",
+    beginner: "Бастауыш",
+    intermediate: "Орта",
+    advanced: "Жоғары",
 
     repeat: "Повторить",
     start: "Начать",
     locked: "Закрыто",
 
-    instrumentDombra: "Домбра",
-    instrumentKobyz: "Кобыз",
-    instrumentShankobyz: "Шаңқобыз",
-
     lesson1: "Базовые приёмы",
     lesson1Sub: "Первые звуки",
-
     lesson2: "Переборы",
     lesson2Sub: "Ритм и движение",
-
     lesson3: "Простая мелодия",
     lesson3Sub: "Ақ желкен",
-
     lesson4: "Ритм-паттерны",
     lesson4Sub: "Учимся держать темп",
-
     lesson5: "Первый кюй",
     lesson5Sub: "Сарыарқа",
 
-    kyuiQuiz: "ВИКТОРИНА КЮЕВ",
+    kyuiQuiz: "KYUI QUIZ",
     guessKyui: "Угадай кюй",
-
-    listen: "Послушать",
     question: "Какой кюй звучит в отрывке?",
     questionLabel: "Вопрос",
     of: "из",
-
     wonderful: "Тамаша!",
     quizFinished: "Викторина завершена.",
     result: "Результат",
     again: "Ещё раз",
 
-    cultureHistory: "КУЛЬТУРА И ИСТОРИЯ",
+    cultureHistory: "CULTURE & HISTORY",
     search: "⌕  Поиск...",
-
     all: "Все",
     instruments: "Инструменты",
     kuiyshi: "Кюйши",
     kuis: "Кюи",
     history: "История",
-
     read: "Читать",
     minutes: "мин",
 
     profileTitle: "Твой путь",
     musician: "Музыкант",
     days: "дней серии",
-    badges: "достижений",
-
+    badges: "бейджей",
     firstLesson: "Первый урок",
     learningStreak: "Серия обучения",
     tenKuis: "10 кюев",
@@ -125,28 +105,11 @@ const translations = {
     module: "МОДУЛЬ 3 · УРОК 2",
     repeatSequence: "Повтори последовательность и следи за ритмом.",
     video: "Видео-демонстрация",
-
-    strings: "Струны",
-    speed: "Скорость",
-
     finishLesson: "✓ Завершить урок · +100 XP",
     understandable: "Понятно",
 
     articlePlaceholder:
-      "Здесь будет полноценная статья с проверенными историческими материалами, фотографиями, аудиофрагментами и ссылками на источники.",
-
-    close: "Закрыть",
-
-    badgeBeginner: "Бастауыш",
-    badgeBeginnerText: "Первый шаг в музыке",
-
-    badgeStreak: "30 дней",
-    badgeStreakText: "Серия обучения",
-
-    badgeDombra: "Домбырашы",
-    badgeDombraText: "Выучи 10 кюев",
-
-    audioComingSoon: "Аудио скоро будет добавлено",
+      "Здесь будет полноценная статья с проверенными историческими материалами, фотографиями, аудиофрагментами и ссылками на источники."
   },
 
   Қазақша: {
@@ -156,18 +119,15 @@ const translations = {
     encyclopedia: "Энциклопедия",
     profile: "Профиль",
 
-    brandSubtitle: "Ұлттық музыка әлемі",
-
-    heroEyebrow: "ҚАЗАҚ МУЗЫКАСЫН ҮЙРЕНУ",
+    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
     heroTitle1: "Сезінетін",
     heroTitle2: "музыка.",
     heroText:
       "Қазақтың ұлттық аспаптарында ойнауды үйрен, күйлерді танып, Қазақстанның музыкалық тарихымен таныс.",
-
-    continueLearning: "Оқуды жалғастыру →",
+    continue: "Оқуды жалғастыру →",
     openEncyclopedia: "Энциклопедияны ашу",
 
-    journey: "СЕНІҢ ЖОЛЫҢ",
+    journey: "YOUR JOURNEY",
     courseMap: "Курс картасы",
     allLessons: "Барлық сабақтар →",
     masteryPath: "Шеберлікке жол",
@@ -175,16 +135,13 @@ const translations = {
 
     quizCard: "Күйлер викторинасы",
     quizCardText: "Әуен мен авторды тап",
-
     encyclopediaCard: "Энциклопедия",
-    encyclopediaCardText: "Тарих, аспаптар және күйшілер",
-
+    encyclopediaCardText: "Тарих, аспаптар, күйші-композиторлар",
     achievements: "Жетістіктер",
-    achievementsText: "12 күндік серия • 7 жетістік",
+    achievementsText: "12 күндік серия • 7 белгі",
 
-    learningPath: "ОҚУ ЖОЛЫ",
+    learningPath: "LEARNING PATH",
     lessonsTitle: "Сабақтар",
-
     beginner: "Бастауыш",
     intermediate: "Орта",
     advanced: "Жоғары",
@@ -193,47 +150,34 @@ const translations = {
     start: "Бастау",
     locked: "Жабық",
 
-    instrumentDombra: "Домбыра",
-    instrumentKobyz: "Қобыз",
-    instrumentShankobyz: "Шаңқобыз",
-
     lesson1: "Негізгі әдістер",
     lesson1Sub: "Алғашқы дыбыстар",
-
     lesson2: "Перне қағыстары",
     lesson2Sub: "Ырғақ және қозғалыс",
-
     lesson3: "Қарапайым әуен",
     lesson3Sub: "Ақ желкен",
-
     lesson4: "Ырғақ үлгілері",
     lesson4Sub: "Темпті сақтауды үйрен",
-
     lesson5: "Алғашқы күй",
     lesson5Sub: "Сарыарқа",
 
-    kyuiQuiz: "КҮЙЛЕР ВИКТОРИНАСЫ",
+    kyuiQuiz: "KYUI QUIZ",
     guessKyui: "Күйді тап",
-
-    listen: "Тыңдау",
     question: "Бұл үзіндіде қандай күй орындалады?",
     questionLabel: "Сұрақ",
     of: "ішінен",
-
     wonderful: "Тамаша!",
     quizFinished: "Викторина аяқталды.",
     result: "Нәтиже",
     again: "Қайтадан",
 
-    cultureHistory: "МӘДЕНИЕТ ЖӘНЕ ТАРИХ",
+    cultureHistory: "CULTURE & HISTORY",
     search: "⌕  Іздеу...",
-
     all: "Барлығы",
     instruments: "Аспаптар",
     kuiyshi: "Күйшілер",
     kuis: "Күйлер",
     history: "Тарих",
-
     read: "Оқу",
     minutes: "мин",
 
@@ -241,37 +185,18 @@ const translations = {
     musician: "Музыкант",
     days: "күндік серия",
     badges: "жетістік",
-
     firstLesson: "Алғашқы сабақ",
     learningStreak: "Оқу сериясы",
     tenKuis: "10 күй",
 
     module: "3-МОДУЛЬ · 2-САБАҚ",
     repeatSequence: "Реттілікті қайталап, ырғаққа назар аудар.",
-
     video: "Бейне-демонстрация",
-
-    strings: "Ішектер",
-    speed: "Жылдамдық",
-
     finishLesson: "✓ Сабақты аяқтау · +100 XP",
     understandable: "Түсінікті",
 
     articlePlaceholder:
-      "Мұнда тексерілген тарихи материалдар, фотосуреттер, аудиофрагменттер және дереккөздерге сілтемелері бар толық мақала болады.",
-
-    close: "Жабу",
-
-    badgeBeginner: "Бастауыш",
-    badgeBeginnerText: "Музыкадағы алғашқы қадам",
-
-    badgeStreak: "30 күн",
-    badgeStreakText: "Оқу сериясы",
-
-    badgeDombra: "Домбырашы",
-    badgeDombraText: "10 күй үйрен",
-
-    audioComingSoon: "Аудио жақында қосылады",
+      "Мұнда тексерілген тарихи материалдар, фотосуреттер, аудиофрагменттер және дереккөздерге сілтемелері бар толық мақала болады."
   },
 
   English: {
@@ -281,15 +206,12 @@ const translations = {
     encyclopedia: "Encyclopedia",
     profile: "Profile",
 
-    brandSubtitle: "The world of national music",
-
-    heroEyebrow: "KAZAKH MUSIC LEARNING",
+    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
     heroTitle1: "Music you can",
     heroTitle2: "feel.",
     heroText:
       "Learn to play Kazakh traditional instruments, discover kui and explore the musical history of Kazakhstan.",
-
-    continueLearning: "Continue learning →",
+    continue: "Continue learning →",
     openEncyclopedia: "Open encyclopedia",
 
     journey: "YOUR JOURNEY",
@@ -300,16 +222,13 @@ const translations = {
 
     quizCard: "Kui Quiz",
     quizCardText: "Guess the melody and composer",
-
     encyclopediaCard: "Encyclopedia",
     encyclopediaCardText: "History, instruments and kuiishi",
-
     achievements: "Achievements",
-    achievementsText: "12 day streak • 7 achievements",
+    achievementsText: "12 day streak • 7 badges",
 
     learningPath: "LEARNING PATH",
     lessonsTitle: "Lessons",
-
     beginner: "Beginner",
     intermediate: "Intermediate",
     advanced: "Advanced",
@@ -318,33 +237,22 @@ const translations = {
     start: "Start",
     locked: "Locked",
 
-    instrumentDombra: "Dombra",
-    instrumentKobyz: "Kobyz",
-    instrumentShankobyz: "Shankobyz",
-
     lesson1: "Basic techniques",
     lesson1Sub: "First sounds",
-
     lesson2: "Picking patterns",
     lesson2Sub: "Rhythm and movement",
-
     lesson3: "Simple melody",
-    lesson3Sub: "Ak Zhelken",
-
+    lesson3Sub: "Ak zhelken",
     lesson4: "Rhythm patterns",
     lesson4Sub: "Learn to keep tempo",
-
     lesson5: "First kui",
     lesson5Sub: "Saryarka",
 
-    kyuiQuiz: "KUI QUIZ",
+    kyuiQuiz: "KYUI QUIZ",
     guessKyui: "Guess the kui",
-
-    listen: "Listen",
     question: "Which kui is playing in the excerpt?",
     questionLabel: "Question",
     of: "of",
-
     wonderful: "Great!",
     quizFinished: "Quiz completed.",
     result: "Result",
@@ -352,52 +260,51 @@ const translations = {
 
     cultureHistory: "CULTURE & HISTORY",
     search: "⌕  Search...",
-
     all: "All",
     instruments: "Instruments",
     kuiyshi: "Kuiishi",
     kuis: "Kui",
     history: "History",
-
     read: "Read",
     minutes: "min",
 
     profileTitle: "Your journey",
     musician: "Musician",
     days: "day streak",
-    badges: "achievements",
-
+    badges: "badges",
     firstLesson: "First lesson",
     learningStreak: "Learning streak",
     tenKuis: "10 kui",
 
     module: "MODULE 3 · LESSON 2",
     repeatSequence: "Repeat the sequence and follow the rhythm.",
-
     video: "Video demonstration",
-
-    strings: "Strings",
-    speed: "Speed",
-
     finishLesson: "✓ Complete lesson · +100 XP",
     understandable: "Got it",
 
     articlePlaceholder:
-      "A full article with verified historical materials, photographs, audio examples and source links will appear here.",
+      "A full article with verified historical materials, photographs, audio examples and source links will appear here."
+  }
+};
 
-    close: "Close",
-
-    badgeBeginner: "Beginner",
-    badgeBeginnerText: "Your first step in music",
-
-    badgeStreak: "30 days",
-    badgeStreakText: "Learning streak",
-
-    badgeDombra: "Dombra player",
-    badgeDombraText: "Learn 10 kui",
-
-    audioComingSoon: "Audio will be added soon",
+const instrumentNames = {
+  Русский: {
+    dombra: "Домбра",
+    kobyz: "Кобыз",
+    sazsyrnai: "Сазсырнай"
   },
+
+  Қазақша: {
+    dombra: "Домбыра",
+    kobyz: "Қобыз",
+    sazsyrnai: "Сазсырнай"
+  },
+
+  English: {
+    dombra: "Dombra",
+    kobyz: "Kobyz",
+    sazsyrnai: "Sazsyrnai"
+  }
 };
 
 const articleData = {
@@ -406,26 +313,26 @@ const articleData = {
       "Курманғазы Сағырбайұлы",
       "Великий кюйши XIX века",
       "🎼",
-      "Кюйши, композитор и один из символов казахской инструментальной музыки.",
+      "Кюйши, композитор и один из символов казахской инструментальной музыки."
     ],
     [
       "Қорқыт ата",
       "Легенда кобыза",
       "🪕",
-      "Фигура, связанная с древней историей кобыза и тюркской музыкальной традицией.",
+      "Фигура, связанная с древней историей кобыза и тюркской музыкальной традицией."
     ],
     [
       "Тәттімбет Қазанғапұлы",
       "Мастер шертпе-кюя",
       "🎵",
-      "Один из крупнейших представителей школы шертпе-кюй.",
+      "Один из крупнейших представителей школы шертпе-кюй."
     ],
     [
       "Домбра",
       "Две струны — целый мир",
       "🪕",
-      "Разбираемся в строе, устройстве и роли домбры в казахской культуре.",
-    ],
+      "Разбираемся в строе, устройстве и роли домбры в казахской культуре."
+    ]
   ],
 
   Қазақша: [
@@ -433,26 +340,26 @@ const articleData = {
       "Құрманғазы Сағырбайұлы",
       "XIX ғасырдың ұлы күйші-композиторы",
       "🎼",
-      "Қазақтың аспаптық музыкасының көрнекті тұлғасы және күй өнерінің символы.",
+      "Қазақтың аспаптық музыкасының көрнекті тұлғасы және күй өнерінің символы."
     ],
     [
       "Қорқыт ата",
       "Қобыз туралы аңыз",
       "🪕",
-      "Қобыздың көне тарихымен және түркі музыкалық дәстүрімен байланысты тұлға.",
+      "Қобыздың көне тарихымен және түркі музыкалық дәстүрімен байланысты тарихи тұлға."
     ],
     [
       "Тәттімбет Қазанғапұлы",
       "Шертпе күйдің шебері",
       "🎵",
-      "Шертпе күй мектебінің ең ірі өкілдерінің бірі.",
+      "Шертпе күй мектебінің ең ірі өкілдерінің бірі."
     ],
     [
       "Домбыра",
       "Екі ішек — тұтас әлем",
       "🪕",
-      "Домбыраның құрылысы және қазақ мәдениетіндегі орны туралы.",
-    ],
+      "Домбыраның құрылысы, күйге келтірілуі және қазақ мәдениетіндегі орны туралы."
+    ]
   ],
 
   English: [
@@ -460,34 +367,34 @@ const articleData = {
       "Kurmangazy Sagyrbayuly",
       "Great 19th-century kuiishi",
       "🎼",
-      "A major kuiishi and composer and one of the symbols of Kazakh instrumental music.",
+      "A major kuiishi and composer and one of the symbols of Kazakh instrumental music."
     ],
     [
       "Korkyt Ata",
       "The legend of the kobyz",
       "🪕",
-      "A figure connected with the ancient history of the kobyz and Turkic musical traditions.",
+      "A historical figure connected with the ancient history of the kobyz and Turkic musical traditions."
     ],
     [
       "Tattimbet Kazangapuly",
       "Master of shertpe kui",
       "🎵",
-      "One of the most important representatives of the shertpe kui tradition.",
+      "One of the most important representatives of the shertpe kui tradition."
     ],
     [
       "Dombra",
       "Two strings — a whole world",
       "🪕",
-      "Explore the tuning, structure and cultural role of the dombra.",
-    ],
-  ],
+      "Explore the tuning, structure and cultural role of the dombra."
+    ]
+  ]
 };
 
 export default function Home() {
   const [lang, setLang] = useState<Language>("Русский");
 
   const [instrument, setInstrument] =
-    useState<Instrument>("Домбра");
+    useState<Instrument>("dombra");
 
   const [tab, setTab] = useState("home");
 
@@ -512,78 +419,45 @@ export default function Home() {
 
   const t = translations[lang];
 
-  const instrumentName = {
-    Русский: {
-      Домбра: t.instrumentDombra,
-      Қобыз: t.instrumentKobyz,
-      Шаңқобыз: t.instrumentShankobyz,
-    },
-
-    Қазақша: {
-      Домбра: t.instrumentDombra,
-      Қобыз: t.instrumentKobyz,
-      Шаңқобыз: t.instrumentShankobyz,
-    },
-
-    English: {
-      Домбра: t.instrumentDombra,
-      Қобыз: t.instrumentKobyz,
-      Шаңқобыз: t.instrumentShankobyz,
-    },
-  };
+  const instruments = instrumentNames[lang];
 
   const lessonTitles = [
     [t.lesson1, t.lesson1Sub],
     [t.lesson2, t.lesson2Sub],
     [t.lesson3, t.lesson3Sub],
     [t.lesson4, t.lesson4Sub],
-    [t.lesson5, t.lesson5Sub],
+    [t.lesson5, t.lesson5Sub]
   ];
 
-  function answerQuiz(index: number) {
+  function answerQuiz(i: number) {
     if (quizDone) return;
 
     const correct =
-      index === quiz[quizIndex].correct;
+      i === quiz[quizIndex].correct;
 
     if (correct) {
-      setQuizScore((score) => score + 1);
+      setQuizScore(s => s + 1);
     }
 
-    setXp((value) =>
-      value + (correct ? 50 : 10)
+    setXp(x =>
+      x + (correct ? 50 : 10)
     );
 
-    if (
-      quizIndex ===
-      quiz.length - 1
-    ) {
+    if (quizIndex === quiz.length - 1) {
       setQuizDone(true);
     } else {
-      setQuizIndex(
-        (value) => value + 1
-      );
+      setQuizIndex(i2 => i2 + 1);
     }
-  }
-
-  function resetQuiz() {
-    setQuizIndex(0);
-    setQuizScore(0);
-    setQuizDone(false);
   }
 
   return (
     <main className="app-shell">
 
-      {/* HEADER */}
-
       <header className="topbar">
 
         <div
           className="brand"
-          onClick={() =>
-            setTab("home")
-          }
+          onClick={() => setTab("home")}
         >
 
           <div className="brand-mark">
@@ -592,8 +466,9 @@ export default function Home() {
 
           <div>
             <b>ÁlemSaz</b>
+
             <span>
-              {t.brandSubtitle}
+              Ұлттық әуен әлемі
             </span>
           </div>
 
@@ -611,7 +486,7 @@ export default function Home() {
 
           <select
             value={lang}
-            onChange={(e) =>
+            onChange={e =>
               setLang(
                 e.target.value as Language
               )
@@ -639,9 +514,8 @@ export default function Home() {
 
       <section className="content">
 
-        {/* HOME */}
-
         {tab === "home" && (
+
           <>
 
             <div className="hero">
@@ -653,11 +527,15 @@ export default function Home() {
                 </p>
 
                 <h1>
+
                   {t.heroTitle1}
+
                   <br />
+
                   <em>
                     {t.heroTitle2}
                   </em>
+
                 </h1>
 
                 <p className="hero-copy">
@@ -673,15 +551,13 @@ export default function Home() {
                       setLessonOpen(true);
                     }}
                   >
-                    {t.continueLearning}
+                    {t.continue}
                   </button>
 
                   <button
                     className="secondary"
                     onClick={() =>
-                      setTab(
-                        "encyclopedia"
-                      )
+                      setTab("encyclopedia")
                     }
                   >
                     {t.openEncyclopedia}
@@ -700,14 +576,12 @@ export default function Home() {
                 </div>
 
                 <div className="ornament">
-                  қошқар мүйіз · қошқар мүйіз
+                  қошқар мүйіз · қошқар мүйіз · қошқар мүйіз
                 </div>
 
               </div>
 
             </div>
-
-            {/* COURSE */}
 
             <div className="section-head">
 
@@ -742,11 +616,7 @@ export default function Home() {
 
                   <span className="pill">
                     🎵{" "}
-                    {
-                      instrumentName[
-                        lang
-                      ][instrument]
-                    }
+                    {instruments[instrument]}
                   </span>
 
                   <h3>
@@ -768,28 +638,24 @@ export default function Home() {
               <div className="path">
 
                 {lessons.map(
-                  (lesson, index) => (
+                  (l, idx) => (
 
                     <button
-                      key={lesson.n}
+                      key={l.n}
                       className={`lesson-node ${
-                        lesson.done
+                        l.done
                           ? "done"
-                          : index === 2
+                          : idx === 2
                           ? "current"
                           : "locked"
                       }`}
                       onClick={() => {
 
-                        if (index <= 2) {
+                        if (idx <= 2) {
 
-                          setTab(
-                            "lessons"
-                          );
+                          setTab("lessons");
 
-                          setLessonOpen(
-                            true
-                          );
+                          setLessonOpen(true);
 
                         }
 
@@ -797,25 +663,17 @@ export default function Home() {
                     >
 
                       <span>
-                        {lesson.done
+                        {l.done
                           ? "✓"
-                          : lesson.n}
+                          : l.n}
                       </span>
 
                       <b>
-                        {
-                          lessonTitles[
-                            index
-                          ][0]
-                        }
+                        {lessonTitles[idx][0]}
                       </b>
 
                       <small>
-                        {
-                          lessonTitles[
-                            index
-                          ][1]
-                        }
+                        {lessonTitles[idx][1]}
                       </small>
 
                     </button>
@@ -826,8 +684,6 @@ export default function Home() {
               </div>
 
             </div>
-
-            {/* FEATURE CARDS */}
 
             <div className="grid-3">
 
@@ -855,9 +711,7 @@ export default function Home() {
               <button
                 className="feature-card"
                 onClick={() =>
-                  setTab(
-                    "encyclopedia"
-                  )
+                  setTab("encyclopedia")
                 }
               >
 
@@ -870,9 +724,7 @@ export default function Home() {
                 </b>
 
                 <small>
-                  {
-                    t.encyclopediaCardText
-                  }
+                  {t.encyclopediaCardText}
                 </small>
 
               </button>
@@ -901,9 +753,8 @@ export default function Home() {
             </div>
 
           </>
-        )}
 
-        {/* LESSONS */}
+        )}
 
         {tab === "lessons" && (
 
@@ -919,11 +770,7 @@ export default function Home() {
 
                 <h2>
                   {t.lessonsTitle} ·{" "}
-                  {
-                    instrumentName[
-                      lang
-                    ][instrument]
-                  }
+                  {instruments[instrument]}
                 </h2>
 
               </div>
@@ -931,23 +778,23 @@ export default function Home() {
               <select
                 className="select"
                 value={instrument}
-                onChange={(e) =>
+                onChange={e =>
                   setInstrument(
                     e.target.value as Instrument
                   )
                 }
               >
 
-                <option value="Домбра">
-                  {t.instrumentDombra}
+                <option value="dombra">
+                  {instruments.dombra}
                 </option>
 
-                <option value="Қобыз">
-                  {t.instrumentKobyz}
+                <option value="kobyz">
+                  {instruments.kobyz}
                 </option>
 
-                <option value="Шаңқобыз">
-                  {t.instrumentShankobyz}
+                <option value="sazsyrnai">
+                  {instruments.sazsyrnai}
                 </option>
 
               </select>
@@ -973,56 +820,48 @@ export default function Home() {
             <div className="lesson-list">
 
               {lessons.map(
-                (lesson, index) => (
+                (l, i) => (
 
                   <div
                     className={`lesson-row ${
-                      lesson.done
+                      l.done
                         ? "completed"
                         : ""
                     }`}
-                    key={lesson.n}
+                    key={l.n}
                   >
 
                     <div className="lesson-icon">
-                      {lesson.done
+
+                      {l.done
                         ? "✓"
-                        : lesson.n}
+                        : l.n}
+
                     </div>
 
                     <div>
 
                       <b>
-                        {
-                          lessonTitles[
-                            index
-                          ][0]
-                        }
+                        {lessonTitles[i][0]}
                       </b>
 
                       <p>
-                        {
-                          lessonTitles[
-                            index
-                          ][1]
-                        }
+                        {lessonTitles[i][1]}
                       </p>
 
                     </div>
 
                     <button
                       className="primary small"
-                      disabled={index > 2}
+                      disabled={i > 2}
                       onClick={() =>
-                        setLessonOpen(
-                          true
-                        )
+                        setLessonOpen(true)
                       }
                     >
 
-                      {lesson.done
+                      {l.done
                         ? t.repeat
-                        : index === 2
+                        : i === 2
                         ? t.start
                         : t.locked}
 
@@ -1040,20 +879,13 @@ export default function Home() {
               <LessonModal
                 t={t}
                 close={() =>
-                  setLessonOpen(
-                    false
-                  )
+                  setLessonOpen(false)
                 }
                 onComplete={() => {
 
-                  setXp(
-                    (value) =>
-                      value + 100
-                  );
+                  setXp(x => x + 100);
 
-                  setLessonOpen(
-                    false
-                  );
+                  setLessonOpen(false);
 
                 }}
               />
@@ -1063,8 +895,6 @@ export default function Home() {
           </div>
 
         )}
-
-        {/* QUIZ */}
 
         {tab === "quiz" && (
 
@@ -1084,15 +914,13 @@ export default function Home() {
 
                 <div
                   className="audio-circle"
-                  onClick={() => {
-                    alert(
-                      t.audioComingSoon
-                    );
-                  }}
+                  onClick={() => {}}
                 >
+
                   <span>
                     ▶️
                   </span>
+
                 </div>
 
                 <p className="quiz-q">
@@ -1113,21 +941,19 @@ export default function Home() {
                   {quiz[
                     quizIndex
                   ].answers.map(
-                    (answer, index) => (
+                    (a, i) => (
 
                       <button
-                        key={answer}
+                        key={a}
                         onClick={() =>
-                          answerQuiz(
-                            index
-                          )
+                          answerQuiz(i)
                         }
                       >
 
                         {String.fromCharCode(
-                          65 + index
+                          65 + i
                         )}
-                        ) {answer}
+                        ) {a}
 
                       </button>
 
@@ -1135,18 +961,6 @@ export default function Home() {
                   )}
 
                 </div>
-
-                <small
-                  style={{
-                    display:
-                      "block",
-                    marginTop:
-                      "16px",
-                    opacity: 0.6,
-                  }}
-                >
-                  {t.audioComingSoon}
-                </small>
 
               </div>
 
@@ -1163,28 +977,42 @@ export default function Home() {
                 </h2>
 
                 <p>
+
                   {t.quizFinished}{" "}
+
                   {t.result}:{" "}
+
                   {quizScore}/
                   {quiz.length}
+
                 </p>
 
                 <b>
+
                   +
                   {quizScore * 50 +
                     (quiz.length -
                       quizScore) *
                       10}{" "}
                   XP
+
                 </b>
 
                 <button
                   className="primary"
-                  onClick={
-                    resetQuiz
-                  }
+                  onClick={() => {
+
+                    setQuizIndex(0);
+
+                    setQuizScore(0);
+
+                    setQuizDone(false);
+
+                  }}
                 >
+
                   {t.again}
+
                 </button>
 
               </div>
@@ -1195,10 +1023,7 @@ export default function Home() {
 
         )}
 
-        {/* ENCYCLOPEDIA */}
-
-        {tab ===
-          "encyclopedia" && (
+        {tab === "encyclopedia" && (
 
           <div className="page">
 
@@ -1218,9 +1043,7 @@ export default function Home() {
 
               <input
                 className="search"
-                placeholder={
-                  t.search
-                }
+                placeholder={t.search}
               />
 
             </div>
@@ -1251,23 +1074,14 @@ export default function Home() {
 
             <div className="article-grid">
 
-              {articleData[
-                lang
-              ].map(
-                ([
-                  title,
-                  subtitle,
-                  icon,
-                  text,
-                ]) => (
+              {articleData[lang].map(
+                ([title, sub, icon, text]) => (
 
                   <button
                     className="article-card"
                     key={title}
                     onClick={() =>
-                      setArticle(
-                        title
-                      )
+                      setArticle(title)
                     }
                   >
 
@@ -1278,7 +1092,7 @@ export default function Home() {
                     <div>
 
                       <span>
-                        {subtitle}
+                        {sub}
                       </span>
 
                       <h3>
@@ -1290,8 +1104,10 @@ export default function Home() {
                       </p>
 
                       <small>
+
                         {t.read} · 5{" "}
                         {t.minutes}
+
                       </small>
 
                     </div>
@@ -1308,15 +1124,13 @@ export default function Home() {
               <div
                 className="overlay"
                 onClick={() =>
-                  setArticle(
-                    null
-                  )
+                  setArticle(null)
                 }
               >
 
                 <div
                   className="article-modal"
-                  onClick={(e) =>
+                  onClick={e =>
                     e.stopPropagation()
                   }
                 >
@@ -1324,21 +1138,14 @@ export default function Home() {
                   <button
                     className="close"
                     onClick={() =>
-                      setArticle(
-                        null
-                      )
-                    }
-                    aria-label={
-                      t.close
+                      setArticle(null)
                     }
                   >
                     ×
                   </button>
 
                   <span className="eyebrow">
-                    ÁLEMSAZ
-                    {" "}
-                    ENCYCLOPEDIA
+                    ÁLEMSAZ ENCYCLOPEDIA
                   </span>
 
                   <h2>
@@ -1346,9 +1153,7 @@ export default function Home() {
                   </h2>
 
                   <p>
-                    {
-                      t.articlePlaceholder
-                    }
+                    {t.articlePlaceholder}
                   </p>
 
                   <div className="placeholder-lines"></div>
@@ -1356,14 +1161,10 @@ export default function Home() {
                   <button
                     className="primary"
                     onClick={() =>
-                      setArticle(
-                        null
-                      )
+                      setArticle(null)
                     }
                   >
-                    {
-                      t.understandable
-                    }
+                    {t.understandable}
                   </button>
 
                 </div>
@@ -1375,8 +1176,6 @@ export default function Home() {
           </div>
 
         )}
-
-        {/* PROFILE */}
 
         {tab === "profile" && (
 
@@ -1401,17 +1200,14 @@ export default function Home() {
               </h3>
 
               <p>
-                {
-                  instrumentName[
-                    lang
-                  ][instrument]
-                }{" "}
-                · {t.beginner}
+                {instruments[instrument]} ·{" "}
+                {t.beginner}
               </p>
 
               <div className="stats">
 
                 <div>
+
                   <b>
                     {xp.toLocaleString()}
                   </b>
@@ -1419,9 +1215,11 @@ export default function Home() {
                   <small>
                     XP
                   </small>
+
                 </div>
 
                 <div>
+
                   <b>
                     {streak}
                   </b>
@@ -1429,9 +1227,11 @@ export default function Home() {
                   <small>
                     {t.days}
                   </small>
+
                 </div>
 
                 <div>
+
                   <b>
                     7
                   </b>
@@ -1439,6 +1239,7 @@ export default function Home() {
                   <small>
                     {t.badges}
                   </small>
+
                 </div>
 
               </div>
@@ -1456,11 +1257,11 @@ export default function Home() {
                 🏅
 
                 <b>
-                  {t.badgeBeginner}
+                  {t.beginner}
                 </b>
 
                 <small>
-                  {t.badgeBeginnerText}
+                  {t.firstLesson}
                 </small>
 
               </div>
@@ -1470,11 +1271,11 @@ export default function Home() {
                 🔥
 
                 <b>
-                  {t.badgeStreak}
+                  30 күн
                 </b>
 
                 <small>
-                  {t.badgeStreakText}
+                  {t.learningStreak}
                 </small>
 
               </div>
@@ -1484,11 +1285,11 @@ export default function Home() {
                 🎵
 
                 <b>
-                  {t.badgeDombra}
+                  Домбырашы
                 </b>
 
                 <small>
-                  {t.badgeDombraText}
+                  {t.tenKuis}
                 </small>
 
               </div>
@@ -1501,36 +1302,18 @@ export default function Home() {
 
       </section>
 
-      {/* BOTTOM NAV */}
-
       <nav className="bottom-nav">
 
         {[
-          [
-            "home",
-            "⌂",
-            t.home,
-          ],
-          [
-            "lessons",
-            "♪",
-            t.lessons,
-          ],
-          [
-            "quiz",
-            "?",
-            t.quiz,
-          ],
+          ["home", "⌂", t.home],
+          ["lessons", "♪", t.lessons],
+          ["quiz", "?", t.quiz],
           [
             "encyclopedia",
             "▤",
-            t.encyclopedia,
+            t.encyclopedia
           ],
-          [
-            "profile",
-            "◉",
-            t.profile,
-          ],
+          ["profile", "◉", t.profile]
         ].map(
           ([id, icon, text]) => (
 
@@ -1568,7 +1351,7 @@ export default function Home() {
 function LessonModal({
   t,
   close,
-  onComplete,
+  onComplete
 }: {
   t: typeof translations["Русский"];
   close: () => void;
@@ -1584,7 +1367,6 @@ function LessonModal({
         <button
           className="close"
           onClick={close}
-          aria-label={t.close}
         >
           ×
         </button>
@@ -1616,15 +1398,25 @@ function LessonModal({
         <div className="tab-view">
 
           <div>
-            {t.strings}
+
+            1-шек&nbsp;&nbsp;&nbsp;
+            2-шек&nbsp;&nbsp;&nbsp;
+            3-шек
+
           </div>
 
           <div className="strings">
+
             —●—————
+
             <br />
+
             ————●——
+
             <br />
+
             ——●————
+
           </div>
 
           <div className="playbar">
@@ -1634,10 +1426,6 @@ function LessonModal({
         </div>
 
         <div className="speed">
-
-          <span>
-            {t.speed}
-          </span>
 
           <button>
             0.5×
@@ -1666,3 +1454,4 @@ function LessonModal({
 
   );
 }
+    
