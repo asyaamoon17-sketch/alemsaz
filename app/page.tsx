@@ -886,9 +886,10 @@ export default function Home() {
                     <button
                       className="primary small"
                       disabled={i > 2}
-                      onClick={() =>
-                        setLessonOpen(true)
-                      }
+                      onClick={() => {
+                        setIsPlaying(false);
+                        setLessonOpen(true);
+                      }}
                     >
 
                       {l.done
@@ -910,12 +911,17 @@ export default function Home() {
 
               <LessonModal
                 t={t}
-                close={() =>
-                  setLessonOpen(false)
-                }
+                isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
+                close={() => {
+                  setIsPlaying(false);
+                  setLessonOpen(false);
+                }}
                 onComplete={() => {
 
                   setXp(x => x + 100);
+
+                  setIsPlaying(false);
 
                   setLessonOpen(false);
 
@@ -951,9 +957,38 @@ export default function Home() {
                   }
                 >
 
-                  <span>
-                    {isPlaying ? "Ⅱ" : "▶"}
-                  </span>
+                  {isPlaying ? (
+                    <span
+                      style={{
+                        display: "flex",
+                        gap: "5px",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        height: "22px"
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: "4px",
+                          height: "20px",
+                          background: "currentColor",
+                          borderRadius: "2px"
+                        }}
+                      />
+                      <span
+                        style={{
+                          width: "4px",
+                          height: "20px",
+                          background: "currentColor",
+                          borderRadius: "2px"
+                        }}
+                      />
+                    </span>
+                  ) : (
+                    <span>
+                      ▶
+                    </span>
+                  )}
 
                 </div>
 
@@ -1384,10 +1419,14 @@ export default function Home() {
 
 function LessonModal({
   t,
+  isPlaying,
+  setIsPlaying,
   close,
   onComplete
 }: {
   t: typeof translations["Русский"];
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   close: () => void;
   onComplete: () => void;
 }) {
@@ -1419,9 +1458,79 @@ function LessonModal({
 
         <div className="video-placeholder">
 
-          <span>
-            ▶️
-          </span>
+          <button
+            type="button"
+            onClick={() =>
+              setIsPlaying(p => !p)
+            }
+            aria-label={
+              isPlaying
+                ? "Pause"
+                : "Play"
+            }
+            style={{
+              border: "none",
+              background: "none",
+              padding: 0,
+              margin: 0,
+              color: "inherit",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+
+            {isPlaying ? (
+
+              <span
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "6px",
+                  width: "32px",
+                  height: "32px"
+                }}
+              >
+
+                <span
+                  style={{
+                    display: "block",
+                    width: "5px",
+                    height: "24px",
+                    background: "currentColor",
+                    borderRadius: "2px"
+                  }}
+                />
+
+                <span
+                  style={{
+                    display: "block",
+                    width: "5px",
+                    height: "24px",
+                    background: "currentColor",
+                    borderRadius: "2px"
+                  }}
+                />
+
+              </span>
+
+            ) : (
+
+              <span
+                style={{
+                  display: "block",
+                  fontSize: "28px",
+                  lineHeight: 1
+                }}
+              >
+                ▶
+              </span>
+
+            )}
+
+          </button>
 
           <small>
             {t.video} · 0:15
