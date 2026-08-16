@@ -55,9 +55,10 @@ const translations = {
 
     learningPath: "LEARNING PATH",
     lessonsTitle: "Уроки",
-    beginner: "Бастауыш",
-    intermediate: "Орта",
-    advanced: "Жоғары",
+
+    beginner: "Начальный",
+    intermediate: "Средний",
+    advanced: "Высокий",
 
     repeat: "Повторить",
     start: "Начать",
@@ -142,6 +143,7 @@ const translations = {
 
     learningPath: "LEARNING PATH",
     lessonsTitle: "Сабақтар",
+
     beginner: "Бастауыш",
     intermediate: "Орта",
     advanced: "Жоғары",
@@ -229,6 +231,7 @@ const translations = {
 
     learningPath: "LEARNING PATH",
     lessonsTitle: "Lessons",
+
     beginner: "Beginner",
     intermediate: "Intermediate",
     advanced: "Advanced",
@@ -588,20 +591,23 @@ export default function Home() {
               <div
                 className="instrument-art"
                 style={{
-                  background: "var(--card)",
-                  padding: "10px"
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden"
                 }}
               >
 
                 <img
                   src="/hero.jpeg"
-                  alt="Kazakh music"
+                  alt="Kazakh traditional music"
                   style={{
                     width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                    display: "block",
-                    borderRadius: "26px"
+                    maxWidth: "520px",
+                    height: "360px",
+                    objectFit: "cover",
+                    borderRadius: "28px",
+                    display: "block"
                   }}
                 />
 
