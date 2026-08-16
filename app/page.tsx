@@ -463,10 +463,22 @@ export default function Home() {
           onClick={() => setTab("home")}
         >
 
-          <div className="brand-mark">
+          <div
+            className="brand-mark"
+            style={{
+              overflow: "hidden",
+              padding: 0
+            }}
+          >
             <img
               src="/avatar.jpeg"
               alt="Álem.Music"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block"
+              }}
             />
           </div>
 
@@ -573,7 +585,13 @@ export default function Home() {
 
               </div>
 
-              <div className="instrument-art">
+              <div
+                className="instrument-art"
+                style={{
+                  background: "var(--card)",
+                  padding: "10px"
+                }}
+              >
 
                 <img
                   src="/hero.jpeg"
@@ -582,8 +600,8 @@ export default function Home() {
                     width: "100%",
                     height: "100%",
                     objectFit: "contain",
-                    objectPosition: "center",
-                    display: "block"
+                    display: "block",
+                    borderRadius: "26px"
                   }}
                 />
 
@@ -923,7 +941,7 @@ export default function Home() {
                 <div
                   className="audio-circle"
                   onClick={() =>
-                    setIsPlaying(!isPlaying)
+                    setIsPlaying(p => !p)
                   }
                 >
 
@@ -1202,12 +1220,7 @@ export default function Home() {
             <div className="profile-card">
 
               <div className="avatar">
-
-                <img
-                  src="/avatar.jpeg"
-                  alt="Avatar"
-                />
-
+                A
               </div>
 
               <h3>
