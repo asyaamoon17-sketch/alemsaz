@@ -461,7 +461,17 @@ export default function Home() {
         >
 
           <div className="brand-mark">
-            Á
+            <img
+              src="/avatar.jpeg"
+              alt="ÁlemSaz"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+                borderRadius: "inherit"
+              }}
+            />
           </div>
 
           <div>
@@ -567,26 +577,19 @@ export default function Home() {
 
               </div>
 
-              <div
-                className="instrument-art"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  overflow: "hidden"
-                }}
-              >
+              <div className="instrument-art">
 
                 <img
                   src="/hero.jpeg"
-                  alt="Kazakh traditional music"
+                  alt="ÁlemSaz"
                   style={{
                     width: "100%",
-                    maxWidth: "520px",
-                    height: "360px",
+                    height: "100%",
+                    maxWidth: "100%",
+                    maxHeight: "100%",
                     objectFit: "cover",
-                    borderRadius: "28px",
-                    display: "block"
+                    display: "block",
+                    borderRadius: "inherit"
                   }}
                 />
 
@@ -1202,25 +1205,8 @@ export default function Home() {
 
             <div className="profile-card">
 
-              <div
-                className="avatar"
-                style={{
-                  overflow: "hidden"
-                }}
-              >
-
-                <img
-                  src="/avatar.jpeg"
-                  alt="Profile"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                    borderRadius: "50%"
-                  }}
-                />
-
+              <div className="avatar">
+                A
               </div>
 
               <h3>
