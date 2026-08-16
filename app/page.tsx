@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 type Language = "Қазақша" | "Русский" | "English";
 type Instrument = "dombra" | "kobyz" | "sazsyrnai";
@@ -16,11 +16,23 @@ const lessons = [
 const quiz = [
   {
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 1
+    correct: 1,
+    audio: "/audio/Balbyraun.mp3"
   },
   {
     answers: ["Курманғазы", "Шоқан", "Абай", "Ыбырай"],
-    correct: 0
+    correct: 0,
+    audio: "/audio/kurmangazyAdai.mp3"
+  },
+  {
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 2,
+    audio: "/audio/Saryarka.mp3"
+  },
+  {
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 3,
+    audio: "/audio/Aksakkulan.mp3"
   }
 ];
 
@@ -80,7 +92,7 @@ const translations = {
     question: "Какой кюй звучит в отрывке?",
     questionLabel: "Вопрос",
     of: "из",
-    wonderful: "Тамаша!",
+    wonderful: "Отлично!",
     quizFinished: "Викторина завершена.",
     result: "Результат",
     again: "Ещё раз",
@@ -423,6 +435,8 @@ export default function Home() {
   const [isPlaying, setIsPlaying] =
     useState(false);
 
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   const t = translations[lang];
 
   const instruments = instrumentNames[lang];
@@ -435,8 +449,64 @@ export default function Home() {
     [t.lesson5, t.lesson5Sub]
   ];
 
+  useEffect(() => {
+    if (!audioRef.current) {
+      audioRef.current = new Audio();
+    }
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+    };
+  }, []);
+
+  function stopAudio() {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
+    setIsPlaying(false);
+  }
+
+  async function toggleQuizAudio() {
+    if (!audioRef.current) {
+      audioRef.current = new Audio();
+    }
+
+    const audio = audioRef.current;
+    const currentAudio = quiz[quizIndex].audio;
+
+    if (isPlaying) {
+      audio.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    if (audio.src !== window.location.origin + currentAudio) {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.src = currentAudio;
+    }
+
+    try {
+      await audio.play();
+      setIsPlaying(true);
+
+      audio.onended = () => {
+        setIsPlaying(false);
+      };
+    } catch {
+      setIsPlaying(false);
+    }
+  }
+
   function answerQuiz(i: number) {
     if (quizDone) return;
+
+    stopAudio();
 
     const correct =
       i === quiz[quizIndex].correct;
@@ -507,11 +577,13 @@ export default function Home() {
 
           <select
             value={lang}
-            onChange={e =>
+            onChange={e => {
+              stopAudio();
+
               setLang(
                 e.target.value as Language
-              )
-            }
+              );
+            }}
             aria-label="Language"
           >
 
@@ -568,6 +640,7 @@ export default function Home() {
                   <button
                     className="primary"
                     onClick={() => {
+                      stopAudio();
                       setTab("lessons");
                       setLessonOpen(true);
                     }}
@@ -577,9 +650,10 @@ export default function Home() {
 
                   <button
                     className="secondary"
-                    onClick={() =>
-                      setTab("encyclopedia")
-                    }
+                    onClick={() => {
+                      stopAudio();
+                      setTab("encyclopedia");
+                    }}
                   >
                     {t.openEncyclopedia}
                   </button>
@@ -631,9 +705,10 @@ export default function Home() {
 
               <button
                 className="text-btn"
-                onClick={() =>
-                  setTab("lessons")
-                }
+                onClick={() => {
+                  stopAudio();
+                  setTab("lessons");
+                }}
               >
                 {t.allLessons}
               </button>
@@ -685,6 +760,8 @@ export default function Home() {
 
                         if (idx <= 2) {
 
+                          stopAudio();
+
                           setTab("lessons");
 
                           setLessonOpen(true);
@@ -721,9 +798,10 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() =>
-                  setTab("quiz")
-                }
+                onClick={() => {
+                  stopAudio();
+                  setTab("quiz");
+                }}
               >
 
                 <span>
@@ -742,9 +820,10 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() =>
-                  setTab("encyclopedia")
-                }
+                onClick={() => {
+                  stopAudio();
+                  setTab("encyclopedia");
+                }}
               >
 
                 <span>
@@ -763,9 +842,10 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() =>
-                  setTab("profile")
-                }
+                onClick={() => {
+                  stopAudio();
+                  setTab("profile");
+                }}
               >
 
                 <span>
@@ -887,7 +967,7 @@ export default function Home() {
                       className="primary small"
                       disabled={i > 2}
                       onClick={() => {
-                        setIsPlaying(false);
+                        stopAudio();
                         setLessonOpen(true);
                       }}
                     >
@@ -914,14 +994,14 @@ export default function Home() {
                 isPlaying={isPlaying}
                 setIsPlaying={setIsPlaying}
                 close={() => {
-                  setIsPlaying(false);
+                  stopAudio();
                   setLessonOpen(false);
                 }}
                 onComplete={() => {
 
                   setXp(x => x + 100);
 
-                  setIsPlaying(false);
+                  stopAudio();
 
                   setLessonOpen(false);
 
@@ -952,42 +1032,67 @@ export default function Home() {
 
                 <div
                   className="audio-circle"
-                  onClick={() =>
-                    setIsPlaying(p => !p)
-                  }
+                  onClick={toggleQuizAudio}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={e => {
+                    if (
+                      e.key === "Enter" ||
+                      e.key === " "
+                    ) {
+                      toggleQuizAudio();
+                    }
+                  }}
                 >
 
                   {isPlaying ? (
+
                     <span
                       style={{
                         display: "flex",
-                        gap: "5px",
                         alignItems: "center",
                         justifyContent: "center",
-                        height: "22px"
+                        gap: "7px",
+                        width: "28px",
+                        height: "28px"
                       }}
                     >
+
                       <span
                         style={{
-                          width: "4px",
-                          height: "20px",
+                          display: "block",
+                          width: "5px",
+                          height: "22px",
                           background: "currentColor",
-                          borderRadius: "2px"
+                          borderRadius: "3px"
                         }}
                       />
+
                       <span
                         style={{
-                          width: "4px",
-                          height: "20px",
+                          display: "block",
+                          width: "5px",
+                          height: "22px",
                           background: "currentColor",
-                          borderRadius: "2px"
+                          borderRadius: "3px"
                         }}
                       />
+
                     </span>
+
                   ) : (
-                    <span>
+
+                    <span
+                      style={{
+                        display: "block",
+                        fontSize: "26px",
+                        lineHeight: 1,
+                        marginLeft: "3px"
+                      }}
+                    >
                       ▶
                     </span>
+
                   )}
 
                 </div>
@@ -1070,6 +1175,8 @@ export default function Home() {
                 <button
                   className="primary"
                   onClick={() => {
+
+                    stopAudio();
 
                     setQuizIndex(0);
 
@@ -1393,9 +1500,10 @@ export default function Home() {
                   ? "active"
                   : ""
               }
-              onClick={() =>
-                setTab(id)
-              }
+              onClick={() => {
+                stopAudio();
+                setTab(id);
+              }}
             >
 
               <span>
@@ -1500,7 +1608,7 @@ function LessonModal({
                     width: "5px",
                     height: "24px",
                     background: "currentColor",
-                    borderRadius: "2px"
+                    borderRadius: "3px"
                   }}
                 />
 
@@ -1510,7 +1618,7 @@ function LessonModal({
                     width: "5px",
                     height: "24px",
                     background: "currentColor",
-                    borderRadius: "2px"
+                    borderRadius: "3px"
                   }}
                 />
 
