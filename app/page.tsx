@@ -453,10 +453,6 @@ export default function Home() {
     }
   }
 
-  function toggleMusic() {
-    setIsPlaying(value => !value);
-  }
-
   return (
     <main className="app-shell">
 
@@ -470,13 +466,12 @@ export default function Home() {
           <div className="brand-mark">
             <img
               src="/avatar.jpeg"
-              alt="ÁlemSaz"
-              className="brand-avatar"
+              alt="Álem.Music"
             />
           </div>
 
           <div>
-            <b>ÁlemSaz</b>
+            <b>Álem.Music</b>
 
             <span>
               Ұлттық әуен әлемі
@@ -538,11 +533,15 @@ export default function Home() {
                 </p>
 
                 <h1>
+
                   {t.heroTitle1}
+
                   <br />
+
                   <em>
                     {t.heroTitle2}
                   </em>
+
                 </h1>
 
                 <p className="hero-copy">
@@ -578,8 +577,14 @@ export default function Home() {
 
                 <img
                   src="/hero.jpeg"
-                  alt="ÁlemSaz"
-                  className="hero-image"
+                  alt="Kazakh music"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                    objectPosition: "center",
+                    display: "block"
+                  }}
                 />
 
               </div>
@@ -835,9 +840,11 @@ export default function Home() {
                   >
 
                     <div className="lesson-icon">
+
                       {l.done
                         ? "✓"
                         : l.n}
+
                     </div>
 
                     <div>
@@ -913,27 +920,18 @@ export default function Home() {
 
               <div className="quiz-card">
 
-                <button
-                  className={`audio-circle ${
-                    isPlaying
-                      ? "playing"
-                      : ""
-                  }`}
-                  onClick={toggleMusic}
-                  aria-label={
-                    isPlaying
-                      ? "Pause music"
-                      : "Play music"
+                <div
+                  className="audio-circle"
+                  onClick={() =>
+                    setIsPlaying(!isPlaying)
                   }
                 >
 
                   <span>
-                    {isPlaying
-                      ? "Ⅱ"
-                      : "▶"}
+                    {isPlaying ? "Ⅱ" : "▶"}
                   </span>
 
-                </button>
+                </div>
 
                 <p className="quiz-q">
                   {t.question}
@@ -1019,8 +1017,6 @@ export default function Home() {
                     setQuizScore(0);
 
                     setQuizDone(false);
-
-                    setIsPlaying(false);
 
                   }}
                 >
@@ -1159,7 +1155,7 @@ export default function Home() {
                   </button>
 
                   <span className="eyebrow">
-                    ÁLEMSAZ ENCYCLOPEDIA
+                    ÁLEM.MUSIC ENCYCLOPEDIA
                   </span>
 
                   <h2>
@@ -1206,7 +1202,12 @@ export default function Home() {
             <div className="profile-card">
 
               <div className="avatar">
-                A
+
+                <img
+                  src="/avatar.jpeg"
+                  alt="Avatar"
+                />
+
               </div>
 
               <h3>
