@@ -417,6 +417,9 @@ export default function Home() {
   const [article, setArticle] =
     useState<string | null>(null);
 
+  const [isPlaying, setIsPlaying] =
+    useState(false);
+
   const t = translations[lang];
 
   const instruments = instrumentNames[lang];
@@ -450,6 +453,10 @@ export default function Home() {
     }
   }
 
+  function toggleMusic() {
+    setIsPlaying(value => !value);
+  }
+
   return (
     <main className="app-shell">
 
@@ -464,13 +471,7 @@ export default function Home() {
             <img
               src="/avatar.jpeg"
               alt="ÁlemSaz"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                display: "block",
-                borderRadius: "inherit"
-              }}
+              className="brand-avatar"
             />
           </div>
 
@@ -537,15 +538,11 @@ export default function Home() {
                 </p>
 
                 <h1>
-
                   {t.heroTitle1}
-
                   <br />
-
                   <em>
                     {t.heroTitle2}
                   </em>
-
                 </h1>
 
                 <p className="hero-copy">
@@ -582,15 +579,7 @@ export default function Home() {
                 <img
                   src="/hero.jpeg"
                   alt="ÁlemSaz"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    maxWidth: "100%",
-                    maxHeight: "100%",
-                    objectFit: "cover",
-                    display: "block",
-                    borderRadius: "inherit"
-                  }}
+                  className="hero-image"
                 />
 
               </div>
@@ -846,11 +835,9 @@ export default function Home() {
                   >
 
                     <div className="lesson-icon">
-
                       {l.done
                         ? "✓"
                         : l.n}
-
                     </div>
 
                     <div>
@@ -926,16 +913,27 @@ export default function Home() {
 
               <div className="quiz-card">
 
-                <div
-                  className="audio-circle"
-                  onClick={() => {}}
+                <button
+                  className={`audio-circle ${
+                    isPlaying
+                      ? "playing"
+                      : ""
+                  }`}
+                  onClick={toggleMusic}
+                  aria-label={
+                    isPlaying
+                      ? "Pause music"
+                      : "Play music"
+                  }
                 >
 
                   <span>
-                    ▶️
+                    {isPlaying
+                      ? "Ⅱ"
+                      : "▶"}
                   </span>
 
-                </div>
+                </button>
 
                 <p className="quiz-q">
                   {t.question}
@@ -1021,6 +1019,8 @@ export default function Home() {
                     setQuizScore(0);
 
                     setQuizDone(false);
+
+                    setIsPlaying(false);
 
                   }}
                 >
