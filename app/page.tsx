@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Language = "Қазақша" | "Русский" | "English";
 type Instrument = "dombra" | "kobyz" | "sazsyrnai";
@@ -15,24 +15,24 @@ const lessons = [
 
 const quiz = [
   {
+    audio: "/audio/Saryarka.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 1,
-    audio: "/audio/Balbyraun.mp3"
+    correct: 0
   },
   {
-    answers: ["Курманғазы", "Шоқан", "Абай", "Ыбырай"],
-    correct: 0,
-    audio: "/audio/kurmangazyAdai.mp3"
+    audio: "/audio/Balbyraun.mp3",
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 1
   },
   {
+    audio: "/audio/kurmangazyAdai.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 2,
-    audio: "/audio/Saryarka.mp3"
+    correct: 2
   },
   {
+    audio: "/audio/Aksakkulan.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 3,
-    audio: "/audio/Aksakkulan.mp3"
+    correct: 3
   }
 ];
 
@@ -406,16 +406,20 @@ const articleData = {
 };
 
 export default function Home() {
-  const [lang, setLang] = useState<Language>("Русский");
+  const [lang, setLang] =
+    useState<Language>("Русский");
 
   const [instrument, setInstrument] =
     useState<Instrument>("dombra");
 
-  const [tab, setTab] = useState("home");
+  const [tab, setTab] =
+    useState("home");
 
-  const [xp, setXp] = useState(2450);
+  const [xp, setXp] =
+    useState(2450);
 
-  const [streak] = useState(12);
+  const [streak] =
+    useState(12);
 
   const [lessonOpen, setLessonOpen] =
     useState(false);
@@ -435,11 +439,13 @@ export default function Home() {
   const [isPlaying, setIsPlaying] =
     useState(false);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef =
+    useRef<HTMLAudioElement | null>(null);
 
   const t = translations[lang];
 
-  const instruments = instrumentNames[lang];
+  const instruments =
+    instrumentNames[lang];
 
   const lessonTitles = [
     [t.lesson1, t.lesson1Sub],
@@ -448,19 +454,6 @@ export default function Home() {
     [t.lesson4, t.lesson4Sub],
     [t.lesson5, t.lesson5Sub]
   ];
-
-  useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio();
-    }
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-    };
-  }, []);
 
   function stopAudio() {
     if (audioRef.current) {
@@ -471,36 +464,44 @@ export default function Home() {
     setIsPlaying(false);
   }
 
-  async function toggleQuizAudio() {
+  function playQuizAudio() {
     if (!audioRef.current) {
-      audioRef.current = new Audio();
+      audioRef.current =
+        new Audio(quiz[quizIndex].audio);
+
+      audioRef.current.onended = () => {
+        setIsPlaying(false);
+      };
     }
 
-    const audio = audioRef.current;
-    const currentAudio = quiz[quizIndex].audio;
+    const currentAudio =
+      audioRef.current;
 
     if (isPlaying) {
-      audio.pause();
+      currentAudio.pause();
       setIsPlaying(false);
       return;
     }
 
-    if (audio.src !== window.location.origin + currentAudio) {
-      audio.pause();
-      audio.currentTime = 0;
-      audio.src = currentAudio;
+    if (
+      currentAudio.src !==
+      new URL(
+        quiz[quizIndex].audio,
+        window.location.href
+      ).href
+    ) {
+      currentAudio.src =
+        quiz[quizIndex].audio;
     }
 
-    try {
-      await audio.play();
-      setIsPlaying(true);
-
-      audio.onended = () => {
+    currentAudio
+      .play()
+      .then(() => {
+        setIsPlaying(true);
+      })
+      .catch(() => {
         setIsPlaying(false);
-      };
-    } catch {
-      setIsPlaying(false);
-    }
+      });
   }
 
   function answerQuiz(i: number) {
@@ -519,12 +520,38 @@ export default function Home() {
       x + (correct ? 50 : 10)
     );
 
-    if (quizIndex === quiz.length - 1) {
+    if (
+      quizIndex ===
+      quiz.length - 1
+    ) {
       setQuizDone(true);
     } else {
-      setQuizIndex(i2 => i2 + 1);
+      setQuizIndex(
+        i2 => i2 + 1
+      );
+
+      audioRef.current =
+        null;
     }
   }
+
+  function restartQuiz() {
+    stopAudio();
+
+    setQuizIndex(0);
+    setQuizScore(0);
+    setQuizDone(false);
+
+    audioRef.current = null;
+  }
+
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
+  }, []);
 
   return (
     <main className="app-shell">
@@ -533,7 +560,9 @@ export default function Home() {
 
         <div
           className="brand"
-          onClick={() => setTab("home")}
+          onClick={() =>
+            setTab("home")
+          }
         >
 
           <div
@@ -556,7 +585,9 @@ export default function Home() {
           </div>
 
           <div>
-            <b>Álem.Music</b>
+            <b>
+              Álem.Music
+            </b>
 
             <span>
               Ұлттық әуен әлемі
@@ -572,21 +603,19 @@ export default function Home() {
           </span>
 
           <span>
-            ⭐ {xp.toLocaleString()}
+            ⭐{" "}
+            {xp.toLocaleString()}
           </span>
 
           <select
             value={lang}
-            onChange={e => {
-              stopAudio();
-
+            onChange={e =>
               setLang(
                 e.target.value as Language
-              );
-            }}
+              )
+            }
             aria-label="Language"
           >
-
             <option value="Русский">
               Русский
             </option>
@@ -598,7 +627,6 @@ export default function Home() {
             <option value="English">
               English
             </option>
-
           </select>
 
         </div>
@@ -620,15 +648,11 @@ export default function Home() {
                 </p>
 
                 <h1>
-
                   {t.heroTitle1}
-
                   <br />
-
                   <em>
                     {t.heroTitle2}
                   </em>
-
                 </h1>
 
                 <p className="hero-copy">
@@ -640,7 +664,6 @@ export default function Home() {
                   <button
                     className="primary"
                     onClick={() => {
-                      stopAudio();
                       setTab("lessons");
                       setLessonOpen(true);
                     }}
@@ -650,10 +673,9 @@ export default function Home() {
 
                   <button
                     className="secondary"
-                    onClick={() => {
-                      stopAudio();
-                      setTab("encyclopedia");
-                    }}
+                    onClick={() =>
+                      setTab("encyclopedia")
+                    }
                   >
                     {t.openEncyclopedia}
                   </button>
@@ -705,10 +727,9 @@ export default function Home() {
 
               <button
                 className="text-btn"
-                onClick={() => {
-                  stopAudio();
-                  setTab("lessons");
-                }}
+                onClick={() =>
+                  setTab("lessons")
+                }
               >
                 {t.allLessons}
               </button>
@@ -760,8 +781,6 @@ export default function Home() {
 
                         if (idx <= 2) {
 
-                          stopAudio();
-
                           setTab("lessons");
 
                           setLessonOpen(true);
@@ -798,10 +817,9 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() => {
-                  stopAudio();
-                  setTab("quiz");
-                }}
+                onClick={() =>
+                  setTab("quiz")
+                }
               >
 
                 <span>
@@ -820,10 +838,9 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() => {
-                  stopAudio();
-                  setTab("encyclopedia");
-                }}
+                onClick={() =>
+                  setTab("encyclopedia")
+                }
               >
 
                 <span>
@@ -842,10 +859,9 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() => {
-                  stopAudio();
-                  setTab("profile");
-                }}
+                onClick={() =>
+                  setTab("profile")
+                }
               >
 
                 <span>
@@ -944,11 +960,9 @@ export default function Home() {
                   >
 
                     <div className="lesson-icon">
-
                       {l.done
                         ? "✓"
                         : l.n}
-
                     </div>
 
                     <div>
@@ -967,17 +981,15 @@ export default function Home() {
                       className="primary small"
                       disabled={i > 2}
                       onClick={() => {
-                        stopAudio();
+                        setIsPlaying(false);
                         setLessonOpen(true);
                       }}
                     >
-
                       {l.done
                         ? t.repeat
                         : i === 2
                         ? t.start
                         : t.locked}
-
                     </button>
 
                   </div>
@@ -1032,15 +1044,20 @@ export default function Home() {
 
                 <div
                   className="audio-circle"
-                  onClick={toggleQuizAudio}
+                  onClick={playQuizAudio}
                   role="button"
                   tabIndex={0}
+                  aria-label={
+                    isPlaying
+                      ? "Pause"
+                      : "Play"
+                  }
                   onKeyDown={e => {
                     if (
                       e.key === "Enter" ||
                       e.key === " "
                     ) {
-                      toggleQuizAudio();
+                      playQuizAudio();
                     }
                   }}
                 >
@@ -1050,31 +1067,34 @@ export default function Home() {
                     <span
                       style={{
                         display: "flex",
+                        gap: "5px",
                         alignItems: "center",
                         justifyContent: "center",
-                        gap: "7px",
-                        width: "28px",
-                        height: "28px"
+                        height: "22px"
                       }}
                     >
 
                       <span
                         style={{
                           display: "block",
-                          width: "5px",
-                          height: "22px",
-                          background: "currentColor",
-                          borderRadius: "3px"
+                          width: "4px",
+                          height: "20px",
+                          background:
+                            "currentColor",
+                          borderRadius:
+                            "2px"
                         }}
                       />
 
                       <span
                         style={{
                           display: "block",
-                          width: "5px",
-                          height: "22px",
-                          background: "currentColor",
-                          borderRadius: "3px"
+                          width: "4px",
+                          height: "20px",
+                          background:
+                            "currentColor",
+                          borderRadius:
+                            "2px"
                         }}
                       />
 
@@ -1082,14 +1102,7 @@ export default function Home() {
 
                   ) : (
 
-                    <span
-                      style={{
-                        display: "block",
-                        fontSize: "26px",
-                        lineHeight: 1,
-                        marginLeft: "3px"
-                      }}
-                    >
+                    <span>
                       ▶
                     </span>
 
@@ -1174,21 +1187,9 @@ export default function Home() {
 
                 <button
                   className="primary"
-                  onClick={() => {
-
-                    stopAudio();
-
-                    setQuizIndex(0);
-
-                    setQuizScore(0);
-
-                    setQuizDone(false);
-
-                  }}
+                  onClick={restartQuiz}
                 >
-
                   {t.again}
-
                 </button>
 
               </div>
@@ -1280,10 +1281,8 @@ export default function Home() {
                       </p>
 
                       <small>
-
                         {t.read} · 5{" "}
                         {t.minutes}
-
                       </small>
 
                     </div>
@@ -1501,7 +1500,10 @@ export default function Home() {
                   : ""
               }
               onClick={() => {
-                stopAudio();
+                if (id !== "quiz") {
+                  stopAudio();
+                }
+
                 setTab(id);
               }}
             >
@@ -1534,7 +1536,9 @@ function LessonModal({
 }: {
   t: typeof translations["Русский"];
   isPlaying: boolean;
-  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsPlaying: React.Dispatch<
+    React.SetStateAction<boolean>
+  >;
   close: () => void;
   onComplete: () => void;
 }) {
@@ -1607,8 +1611,9 @@ function LessonModal({
                     display: "block",
                     width: "5px",
                     height: "24px",
-                    background: "currentColor",
-                    borderRadius: "3px"
+                    background:
+                      "currentColor",
+                    borderRadius: "2px"
                   }}
                 />
 
@@ -1617,8 +1622,9 @@ function LessonModal({
                     display: "block",
                     width: "5px",
                     height: "24px",
-                    background: "currentColor",
-                    borderRadius: "3px"
+                    background:
+                      "currentColor",
+                    borderRadius: "2px"
                   }}
                 />
 
@@ -1649,11 +1655,9 @@ function LessonModal({
         <div className="tab-view">
 
           <div>
-
             1-шек&nbsp;&nbsp;&nbsp;
             2-шек&nbsp;&nbsp;&nbsp;
             3-шек
-
           </div>
 
           <div className="strings">
