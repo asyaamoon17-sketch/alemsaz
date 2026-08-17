@@ -3,7 +3,6 @@
    ================================================= */
 
 selectedArticle && (
-
   <article
     className="encyclopedia-article"
     style={{
@@ -14,56 +13,45 @@ selectedArticle && (
     }}
   >
 
-    {/* КНОПКА НАЗАД */}
-
     <button
       className="text-btn article-back"
       onClick={() => setArticle(null)}
-      style={{
-        marginBottom: "24px"
-      }}
     >
       ← {t.articleBack}
     </button>
 
 
-    {/* =================================================
-       ОБЛОЖКА СТАТЬИ
-       ФОТО ТЕПЕРЬ ОТДЕЛЬНЫМ IMG
-       ================================================= */}
+    {/* ОБЛОЖКА СТАТЬИ */}
 
     <div
       className="article-cover"
       style={{
         width: "100%",
+        marginTop: "24px",
+        marginBottom: "30px",
         borderRadius: "28px",
         overflow: "hidden",
-        background: "#111",
+        background: "#181512",
         boxShadow:
-          "0 18px 50px rgba(0,0,0,0.14)",
-        marginBottom: "28px"
+          "0 16px 45px rgba(0, 0, 0, 0.12)"
       }}
     >
 
       {/* ФОТО */}
 
       {selectedArticle.image ? (
-
         <img
           src={selectedArticle.image}
           alt={selectedArticle.title}
           style={{
             width: "100%",
-            height: "min(520px, 70vw)",
-            minHeight: "360px",
+            height: "420px",
             objectFit: "cover",
             objectPosition: "center",
             display: "block"
           }}
         />
-
       ) : (
-
         <div
           style={{
             width: "100%",
@@ -71,28 +59,20 @@ selectedArticle && (
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "90px",
-            background:
-              "linear-gradient(135deg, #1c1712, #5d4734)"
+            fontSize: "90px"
           }}
         >
           {selectedArticle.icon}
         </div>
-
       )}
 
 
-      {/* =================================================
-         ЗАГОЛОВОК ПОД ФОТО
-         ================================================= */}
+      {/* ИНФОРМАЦИЯ ПОД ФОТО */}
 
       <div
         style={{
-          padding:
-            "30px clamp(22px, 5vw, 52px) 34px",
-          background:
-            "linear-gradient(135deg, #17130f, #292017)",
-          color: "white"
+          padding: "30px 32px 34px",
+          color: "#ffffff"
         }}
       >
 
@@ -100,21 +80,18 @@ selectedArticle && (
           className="eyebrow"
           style={{
             display: "block",
-            marginBottom: "12px",
-            opacity: 0.7
+            marginBottom: "12px"
           }}
         >
-          ÁLEM.MUSIC ENCYCLOPEDIA
+          ÁLEM.MUSIC · ENCYCLOPEDIA
         </span>
 
 
         <h1
           style={{
             margin: "0 0 10px",
-            fontSize:
-              "clamp(30px, 5vw, 54px)",
-            lineHeight: 1.05,
-            letterSpacing: "-0.03em"
+            fontSize: "clamp(30px, 5vw, 52px)",
+            lineHeight: 1.08
           }}
         >
           {selectedArticle.title}
@@ -123,10 +100,9 @@ selectedArticle && (
 
         <p
           style={{
-            margin: "0 0 22px",
-            fontSize:
-              "clamp(17px, 2.5vw, 22px)",
-            lineHeight: 1.45,
+            margin: "0 0 20px",
+            fontSize: "20px",
+            lineHeight: 1.4,
             opacity: 0.82
           }}
         >
@@ -158,9 +134,7 @@ selectedArticle && (
     </div>
 
 
-    {/* =================================================
-       ТЕКСТ СТАТЬИ
-       ================================================= */}
+    {/* ТЕКСТ СТАТЬИ */}
 
     <div
       className="article-body"
@@ -168,13 +142,12 @@ selectedArticle && (
         width: "100%",
         maxWidth: "860px",
         margin: "0 auto",
-        background: "#fff",
+        padding: "40px 32px",
+        boxSizing: "border-box",
+        background: "#ffffff",
         borderRadius: "26px",
-        padding:
-          "clamp(24px, 5vw, 52px)",
         boxShadow:
-          "0 10px 40px rgba(0,0,0,0.07)",
-        boxSizing: "border-box"
+          "0 10px 35px rgba(0, 0, 0, 0.06)"
       }}
     >
 
@@ -184,26 +157,25 @@ selectedArticle && (
           <section
             className="article-section"
             key={
-              `${selectedArticle.id}-${index}`
+              selectedArticle.id +
+              "-" +
+              index
             }
             style={{
               marginBottom:
                 index ===
                 selectedArticle.sections.length - 1
-                  ? 0
+                  ? "0"
                   : "38px"
             }}
           >
 
             <h2
               style={{
-                margin:
-                  "0 0 16px",
+                margin: "0 0 16px",
                 fontSize:
-                  "clamp(22px, 3.5vw, 32px)",
-                lineHeight: 1.2,
-                letterSpacing:
-                  "-0.02em"
+                  "clamp(22px, 3vw, 32px)",
+                lineHeight: 1.2
               }}
             >
               {section.heading}
@@ -217,12 +189,9 @@ selectedArticle && (
               ) => (
 
                 <p
-                  key={
-                    paragraphIndex
-                  }
+                  key={paragraphIndex}
                   style={{
-                    margin:
-                      "0 0 18px",
+                    margin: "0 0 18px",
                     fontSize:
                       "clamp(16px, 2vw, 19px)",
                     lineHeight: 1.8,
@@ -241,15 +210,13 @@ selectedArticle && (
       )}
 
 
-      {selectedArticle.sections
-        .length === 0 && (
+      {selectedArticle.sections.length === 0 && (
 
         <div
           className="article-empty"
           style={{
-            padding:
-              "40px 10px",
-            textAlign: "center"
+            textAlign: "center",
+            padding: "30px 10px"
           }}
         >
 
@@ -264,9 +231,7 @@ selectedArticle && (
     </div>
 
 
-    {/* =================================================
-       КОНЕЦ СТАТЬИ
-       ================================================= */}
+    {/* КНОПКА В КОНЦЕ */}
 
     <div
       className="article-footer"
@@ -278,9 +243,7 @@ selectedArticle && (
 
       <button
         className="primary"
-        onClick={() =>
-          setArticle(null)
-        }
+        onClick={() => setArticle(null)}
       >
         ← {t.articleBack}
       </button>
@@ -288,5 +251,4 @@ selectedArticle && (
     </div>
 
   </article>
-
 )
