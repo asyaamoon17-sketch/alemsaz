@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 type Language = "Қазақша" | "Русский" | "English";
 type Instrument = "dombra" | "kobyz" | "sazsyrnai";
 
-type EncyclopediaCategory =
+type ArticleCategory =
   | "all"
   | "instruments"
   | "kuiyshi"
@@ -23,13 +23,11 @@ const lessons = [
 /* =========================================================
    АУДИО ВИКТОРИНЫ
 
-   Файлы должны находиться непосредственно в папке public:
-
-   public/
-   ├── Adai.mp3
-   ├── Aksakkulan.mp3
-   ├── BB.mp3
-   └── Saryarka.mp3
+   Файлы находятся в папке public:
+   public/Adai.mp3
+   public/Aksakkulan.mp3
+   public/BB.mp3
+   public/Saryarka.mp3
    ========================================================= */
 
 const quiz = [
@@ -54,6 +52,10 @@ const quiz = [
     correct: 3
   }
 ];
+
+/* =========================================================
+   ПЕРЕВОДЫ ИНТЕРФЕЙСА
+   ========================================================= */
 
 const translations = {
   Русский: {
@@ -125,8 +127,6 @@ const translations = {
     history: "История",
     read: "Читать",
     minutes: "мин",
-    nothingFound: "Ничего не найдено",
-    tryAnotherSearch: "Попробуй изменить запрос или выбрать другую категорию.",
 
     profileTitle: "Твой путь",
     musician: "Музыкант",
@@ -142,8 +142,11 @@ const translations = {
     finishLesson: "✓ Завершить урок · +100 XP",
     understandable: "Понятно",
 
+    articleReadTime: "8 мин чтения",
+    articleBack: "Назад к энциклопедии",
+    articleSources: "Исторический очерк",
     articlePlaceholder:
-      "Здесь будет полноценная статья с проверенными историческими материалами, фотографиями, аудиофрагментами и ссылками на источники."
+      "Полная статья будет добавлена позже."
   },
 
   Қазақша: {
@@ -215,9 +218,6 @@ const translations = {
     history: "Тарих",
     read: "Оқу",
     minutes: "мин",
-    nothingFound: "Ештеңе табылмады",
-    tryAnotherSearch:
-      "Сұранысты өзгертіп көр немесе басқа санатты таңда.",
 
     profileTitle: "Сенің жолың",
     musician: "Музыкант",
@@ -233,8 +233,11 @@ const translations = {
     finishLesson: "✓ Сабақты аяқтау · +100 XP",
     understandable: "Түсінікті",
 
+    articleReadTime: "8 минут оқу",
+    articleBack: "Энциклопедияға оралу",
+    articleSources: "Тарихи очерк",
     articlePlaceholder:
-      "Мұнда тексерілген тарихи материалдар, фотосуреттер, аудиофрагменттер және дереккөздерге сілтемелері бар толық мақала болады."
+      "Толық мақала кейінірек қосылады."
   },
 
   English: {
@@ -306,9 +309,6 @@ const translations = {
     history: "History",
     read: "Read",
     minutes: "min",
-    nothingFound: "Nothing found",
-    tryAnotherSearch:
-      "Try changing your search or choosing another category.",
 
     profileTitle: "Your journey",
     musician: "Musician",
@@ -324,10 +324,17 @@ const translations = {
     finishLesson: "✓ Complete lesson · +100 XP",
     understandable: "Got it",
 
+    articleReadTime: "8 min read",
+    articleBack: "Back to encyclopedia",
+    articleSources: "Historical feature",
     articlePlaceholder:
-      "A full article with verified historical materials, photographs, audio examples and source links will appear here."
+      "The full article will be added later."
   }
 };
+
+/* =========================================================
+   НАЗВАНИЯ ИНСТРУМЕНТОВ
+   ========================================================= */
 
 const instrumentNames = {
   Русский: {
@@ -350,415 +357,365 @@ const instrumentNames = {
 };
 
 /* =========================================================
-   ЭНЦИКЛОПЕДИЯ
+   СТАТЬИ ЭНЦИКЛОПЕДИИ
 
-   У каждого материала теперь есть category.
-   Это позволяет реально фильтровать материалы.
+   image:
+   Файл Kurmangazy.jpeg должен находиться в public/
+
+   category:
+   instruments / kuiyshi / kuis / history
    ========================================================= */
 
-const articleData = {
+const encyclopediaArticles = {
   Русский: [
     {
+      id: "kurmangazy",
       title: "Курманғазы Сағырбайұлы",
-      sub: "Великий кюйши XIX века",
+      subtitle: "Голос степной свободы",
       icon: "🎼",
-      text:
-        "Кюйши, композитор и один из символов казахской инструментальной музыки.",
-      category: "kuiyshi" as EncyclopediaCategory
+      image: "/Kurmangazy.jpeg",
+      category: "kuiyshi" as ArticleCategory,
+      description:
+        "Великий кюйши, композитор и виртуоз, навсегда изменивший музыкальный язык казахской степи.",
+      readTime: "8 мин",
+      sections: [
+        {
+          heading:
+            "ГОЛОС СТЕПНОЙ СВОБОДЫ",
+          paragraphs: [
+            "Как Курманғазы Сагырбайулы закодировал душу народа в струнах домбры."
+          ]
+        },
+        {
+          heading:
+            "Жизненный путь и культурное наследие",
+          paragraphs: [
+            "В истории казахской культуры есть имена, ставшие духовными столпами нации. Среди них особое место занимает Курманғазы Сағырбайұлы (1823–1896) — гениальный композитор, исполнитель-виртуоз и создатель классической школы инструментальной музыки. Его жизнь была полна драматических испытаний, а его творчество навсегда изменило музыкальный код великой степи."
+          ]
+        },
+        {
+          heading:
+            "Жизненный путь: Сквозь тернии к признанию",
+          paragraphs: [
+            "Курманғазы родился в 1823 году в Букеевской Орде (ныне Западно-Казахстанская область) в семье бедного кочевника Сагырбая. Из-за крайней нужды мальчик уже в 1829 году, будучи шестилетним ребенком, начал работать — пас чужой скот. Единственным его утешением в эти тяжелые годы стала музыка, доносившаяся из аулов.",
+            "В подростковом возрасте Курманғазы твердо решил освоить домбру. Отец был категорически против: в те времена ремесло бродячего музыканта считалось синонимом нищеты. Однако мать композитора, Алма, тайно поддерживала сына, разглядев в нем великий дар. В 1841 году, в возрасте 18 лет, Курманғазы принимает судьбоносное решение: он покидает родной дом, чтобы учиться у знаменитого кюйши Узака, и начинает жизнь странствующего музыканта.",
+            "Вторая половина XIX века стала для Курманғазы временем серьезных испытаний. Обладая обостренным чувством справедливости, он открыто выступал против угнетения простых людей местными баями и царской администрацией. За свой независимый нрав, лидерские качества и поддержку народных движений композитор подвергался жестоким преследованиям. Его неоднократно арестовывали, он сидел в тюрьмах Уральска, Оренбурга и Гурьева, но каждый раз совершал дерзкие побеги, продолжая свой творческий путь.",
+            "Музыкант ушел из жизни в 1896 году и был похоронен в селе Алтынжар (ныне Астраханская область)."
+          ]
+        },
+        {
+          heading:
+            "Вклад в культуру: Создание музыкальной академии степи",
+          paragraphs: [
+            "Вклад Курманғазы в казахскую культуру невозможно переоценить. Он совершил настоящую революцию в народной музыке, подняв исполнительство на домбре на уровень высочайшего академического искусства."
+          ]
+        },
+        {
+          heading:
+            "Основание стиля төкпе",
+          paragraphs: [
+            "Курманғазы стал основоположником западной школы исполнительства, получившей название «төкпе». Для этого стиля характерны невероятная динамика, мощные взрывные удары по струнам, стремительный темп и богатырский размах. До него казахская музыка часто была более созерцательной; Курманғазы наполнил ее энергией, страстью и силой."
+          ]
+        },
+        {
+          heading:
+            "Расширение возможностей домбры",
+          paragraphs: [
+            "Композитор разработал уникальные технические приемы игры, которые позволяли двум струнам деревянного инструмента звучать подобно целому оркестру. Он научил домбру передавать сложнейшую гамму человеческих чувств — от глубокой философской скорби до ликующей радости свободы."
+          ]
+        },
+        {
+          heading:
+            "Воспитание преемников",
+          paragraphs: [
+            "Курманғазы оставил после себя сильную плеяду учеников. Самой известной среди них стала Дина Нурпеисова, которая сохранила исполнительские традиции мастера и передала их советским музыковедам, связав музыкальное наследие прошлого с современностью."
+          ]
+        },
+        {
+          heading:
+            "Мировое признание",
+          paragraphs: [
+            "В 1868 году русский поэт и исследователь Н. Савичев впервые описал феномен Курманғазы в прессе, назвав его «редким музыкальным фокусом» и отметив его гениальный вкус. В 1973 году наследие Курманғазы получило официальное признание на трибуне ЮНЕСКО, войдя в золотой фонд мировой музыкальной культуры.",
+            "Сегодня имя Курманғазы носят Казахская национальная консерватория в Алматы и Государственный академический оркестр народных инструментов. Его жизнь доказала: можно запереть человека в каменных стенах, но невозможно заковать в кандалы музыку, которая выражает дух целого народа."
+          ]
+        }
+      ]
     },
+
     {
+      id: "korkyt",
       title: "Қорқыт ата",
-      sub: "Легенда кобыза",
+      subtitle: "Легенда кобыза",
       icon: "🪕",
-      text:
-        "Фигура, связанная с древней историей кобыза и тюркской музыкальной традицией.",
-      category: "history" as EncyclopediaCategory
+      image: null,
+      category: "history" as ArticleCategory,
+      description:
+        "Историко-легендарная фигура, связанная с древней традицией кобыза.",
+      readTime: "5 мин",
+      sections: []
     },
+
     {
+      id: "tattimbet",
       title: "Тәттімбет Қазанғапұлы",
-      sub: "Мастер шертпе-кюя",
+      subtitle: "Мастер шертпе-кюя",
       icon: "🎵",
-      text:
+      image: null,
+      category: "kuiyshi" as ArticleCategory,
+      description:
         "Один из крупнейших представителей школы шертпе-кюй.",
-      category: "kuiyshi" as EncyclopediaCategory
+      readTime: "5 мин",
+      sections: []
     },
+
     {
+      id: "dombra",
       title: "Домбра",
-      sub: "Две струны — целый мир",
+      subtitle: "Две струны — целый мир",
       icon: "🪕",
-      text:
-        "Разбираемся в строе, устройстве и роли домбры в казахской культуре.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Кобыз",
-      sub: "Древний струнный инструмент",
-      icon: "🎻",
-      text:
-        "Один из древнейших казахских музыкальных инструментов, связанный с традицией кобызовой музыки.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Сазсырнай",
-      sub: "Глиняный голос степи",
-      icon: "🎶",
-      text:
-        "Традиционный духовой инструмент из обожжённой глины с мягким и узнаваемым звучанием.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Сарыарқа",
-      sub: "Кюй Курманғазы",
-      icon: "🎵",
-      text:
-        "Один из известных кюев казахской музыкальной традиции.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Адай",
-      sub: "Кюй Курманғазы",
-      icon: "🎵",
-      text:
-        "Энергичный кюй, ставший одним из узнаваемых произведений Курманғазы.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Балбырауын",
-      sub: "Кюй Курманғазы",
-      icon: "🎵",
-      text:
-        "Известный инструментальный кюй казахской традиции.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Ақсақ құлан",
-      sub: "Древний кюй",
-      icon: "🎵",
-      text:
-        "Один из наиболее известных сюжетных кюев, связанный с древними музыкальными преданиями.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "История казахского кюя",
-      sub: "Музыка степи",
-      icon: "📜",
-      text:
-        "Кюй занимает особое место в истории казахской культуры и передаёт музыкальные истории поколений.",
-      category: "history" as EncyclopediaCategory
-    },
-    {
-      title: "Кюй и домбра",
-      sub: "Музыкальная традиция",
-      icon: "🏛️",
-      text:
-        "Домбра стала одним из главных инструментов, через который развивалась традиция исполнения кюев.",
-      category: "history" as EncyclopediaCategory
+      image: null,
+      category: "instruments" as ArticleCategory,
+      description:
+        "Устройство, звучание и культурное значение главного казахского струнного инструмента.",
+      readTime: "5 мин",
+      sections: []
     }
   ],
 
   Қазақша: [
     {
+      id: "kurmangazy",
       title: "Құрманғазы Сағырбайұлы",
-      sub: "XIX ғасырдың ұлы күйші-композиторы",
+      subtitle: "Дала еркіндігінің үні",
       icon: "🎼",
-      text:
-        "Қазақтың аспаптық музыкасының көрнекті тұлғасы және күй өнерінің символы.",
-      category: "kuiyshi" as EncyclopediaCategory
+      image: "/Kurmangazy.jpeg",
+      category: "kuiyshi" as ArticleCategory,
+      description:
+        "Ұлы күйші, композитор және домбыра өнерінің классикалық дәстүрін қалыптастырған виртуоз.",
+      readTime: "8 мин",
+      sections: [
+        {
+          heading:
+            "ДАЛА ЕРКІНДІГІНІҢ ҮНІ",
+          paragraphs: [
+            "Құрманғазы Сағырбайұлы домбыраның қос ішегіне халықтың рухын, арманын және еркіндікке деген ұмтылысын сыйғызған ұлы күйші."
+          ]
+        },
+        {
+          heading:
+            "Өмір жолы және мәдени мұрасы",
+          paragraphs: [
+            "Қазақ мәдениетінің тарихында халықтың рухани тірегіне айналған тұлғалар бар. Солардың ішінде Құрманғазы Сағырбайұлының (1823–1896) орны ерекше. Ол — ұлы композитор, күйші-виртуоз және қазақтың аспаптық музыкасының классикалық мектебін қалыптастырған көрнекті тұлға. Оның өмірі ауыр сынақтарға толы болды, ал шығармашылығы Ұлы даланың музыкалық тілін мәңгілікке өзгертті."
+          ]
+        },
+        {
+          heading:
+            "Өмір жолы: Қиындықтардан мойындалуға дейін",
+          paragraphs: [
+            "Құрманғазы 1823 жылы Бөкей Ордасында (қазіргі Батыс Қазақстан облысы) кедей көшпелі Сағырбайдың отбасында дүниеге келген. Отбасының тұрмысы өте ауыр болғандықтан, ол 1829 жылы, небәрі алты жасында, еңбек етуге мәжбүр болып, біреудің малын баққан. Сол қиын жылдарда оның жалғыз жұбанышы ауылдардан естілетін музыка болды.",
+            "Жасөспірім кезінде Құрманғазы домбыраны меңгеруге бел буды. Әкесі бұған үзілді-кесілді қарсы болды, өйткені ол заманда кезбе музыканттың кәсібі жоқшылықпен байланысты деп саналатын. Алайда композитордың анасы Алма баласын жасырын түрде қолдап, оның бойындағы үлкен дарынды көре білді. 1841 жылы, он сегіз жасында, Құрманғазы тағдырын өзгертетін шешім қабылдап, атақты күйші Ұзақтан білім алу үшін туған үйінен аттанып, ел аралаған музыканттық жолын бастады.",
+            "XIX ғасырдың екінші жартысы Құрманғазы үшін ауыр сынақтарға толы кезең болды. Әділет сезімі жоғары болған ол қарапайым халықты жергілікті байлар мен патша әкімшілігінің қысымынан қорғап, олардың озбырлығына ашық қарсы шықты. Еркін мінезі, көшбасшылық қасиеттері және халықтық қозғалыстарды қолдағаны үшін композитор қудалауға ұшырады. Оны бірнеше рет тұтқындап, Орал, Орынбор және Гурьев түрмелеріне қамады. Соған қарамастан ол бірнеше рет батыл қашып шығып, шығармашылық жолын жалғастырды.",
+            "Музыкант 1896 жылы дүниеден өтіп, Алтынжар ауылында (қазіргі Астрахань облысы) жерленді."
+          ]
+        },
+        {
+          heading:
+            "Мәдениетке қосқан үлесі: Даланың музыкалық академиясын қалыптастыру",
+          paragraphs: [
+            "Құрманғазының қазақ мәдениетіне қосқан үлесін бағалау қиын. Ол халық музыкасына үлкен өзгеріс әкеліп, домбырада орындау өнерін аса жоғары кәсіби деңгейге көтерді."
+          ]
+        },
+        {
+          heading:
+            "Төкпе күй дәстүрінің қалыптасуы",
+          paragraphs: [
+            "Құрманғазы Батыс Қазақстанда кең тараған төкпе күй орындаушылық мектебінің қалыптасуына үлкен үлес қосты. Бұл дәстүрге қуатты ырғақ, ішекке жасалатын батыл қағыстар, шапшаңдық және кең тынысты орындау мәнері тән. Құрманғазы қазақ музыкасына ерекше қуат, жігер және еркіндік рухын әкелді."
+          ]
+        },
+        {
+          heading:
+            "Домбыраның мүмкіндігін кеңейту",
+          paragraphs: [
+            "Күйші домбыраның екі ішегін пайдалана отырып, аспаптың дыбыстық мүмкіндігін барынша кеңейтті. Оның орындаушылық мәнері домбыра арқылы адамның сан алуан сезімдерін — терең философиялық мұңнан бастап еркіндікке деген шаттыққа дейін жеткізуге мүмкіндік берді."
+          ]
+        },
+        {
+          heading:
+            "Шәкірт тәрбиесі және мұрасының жалғасуы",
+          paragraphs: [
+            "Құрманғазы өзінен кейін мықты шәкірттер мектебін қалдырды. Солардың ішіндегі ең танымалы — Дина Нұрпейісова. Ол ұстазының орындаушылық дәстүрін сақтап, кейінгі ұрпаққа жеткізді және қазақтың күй мұрасын қазіргі заманмен жалғаған маңызды тұлға болды."
+          ]
+        },
+        {
+          heading:
+            "Әлемдік мойындау",
+          paragraphs: [
+            "1868 жылы орыс ақыны әрі зерттеушісі Н. Савичев Құрманғазының өнері туралы баспасөзде алғашқылардың бірі болып жазып, оның орындаушылық шеберлігіне жоғары баға берді. Кейін Құрманғазының шығармашылық мұрасы халықаралық деңгейде де танылды.",
+            "Бүгінде Алматыдағы Қазақ ұлттық консерваториясы мен Мемлекеттік академиялық халық аспаптар оркестрі Құрманғазының есімін иеленеді. Оның өмір жолы адамды тас қабырғаға қамауға болатынын, бірақ тұтас халықтың рухын жеткізетін музыканы бұғауға болмайтынын дәлелдейді."
+          ]
+        }
+      ]
     },
+
     {
+      id: "korkyt",
       title: "Қорқыт ата",
-      sub: "Қобыз туралы аңыз",
+      subtitle: "Қобыз туралы аңыз",
       icon: "🪕",
-      text:
-        "Қобыздың көне тарихымен және түркі музыкалық дәстүрімен байланысты тарихи тұлға.",
-      category: "history" as EncyclopediaCategory
+      image: null,
+      category: "history" as ArticleCategory,
+      description:
+        "Қобыздың көне тарихымен және түркі музыкалық дәстүрімен байланысты тарихи-мифологиялық тұлға.",
+      readTime: "5 мин",
+      sections: []
     },
+
     {
+      id: "tattimbet",
       title: "Тәттімбет Қазанғапұлы",
-      sub: "Шертпе күйдің шебері",
+      subtitle: "Шертпе күйдің шебері",
       icon: "🎵",
-      text:
+      image: null,
+      category: "kuiyshi" as ArticleCategory,
+      description:
         "Шертпе күй мектебінің ең ірі өкілдерінің бірі.",
-      category: "kuiyshi" as EncyclopediaCategory
+      readTime: "5 мин",
+      sections: []
     },
+
     {
+      id: "dombra",
       title: "Домбыра",
-      sub: "Екі ішек — тұтас әлем",
+      subtitle: "Екі ішек — тұтас әлем",
       icon: "🪕",
-      text:
-        "Домбыраның құрылысы, күйге келтірілуі және қазақ мәдениетіндегі орны туралы.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Қобыз",
-      sub: "Ежелгі ішекті аспап",
-      icon: "🎻",
-      text:
-        "Қазақтың көне музыкалық аспаптарының бірі және қобыз өнерінің негізі.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Сазсырнай",
-      sub: "Даланың сазды үні",
-      icon: "🎶",
-      text:
-        "Саздан жасалған дәстүрлі үрмелі аспап. Жұмсақ әрі ерекше дыбысымен танымал.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Сарыарқа",
-      sub: "Құрманғазының күйі",
-      icon: "🎵",
-      text:
-        "Қазақтың күй өнеріндегі кеңінен танымал шығармалардың бірі.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Адай",
-      sub: "Құрманғазының күйі",
-      icon: "🎵",
-      text:
-        "Құрманғазының қуатты әрі кең танылған күйлерінің бірі.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Балбырауын",
-      sub: "Құрманғазының күйі",
-      icon: "🎵",
-      text:
-        "Қазақтың аспаптық музыка дәстүріндегі танымал күй.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Ақсақ құлан",
-      sub: "Көне күй",
-      icon: "🎵",
-      text:
-        "Ежелгі музыкалық аңыздармен байланысты белгілі сюжетті күй.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Қазақ күйінің тарихы",
-      sub: "Дала музыкасы",
-      icon: "📜",
-      text:
-        "Күй қазақ мәдениетінің тарихында ерекше орын алып, ұрпақтан ұрпаққа музыкалық әңгімелер жеткізді.",
-      category: "history" as EncyclopediaCategory
-    },
-    {
-      title: "Күй және домбыра",
-      sub: "Музыкалық дәстүр",
-      icon: "🏛️",
-      text:
-        "Домбыра күй орындау дәстүрінің негізгі аспаптарының біріне айналды.",
-      category: "history" as EncyclopediaCategory
+      image: null,
+      category: "instruments" as ArticleCategory,
+      description:
+        "Домбыраның құрылысы, дыбысталуы және қазақ мәдениетіндегі орны туралы.",
+      readTime: "5 мин",
+      sections: []
     }
   ],
 
   English: [
     {
+      id: "kurmangazy",
       title: "Kurmangazy Sagyrbayuly",
-      sub: "Great 19th-century kuiishi",
+      subtitle: "The Voice of Steppe Freedom",
       icon: "🎼",
-      text:
-        "A major kuiishi and composer and one of the symbols of Kazakh instrumental music.",
-      category: "kuiyshi" as EncyclopediaCategory
+      image: "/Kurmangazy.jpeg",
+      category: "kuiyshi" as ArticleCategory,
+      description:
+        "A great kuiishi, composer and virtuoso who transformed the musical language of the Kazakh steppe.",
+      readTime: "8 min",
+      sections: [
+        {
+          heading:
+            "THE VOICE OF STEPPE FREEDOM",
+          paragraphs: [
+            "How Kurmangazy Sagyrbayuly encoded the spirit of his people in the strings of the dombra."
+          ]
+        },
+        {
+          heading:
+            "Life and Cultural Legacy",
+          paragraphs: [
+            "In the history of Kazakh culture, there are figures who became spiritual pillars of the nation. Kurmangazy Sagyrbayuly (1823–1896) holds a special place among them. He was a brilliant composer, virtuoso performer and one of the key figures in the development of the classical tradition of Kazakh instrumental music. His life was filled with dramatic trials, while his art permanently transformed the musical language of the Great Steppe."
+          ]
+        },
+        {
+          heading:
+            "A Life Through Hardship to Recognition",
+          paragraphs: [
+            "Kurmangazy was born in 1823 in the Bukey Horde, in what is now the West Kazakhstan region, into the family of a poor nomad named Sagyrbay. Because of extreme poverty, the boy had to begin working as early as 1829, when he was only six years old, herding someone else's livestock. During those difficult years, music coming from the surrounding auls became his greatest source of comfort.",
+            "As a teenager, Kurmangazy firmly decided to master the dombra. His father strongly opposed the idea because, at the time, the profession of a wandering musician was associated with poverty. His mother, Alma, secretly supported her son and recognized his exceptional talent. In 1841, at the age of eighteen, Kurmangazy made a life-changing decision: he left his home to study with the famous kuiishi Uzak and began his life as a travelling musician.",
+            "The second half of the nineteenth century brought serious trials. With a strong sense of justice, Kurmangazy openly opposed the oppression of ordinary people by local wealthy elites and the tsarist administration. Because of his independent character, leadership qualities and support for popular movements, he was repeatedly persecuted. He was arrested several times and imprisoned in Uralsk, Orenburg and Guryev, yet he repeatedly escaped and continued his creative journey.",
+            "Kurmangazy died in 1896 and was buried in the village of Altynzhar, now located in Astrakhan Region."
+          ]
+        },
+        {
+          heading:
+            "Contribution to Culture: Building a Musical School of the Steppe",
+          paragraphs: [
+            "Kurmangazy's contribution to Kazakh culture is difficult to overstate. He brought a true revolution to traditional music and raised dombra performance to an exceptionally high artistic level."
+          ]
+        },
+        {
+          heading:
+            "The Tökpe Tradition",
+          paragraphs: [
+            "Kurmangazy became one of the defining figures of the western Kazakh performance tradition known as tökpe. The style is characterized by powerful rhythmic energy, forceful strikes on the strings, rapid movement and a broad, heroic character. Kurmangazy filled Kazakh instrumental music with energy, passion and a strong sense of freedom."
+          ]
+        },
+        {
+          heading:
+            "Expanding the Possibilities of the Dombra",
+          paragraphs: [
+            "The composer developed distinctive performance techniques that allowed the two strings of the wooden instrument to create an exceptionally rich sound. Through the dombra, he demonstrated that a simple two-string instrument could express a complex range of human emotions — from deep philosophical sorrow to the joyful feeling of freedom."
+          ]
+        },
+        {
+          heading:
+            "Passing the Tradition to Future Generations",
+          paragraphs: [
+            "Kurmangazy left behind a strong circle of students and followers. The most famous among them was Dina Nurpeisova, who preserved the master's performance traditions and helped carry the musical heritage of the past into the modern era."
+          ]
+        },
+        {
+          heading:
+            "Recognition Beyond the Steppe",
+          paragraphs: [
+            "In 1868, Russian poet and researcher N. Savichev was among the early writers to describe Kurmangazy's artistic phenomenon in the press, praising his exceptional musical ability. In the twentieth century, his legacy received broader international recognition and became an important part of the heritage of Kazakh musical culture.",
+            "Today, the Kazakh National Conservatory in Almaty and the State Academic Orchestra of Folk Instruments bear Kurmangazy's name. His life demonstrated that a person can be locked behind stone walls, but music expressing the spirit of an entire people can never be placed in chains."
+          ]
+        }
+      ]
     },
+
     {
+      id: "korkyt",
       title: "Korkyt Ata",
-      sub: "The legend of the kobyz",
+      subtitle: "The Legend of the Kobyz",
       icon: "🪕",
-      text:
-        "A historical figure connected with the ancient history of the kobyz and Turkic musical traditions.",
-      category: "history" as EncyclopediaCategory
+      image: null,
+      category: "history" as ArticleCategory,
+      description:
+        "A historical and legendary figure associated with the ancient kobyz tradition.",
+      readTime: "5 min",
+      sections: []
     },
+
     {
+      id: "tattimbet",
       title: "Tattimbet Kazangapuly",
-      sub: "Master of shertpe kui",
+      subtitle: "Master of Shertpe Kui",
       icon: "🎵",
-      text:
+      image: null,
+      category: "kuiyshi" as ArticleCategory,
+      description:
         "One of the most important representatives of the shertpe kui tradition.",
-      category: "kuiyshi" as EncyclopediaCategory
+      readTime: "5 min",
+      sections: []
     },
+
     {
+      id: "dombra",
       title: "Dombra",
-      sub: "Two strings — a whole world",
+      subtitle: "Two Strings — A Whole World",
       icon: "🪕",
-      text:
-        "Explore the tuning, structure and cultural role of the dombra.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Kobyz",
-      sub: "Ancient string instrument",
-      icon: "🎻",
-      text:
-        "One of the ancient Kazakh musical instruments connected with the kobyz tradition.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Sazsyrnai",
-      sub: "The clay voice of the steppe",
-      icon: "🎶",
-      text:
-        "A traditional clay wind instrument with a soft and distinctive sound.",
-      category: "instruments" as EncyclopediaCategory
-    },
-    {
-      title: "Saryarka",
-      sub: "Kui by Kurmangazy",
-      icon: "🎵",
-      text:
-        "One of the well-known kui works of Kazakh musical tradition.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Adai",
-      sub: "Kui by Kurmangazy",
-      icon: "🎵",
-      text:
-        "An energetic kui that became one of Kurmangazy's recognizable works.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Balbyrauyn",
-      sub: "Kui by Kurmangazy",
-      icon: "🎵",
-      text:
-        "A well-known instrumental kui from the Kazakh tradition.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "Aksak Kulan",
-      sub: "Ancient kui",
-      icon: "🎵",
-      text:
-        "A famous narrative kui connected with ancient musical legends.",
-      category: "kuis" as EncyclopediaCategory
-    },
-    {
-      title: "History of Kazakh Kui",
-      sub: "Music of the steppe",
-      icon: "📜",
-      text:
-        "Kui holds a special place in Kazakh culture and carries musical stories between generations.",
-      category: "history" as EncyclopediaCategory
-    },
-    {
-      title: "Kui and Dombra",
-      sub: "Musical tradition",
-      icon: "🏛️",
-      text:
-        "The dombra became one of the main instruments through which the kui tradition developed.",
-      category: "history" as EncyclopediaCategory
+      image: null,
+      category: "instruments" as ArticleCategory,
+      description:
+        "Explore the structure, sound and cultural significance of the dombra.",
+      readTime: "5 min",
+      sections: []
     }
   ]
 };
 
 /* =========================================================
-   ФУНКЦИЯ НОРМАЛИЗАЦИИ ПОИСКА
-
-   Позволяет искать без учёта:
-   - регистра;
-   - лишних пробелов;
-   - некоторых диакритических знаков;
-   - разных вариантов написания.
+   ОСНОВНОЙ КОМПОНЕНТ
    ========================================================= */
-
-function normalizeSearch(value: string) {
-  return value
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .replace(/ғ/g, "г")
-    .replace(/қ/g, "к")
-    .replace(/ң/g, "н")
-    .replace(/ө/g, "о")
-    .replace(/ұ/g, "у")
-    .replace(/ү/g, "у")
-    .replace(/і/g, "и")
-    .replace(/һ/g, "х")
-    .replace(/ё/g, "е")
-    .replace(/ъ/g, "")
-    .replace(/ь/g, "")
-    .replace(/[^a-zа-я0-9\s]/gi, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-/* =========================================================
-   ПРИБЛИЗИТЕЛЬНЫЙ ПОИСК
-
-   Используется небольшое расстояние Левенштейна,
-   чтобы находить материал даже при небольшой ошибке.
-   ========================================================= */
-
-function levenshtein(a: string, b: string): number {
-  const matrix: number[][] = [];
-
-  for (let i = 0; i <= b.length; i++) {
-    matrix[i] = [i];
-  }
-
-  for (let j = 0; j <= a.length; j++) {
-    matrix[0][j] = j;
-  }
-
-  for (let i = 1; i <= b.length; i++) {
-    for (let j = 1; j <= a.length; j++) {
-      if (b.charAt(i - 1) === a.charAt(j - 1)) {
-        matrix[i][j] = matrix[i - 1][j - 1];
-      } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1
-        );
-      }
-    }
-  }
-
-  return matrix[b.length][a.length];
-}
-
-function fuzzyIncludes(text: string, query: string) {
-  const normalizedText = normalizeSearch(text);
-  const normalizedQuery = normalizeSearch(query);
-
-  if (!normalizedQuery) {
-    return true;
-  }
-
-  if (normalizedText.includes(normalizedQuery)) {
-    return true;
-  }
-
-  const words = normalizedText.split(" ");
-
-  for (const word of words) {
-    if (word.length < 3) {
-      continue;
-    }
-
-    const distance = levenshtein(
-      word,
-      normalizedQuery
-    );
-
-    const allowedDistance =
-      normalizedQuery.length <= 4
-        ? 1
-        : normalizedQuery.length <= 8
-        ? 2
-        : 3;
-
-    if (distance <= allowedDistance) {
-      return true;
-    }
-  }
-
-  return false;
-}
 
 export default function Home() {
   const [lang, setLang] =
@@ -791,6 +748,12 @@ export default function Home() {
   const [article, setArticle] =
     useState<string | null>(null);
 
+  const [encyclopediaCategory, setEncyclopediaCategory] =
+    useState<ArticleCategory>("all");
+
+  const [searchQuery, setSearchQuery] =
+    useState("");
+
   const quizAudioRef =
     useRef<HTMLAudioElement | null>(null);
 
@@ -800,17 +763,8 @@ export default function Home() {
   const [audioError, setAudioError] =
     useState(false);
 
-  /* =========================================================
-     НОВЫЕ СОСТОЯНИЯ ЭНЦИКЛОПЕДИИ
-     ========================================================= */
-
-  const [encyclopediaCategory, setEncyclopediaCategory] =
-    useState<EncyclopediaCategory>("all");
-
-  const [encyclopediaSearch, setEncyclopediaSearch] =
-    useState("");
-
-  const t = translations[lang];
+  const t =
+    translations[lang];
 
   const instruments =
     instrumentNames[lang];
@@ -823,37 +777,17 @@ export default function Home() {
     [t.lesson5, t.lesson5Sub]
   ];
 
+  const articles =
+    encyclopediaArticles[lang];
+
+  const selectedArticle =
+    articles.find(
+      item => item.id === article
+    );
+
   /* =========================================================
-     ФИЛЬТРАЦИЯ ЭНЦИКЛОПЕДИИ
+     АУДИО
      ========================================================= */
-
-  const encyclopediaArticles =
-    articleData[lang];
-
-  const filteredArticles =
-    encyclopediaArticles.filter(item => {
-
-      const categoryMatches =
-        encyclopediaCategory === "all" ||
-        item.category === encyclopediaCategory;
-
-      if (!categoryMatches) {
-        return false;
-      }
-
-      const query =
-        encyclopediaSearch.trim();
-
-      if (!query) {
-        return true;
-      }
-
-      return (
-        fuzzyIncludes(item.title, query) ||
-        fuzzyIncludes(item.sub, query) ||
-        fuzzyIncludes(item.text, query)
-      );
-    });
 
   function stopQuizAudio() {
     const audio =
@@ -975,13 +909,56 @@ export default function Home() {
     stopQuizAudio();
   }
 
-  function openEncyclopedia() {
-    stopAllAudio();
-    setTab("encyclopedia");
-  }
+  /* =========================================================
+     ПОИСК В ЭНЦИКЛОПЕДИИ
+     ========================================================= */
+
+  const normalizedSearch =
+    searchQuery
+      .toLowerCase()
+      .trim();
+
+  const filteredArticles =
+    articles.filter(item => {
+
+      const matchesCategory =
+        encyclopediaCategory === "all" ||
+        item.category ===
+          encyclopediaCategory;
+
+      if (!matchesCategory) {
+        return false;
+      }
+
+      if (!normalizedSearch) {
+        return true;
+      }
+
+      const searchableText = [
+        item.title,
+        item.subtitle,
+        item.description,
+        ...item.sections.flatMap(
+          section => [
+            section.heading,
+            ...section.paragraphs
+          ]
+        )
+      ]
+        .join(" ")
+        .toLowerCase();
+
+      return searchableText.includes(
+        normalizedSearch
+      );
+    });
 
   return (
     <main className="app-shell">
+
+      {/* =====================================================
+          TOPBAR
+          ===================================================== */}
 
       <header className="topbar">
 
@@ -1068,6 +1045,10 @@ export default function Home() {
 
       <section className="content">
 
+        {/* ===================================================
+            HOME
+            =================================================== */}
+
         {tab === "home" && (
           <>
 
@@ -1109,7 +1090,11 @@ export default function Home() {
 
                   <button
                     className="secondary"
-                    onClick={openEncyclopedia}
+                    onClick={() => {
+                      stopAllAudio();
+
+                      setTab("encyclopedia");
+                    }}
                   >
                     {t.openEncyclopedia}
                   </button>
@@ -1243,7 +1228,6 @@ export default function Home() {
                       </small>
 
                     </button>
-
                   )
                 )}
 
@@ -1278,7 +1262,11 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={openEncyclopedia}
+                onClick={() => {
+                  stopAllAudio();
+
+                  setTab("encyclopedia");
+                }}
               >
 
                 <span>
@@ -1322,6 +1310,10 @@ export default function Home() {
 
           </>
         )}
+
+        {/* ===================================================
+            LESSONS
+            =================================================== */}
 
         {tab === "lessons" && (
 
@@ -1439,7 +1431,6 @@ export default function Home() {
                     </button>
 
                   </div>
-
                 )
               )}
 
@@ -1470,6 +1461,10 @@ export default function Home() {
           </div>
 
         )}
+
+        {/* ===================================================
+            QUIZ
+            =================================================== */}
 
         {tab === "quiz" && (
 
@@ -1687,274 +1682,430 @@ export default function Home() {
 
         )}
 
-        {/* =====================================================
+        {/* ===================================================
             ЭНЦИКЛОПЕДИЯ
-            ===================================================== */}
+            =================================================== */}
 
         {tab === "encyclopedia" && (
 
           <div className="page">
 
-            <div className="section-head">
+            {!article ? (
 
-              <div>
+              <>
+                <div className="section-head">
 
-                <span className="eyebrow">
-                  {t.cultureHistory}
-                </span>
+                  <div>
 
-                <h2>
-                  {t.encyclopedia}
-                </h2>
+                    <span className="eyebrow">
+                      {t.cultureHistory}
+                    </span>
 
-              </div>
+                    <h2>
+                      {t.encyclopedia}
+                    </h2>
 
-              {/* ПОИСК */}
+                  </div>
 
-              <input
-                className="search"
-                value={encyclopediaSearch}
-                onChange={e =>
-                  setEncyclopediaSearch(
-                    e.target.value
-                  )
-                }
-                placeholder={t.search}
-                aria-label={t.search}
-              />
+                  <input
+                    className="search"
+                    value={searchQuery}
+                    onChange={e =>
+                      setSearchQuery(
+                        e.target.value
+                      )
+                    }
+                    placeholder={
+                      t.search
+                    }
+                  />
 
-            </div>
+                </div>
 
-            {/* КАТЕГОРИИ */}
+                {/* КАТЕГОРИИ */}
 
-            <div className="category-row">
+                <div className="category-row">
 
-              <button
-                className={
-                  encyclopediaCategory === "all"
-                    ? "active"
-                    : ""
-                }
-                onClick={() =>
-                  setEncyclopediaCategory(
-                    "all"
-                  )
-                }
-              >
-                {t.all}
-              </button>
+                  <button
+                    className={
+                      encyclopediaCategory ===
+                      "all"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setEncyclopediaCategory(
+                        "all"
+                      )
+                    }
+                  >
+                    {t.all}
+                  </button>
 
-              <button
-                className={
-                  encyclopediaCategory ===
-                  "instruments"
-                    ? "active"
-                    : ""
-                }
-                onClick={() =>
-                  setEncyclopediaCategory(
-                    "instruments"
-                  )
-                }
-              >
-                {t.instruments}
-              </button>
+                  <button
+                    className={
+                      encyclopediaCategory ===
+                      "instruments"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setEncyclopediaCategory(
+                        "instruments"
+                      )
+                    }
+                  >
+                    {t.instruments}
+                  </button>
 
-              <button
-                className={
-                  encyclopediaCategory ===
-                  "kuiyshi"
-                    ? "active"
-                    : ""
-                }
-                onClick={() =>
-                  setEncyclopediaCategory(
-                    "kuiyshi"
-                  )
-                }
-              >
-                {t.kuiyshi}
-              </button>
+                  <button
+                    className={
+                      encyclopediaCategory ===
+                      "kuiyshi"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setEncyclopediaCategory(
+                        "kuiyshi"
+                      )
+                    }
+                  >
+                    {t.kuiyshi}
+                  </button>
 
-              <button
-                className={
-                  encyclopediaCategory ===
-                  "kuis"
-                    ? "active"
-                    : ""
-                }
-                onClick={() =>
-                  setEncyclopediaCategory(
-                    "kuis"
-                  )
-                }
-              >
-                {t.kuis}
-              </button>
+                  <button
+                    className={
+                      encyclopediaCategory ===
+                      "kuis"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setEncyclopediaCategory(
+                        "kuis"
+                      )
+                    }
+                  >
+                    {t.kuis}
+                  </button>
 
-              <button
-                className={
-                  encyclopediaCategory ===
-                  "history"
-                    ? "active"
-                    : ""
-                }
-                onClick={() =>
-                  setEncyclopediaCategory(
-                    "history"
-                  )
-                }
-              >
-                {t.history}
-              </button>
+                  <button
+                    className={
+                      encyclopediaCategory ===
+                      "history"
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      setEncyclopediaCategory(
+                        "history"
+                      )
+                    }
+                  >
+                    {t.history}
+                  </button>
 
-            </div>
+                </div>
 
-            {/* РЕЗУЛЬТАТЫ */}
+                {/* КАРТОЧКИ СТАТЕЙ */}
 
-            {filteredArticles.length > 0 ? (
+                <div className="article-grid">
 
-              <div className="article-grid">
+                  {filteredArticles.map(
+                    item => (
 
-                {filteredArticles.map(
-                  item => (
+                      <button
+                        className="article-card"
+                        key={item.id}
+                        onClick={() =>
+                          setArticle(
+                            item.id
+                          )
+                        }
+                      >
 
-                    <button
-                      className="article-card"
-                      key={item.title}
-                      onClick={() =>
-                        setArticle(
-                          item.title
-                        )
-                      }
-                    >
+                        <div
+                          className="article-image"
+                          style={
+                            item.image
+                              ? {
+                                  padding: 0,
+                                  overflow:
+                                    "hidden"
+                                }
+                              : undefined
+                          }
+                        >
 
-                      <div className="article-image">
-                        {item.icon}
-                      </div>
+                          {item.image ? (
 
-                      <div>
+                            <img
+                              src={
+                                item.image
+                              }
+                              alt={
+                                item.title
+                              }
+                              style={{
+                                width:
+                                  "100%",
+                                height:
+                                  "100%",
+                                objectFit:
+                                  "cover",
+                                display:
+                                  "block"
+                              }}
+                            />
 
-                        <span>
-                          {item.sub}
-                        </span>
+                          ) : (
 
-                        <h3>
-                          {item.title}
-                        </h3>
+                            item.icon
 
-                        <p>
-                          {item.text}
-                        </p>
+                          )}
 
-                        <small>
-                          {t.read} · 5{" "}
-                          {t.minutes}
-                        </small>
+                        </div>
 
-                      </div>
+                        <div>
 
-                    </button>
+                          <span>
+                            {
+                              item.subtitle
+                            }
+                          </span>
 
-                  )
+                          <h3>
+                            {item.title}
+                          </h3>
+
+                          <p>
+                            {
+                              item.description
+                            }
+                          </p>
+
+                          <small>
+                            {t.read} ·{" "}
+                            {
+                              item.readTime
+                            }
+                          </small>
+
+                        </div>
+
+                      </button>
+
+                    )
+                  )}
+
+                </div>
+
+                {filteredArticles.length ===
+                  0 && (
+
+                  <div
+                    style={{
+                      textAlign:
+                        "center",
+                      padding:
+                        "60px 20px",
+                      opacity: 0.7
+                    }}
+                  >
+
+                    <h3>
+                      Ничего не найдено
+                    </h3>
+
+                    <p>
+                      Попробуйте изменить
+                      запрос или выбрать
+                      другую категорию.
+                    </p>
+
+                  </div>
+
                 )}
 
-              </div>
+              </>
 
             ) : (
 
-              <div
-                className="result-card"
-                style={{
-                  marginTop: "24px"
-                }}
-              >
+              /* =================================================
+                 ПОЛНАЯ СТАТЬЯ
+                 ================================================= */
 
-                <div className="big-check">
-                  🔎
-                </div>
+              selectedArticle && (
 
-                <h2>
-                  {t.nothingFound}
-                </h2>
-
-                <p>
-                  {t.tryAnotherSearch}
-                </p>
-
-                <button
-                  className="primary"
-                  onClick={() => {
-                    setEncyclopediaSearch("");
-                    setEncyclopediaCategory(
-                      "all"
-                    );
-                  }}
-                >
-                  {t.all}
-                </button>
-
-              </div>
-
-            )}
-
-            {article && (
-
-              <div
-                className="overlay"
-                onClick={() =>
-                  setArticle(null)
-                }
-              >
-
-                <div
-                  className="article-modal"
-                  onClick={e =>
-                    e.stopPropagation()
-                  }
+                <article
+                  className="encyclopedia-article"
                 >
 
                   <button
-                    className="close"
+                    className="text-btn article-back"
                     onClick={() =>
                       setArticle(null)
                     }
                   >
-                    ×
+                    ←{" "}
+                    {t.articleBack}
                   </button>
 
-                  <span className="eyebrow">
-                    ÁLEM.MUSIC ENCYCLOPEDIA
-                  </span>
+                  {/* ОБЛОЖКА */}
 
-                  <h2>
-                    {article}
-                  </h2>
-
-                  <p>
-                    {t.articlePlaceholder}
-                  </p>
-
-                  <div className="placeholder-lines"></div>
-
-                  <button
-                    className="primary"
-                    onClick={() =>
-                      setArticle(null)
+                  <div
+                    className="article-cover"
+                    style={
+                      selectedArticle.image
+                        ? {
+                            backgroundImage:
+                              `url(${selectedArticle.image})`
+                          }
+                        : undefined
                     }
                   >
-                    {t.understandable}
-                  </button>
 
-                </div>
+                    {!selectedArticle.image && (
+                      <div className="article-cover-icon">
+                        {
+                          selectedArticle.icon
+                        }
+                      </div>
+                    )}
 
-              </div>
+                    <div className="article-cover-overlay">
+
+                      <span className="eyebrow">
+                        ÁLEM.MUSIC
+                        {" "}
+                        ENCYCLOPEDIA
+                      </span>
+
+                      <h1>
+                        {
+                          selectedArticle.title
+                        }
+                      </h1>
+
+                      <p>
+                        {
+                          selectedArticle.subtitle
+                        }
+                      </p>
+
+                      <div className="article-meta">
+
+                        <span>
+                          📖{" "}
+                          {
+                            t.articleReadTime
+                          }
+                        </span>
+
+                        <span>
+                          🎼{" "}
+                          {
+                            t.articleSources
+                          }
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  {/* ТЕКСТ СТАТЬИ */}
+
+                  <div className="article-body">
+
+                    {selectedArticle.sections.map(
+                      (section, index) => (
+
+                        <section
+                          className="article-section"
+                          key={
+                            `${selectedArticle.id}-${index}`
+                          }
+                        >
+
+                          <h2>
+                            {
+                              section.heading
+                            }
+                          </h2>
+
+                          {section.paragraphs.map(
+                            (
+                              paragraph,
+                              paragraphIndex
+                            ) => (
+
+                              <p
+                                key={
+                                  paragraphIndex
+                                }
+                              >
+                                {
+                                  paragraph
+                                }
+                              </p>
+
+                            )
+                          )}
+
+                        </section>
+
+                      )
+                    )}
+
+                    {selectedArticle.sections
+                      .length === 0 && (
+
+                      <div className="article-empty">
+
+                        <p>
+                          {
+                            t.articlePlaceholder
+                          }
+                        </p>
+
+                      </div>
+
+                    )}
+
+                  </div>
+
+                  {/* КОНЕЦ СТАТЬИ */}
+
+                  <div className="article-footer">
+
+                    <button
+                      className="primary"
+                      onClick={() =>
+                        setArticle(null)
+                      }
+                    >
+                      ←{" "}
+                      {t.articleBack}
+                    </button>
+
+                  </div>
+
+                </article>
+
+              )
 
             )}
 
           </div>
 
         )}
+
+        {/* ===================================================
+            PROFILE
+            =================================================== */}
 
         {tab === "profile" && (
 
@@ -2033,32 +2184,41 @@ export default function Home() {
 
               <div>
                 🏅
+
                 <b>
                   {t.beginner}
                 </b>
+
                 <small>
                   {t.firstLesson}
                 </small>
+
               </div>
 
               <div>
                 🔥
+
                 <b>
                   30 күн
                 </b>
+
                 <small>
                   {t.learningStreak}
                 </small>
+
               </div>
 
               <div>
                 🎵
+
                 <b>
                   Домбырашы
                 </b>
+
                 <small>
                   {t.tenKuis}
                 </small>
+
               </div>
 
             </div>
@@ -2068,6 +2228,10 @@ export default function Home() {
         )}
 
       </section>
+
+      {/* =====================================================
+          BOTTOM NAVIGATION
+          ===================================================== */}
 
       <nav className="bottom-nav">
 
@@ -2093,11 +2257,20 @@ export default function Home() {
               }
               onClick={() => {
 
-                if (id !== "quiz") {
+                if (
+                  id !== "quiz"
+                ) {
                   stopAllAudio();
                 }
 
                 setTab(id);
+
+                if (
+                  id ===
+                  "encyclopedia"
+                ) {
+                  setArticle(null);
+                }
 
               }}
             >
@@ -2120,6 +2293,10 @@ export default function Home() {
     </main>
   );
 }
+
+/* =========================================================
+   МОДАЛЬНОЕ ОКНО УРОКА
+   ========================================================= */
 
 function LessonModal({
   t,
