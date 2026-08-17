@@ -13,6 +13,21 @@ const lessons = [
   { n: 5, done: false }
 ];
 
+/* =========================================================
+   АУДИО ВИКТОРИНЫ
+
+   Файлы должны находиться непосредственно в папке public:
+
+   public/
+   ├── Adai.mp3
+   ├── Aksakkulan.mp3
+   ├── BBraun.mp3
+   └── Saryarka.mp3
+
+   ВАЖНО:
+   Названия здесь полностью совпадают с названиями файлов.
+   ========================================================= */
+
 const quiz = [
   {
     audio: "/Saryarka.mp3",
@@ -20,12 +35,12 @@ const quiz = [
     correct: 0
   },
   {
-    audio: "/Balbyraun.mp3",
+    audio: "/BBraun.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
     correct: 1
   },
   {
-    audio: "/kurmangazyAdai.mp3",
+    audio: "/Adai.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
     correct: 2
   },
@@ -407,30 +422,34 @@ const articleData = {
 
 export default function Home() {
   const [lang, setLang] = useState<Language>("Русский");
+
   const [instrument, setInstrument] =
     useState<Instrument>("dombra");
 
   const [tab, setTab] = useState("home");
+
   const [xp, setXp] = useState(2450);
+
   const [streak] = useState(12);
 
-  const [lessonOpen, setLessonOpen] = useState(false);
+  const [lessonOpen, setLessonOpen] =
+    useState(false);
 
-  const [quizIndex, setQuizIndex] = useState(0);
-  const [quizDone, setQuizDone] = useState(false);
-  const [quizScore, setQuizScore] = useState(0);
+  const [quizIndex, setQuizIndex] =
+    useState(0);
+
+  const [quizDone, setQuizDone] =
+    useState(false);
+
+  const [quizScore, setQuizScore] =
+    useState(0);
 
   const [article, setArticle] =
     useState<string | null>(null);
 
   /*
-    ВАЖНО:
-
-    Здесь больше НЕТ new Audio().
-    Используется один настоящий HTMLAudioElement.
-
-    React меняет src при смене вопроса,
-    браузер сам загружает новый MP3.
+    Один настоящий HTMLAudioElement.
+    Он используется для всех четырёх вопросов.
   */
   const quizAudioRef =
     useRef<HTMLAudioElement | null>(null);
@@ -442,7 +461,9 @@ export default function Home() {
     useState(false);
 
   const t = translations[lang];
-  const instruments = instrumentNames[lang];
+
+  const instruments =
+    instrumentNames[lang];
 
   const lessonTitles = [
     [t.lesson1, t.lesson1Sub],
@@ -453,50 +474,40 @@ export default function Home() {
   ];
 
   /*
-    Останавливаем аудио.
+    Полностью останавливает текущее аудио.
   */
   function stopQuizAudio() {
-    const audio = quizAudioRef.current;
+    const audio =
+      quizAudioRef.current;
 
     if (audio) {
       audio.pause();
 
-      /*
-        Не оставляем старую позицию.
-      */
       try {
         audio.currentTime = 0;
       } catch {}
-
     }
 
     setIsPlaying(false);
   }
 
   /*
-    Эта функция вызывается при нажатии на большую кнопку.
-
-    Каждый раз берём ТЕКУЩИЙ quizIndex.
+    Воспроизведение / пауза.
   */
   async function toggleQuizAudio() {
-    const audio = quizAudioRef.current;
+    const audio =
+      quizAudioRef.current;
 
     if (!audio) {
       return;
     }
 
-    /*
-      Если сейчас играет — ставим на паузу.
-    */
     if (!audio.paused) {
       audio.pause();
       setIsPlaying(false);
       return;
     }
 
-    /*
-      Если закончило играть — начинаем снова с начала.
-    */
     if (audio.ended) {
       audio.currentTime = 0;
     }
@@ -505,7 +516,6 @@ export default function Home() {
 
     try {
       await audio.play();
-
       setIsPlaying(true);
     } catch (error) {
       console.error(
@@ -519,17 +529,25 @@ export default function Home() {
   }
 
   /*
-    Когда меняется вопрос:
+    КЛЮЧЕВОЙ МОМЕНТ.
 
-    1. останавливаем старое аудио;
-    2. сбрасываем состояние;
-    3. сообщаем браузеру, что src изменился;
-    4. load() заставляет браузер загрузить НОВЫЙ файл.
+    При переходе:
+
+    1 → Saryarka.mp3
+    2 → BBraun.mp3
+    3 → Adai.mp3
+    4 → Aksakkulan.mp3
+
+    старый файл останавливается,
+    браузер загружает новый src.
   */
   useEffect(() => {
-    const audio = quizAudioRef.current;
+    const audio =
+      quizAudioRef.current;
 
-    if (!audio) return;
+    if (!audio) {
+      return;
+    }
 
     audio.pause();
 
@@ -543,16 +561,13 @@ export default function Home() {
     setAudioError(false);
   }, [quizIndex]);
 
-  /*
-    Слушатели событий настоящего <audio>.
-  */
   function handleAudioEnded() {
     setIsPlaying(false);
   }
 
   function handleAudioError() {
     console.error(
-      "Браузер не смог загрузить:",
+      "Не удалось загрузить аудио:",
       quiz[quizIndex].audio
     );
 
@@ -560,13 +575,14 @@ export default function Home() {
     setAudioError(true);
   }
 
+  /*
+    Ответ на вопрос.
+  */
   function answerQuiz(i: number) {
-    if (quizDone) return;
+    if (quizDone) {
+      return;
+    }
 
-    /*
-      Останавливаем текущую мелодию
-      ПЕРЕД переходом к следующему вопросу.
-    */
     stopQuizAudio();
 
     const correct =
@@ -578,8 +594,9 @@ export default function Home() {
       );
     }
 
-    setXp(x =>
-      x + (correct ? 50 : 10)
+    setXp(
+      x =>
+        x + (correct ? 50 : 10)
     );
 
     if (
@@ -588,19 +605,12 @@ export default function Home() {
     ) {
       setQuizDone(true);
     } else {
-      /*
-        Именно это меняет аудио.
-      */
       setQuizIndex(
         index => index + 1
       );
     }
   }
 
-  /*
-    Общая остановка аудио при переходе
-    из викторины в другие разделы.
-  */
   function stopAllAudio() {
     stopQuizAudio();
   }
@@ -641,6 +651,7 @@ export default function Home() {
 
           <div>
             <b>Álem.Music</b>
+
             <span>
               Ұлттық әуен әлемі
             </span>
@@ -650,7 +661,9 @@ export default function Home() {
 
         <div className="top-stats">
 
-          <span>🔥 {streak}</span>
+          <span>
+            🔥 {streak}
+          </span>
 
           <span>
             ⭐ {xp.toLocaleString()}
@@ -699,6 +712,7 @@ export default function Home() {
                 <h1>
                   {t.heroTitle1}
                   <br />
+
                   <em>
                     {t.heroTitle2}
                   </em>
@@ -714,7 +728,9 @@ export default function Home() {
                     className="primary"
                     onClick={() => {
                       stopAllAudio();
+
                       setTab("lessons");
+
                       setLessonOpen(true);
                     }}
                   >
@@ -725,6 +741,7 @@ export default function Home() {
                     className="secondary"
                     onClick={() => {
                       stopAllAudio();
+
                       setTab("encyclopedia");
                     }}
                   >
@@ -780,6 +797,7 @@ export default function Home() {
                 className="text-btn"
                 onClick={() => {
                   stopAllAudio();
+
                   setTab("lessons");
                 }}
               >
@@ -873,6 +891,7 @@ export default function Home() {
                 className="feature-card"
                 onClick={() => {
                   stopAllAudio();
+
                   setTab("quiz");
                 }}
               >
@@ -893,6 +912,7 @@ export default function Home() {
                 className="feature-card"
                 onClick={() => {
                   stopAllAudio();
+
                   setTab("encyclopedia");
                 }}
               >
@@ -913,6 +933,7 @@ export default function Home() {
                 className="feature-card"
                 onClick={() => {
                   stopAllAudio();
+
                   setTab("profile");
                 }}
               >
@@ -1030,9 +1051,13 @@ export default function Home() {
                       className="primary small"
                       disabled={i > 2}
                       onClick={() => {
+
                         stopAllAudio();
+
                         setIsPlaying(false);
+
                         setLessonOpen(true);
+
                       }}
                     >
 
@@ -1057,12 +1082,17 @@ export default function Home() {
                 t={t}
                 isPlaying={false}
                 setIsPlaying={() => {}}
-                close={() => {
-                  setLessonOpen(false);
-                }}
+                close={() =>
+                  setLessonOpen(false)
+                }
                 onComplete={() => {
-                  setXp(x => x + 100);
+
+                  setXp(
+                    x => x + 100
+                  );
+
                   setLessonOpen(false);
+
                 }}
               />
 
@@ -1071,12 +1101,6 @@ export default function Home() {
           </div>
 
         )}
-
-        {/*
-          ============================================================
-          ВИКТОРИНА
-          ============================================================
-        */}
 
         {tab === "quiz" && (
 
@@ -1093,14 +1117,6 @@ export default function Home() {
             {!quizDone ? (
 
               <div className="quiz-card">
-
-                {/*
-                  ВОТ ГЛАВНОЕ ИЗМЕНЕНИЕ.
-
-                  Всегда существует ОДИН <audio>.
-
-                  Его src зависит от quizIndex.
-                */}
 
                 <audio
                   ref={quizAudioRef}
@@ -1141,9 +1157,6 @@ export default function Home() {
 
                   {isPlaying ? (
 
-                    /*
-                      ДВЕ ПОЛОСКИ
-                    */
                     <span
                       style={{
                         display: "flex",
@@ -1181,7 +1194,7 @@ export default function Home() {
                   ) : (
 
                     <span>
-                      ▶
+                      ▶️
                     </span>
 
                   )}
@@ -1198,7 +1211,7 @@ export default function Home() {
                     }}
                   >
                     Не удалось воспроизвести аудио.
-                    Попробуйте нажать воспроизведение ещё раз.
+                    Проверьте файл и попробуйте ещё раз.
                   </p>
 
                 )}
@@ -1736,7 +1749,7 @@ function LessonModal({
                   lineHeight: 1
                 }}
               >
-                ▶
+                ▶️
               </span>
 
             )}
