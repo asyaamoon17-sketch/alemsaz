@@ -16,13 +16,14 @@ const lessons = [
 /* =========================================================
    АУДИО ВИКТОРИНЫ
 
-   Файлы находятся непосредственно в папке public:
+   Файлы должны находиться непосредственно в папке public:
 
    public/
-   ├── Saryarka.mp3
-   ├── BalbyraunNew.mp3
    ├── Adai.mp3
-   └── Aksakkulan.mp3
+   ├── Aksakkulan.mp3
+   ├── OrchestraBB.mp3
+   └── Saryarka.mp3
+
    ========================================================= */
 
 const quiz = [
@@ -32,7 +33,7 @@ const quiz = [
     correct: 0
   },
   {
-    audio: "/BalbyraunNew.mp3",
+    audio: "/OrchestraBB.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
     correct: 1
   },
