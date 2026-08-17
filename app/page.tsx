@@ -5,6 +5,13 @@ import { useEffect, useRef, useState } from "react";
 type Language = "Қазақша" | "Русский" | "English";
 type Instrument = "dombra" | "kobyz" | "sazsyrnai";
 
+type EncyclopediaCategory =
+  | "all"
+  | "instruments"
+  | "kuiyshi"
+  | "kuis"
+  | "history";
+
 const lessons = [
   { n: 1, done: true },
   { n: 2, done: true },
@@ -118,6 +125,8 @@ const translations = {
     history: "История",
     read: "Читать",
     minutes: "мин",
+    nothingFound: "Ничего не найдено",
+    tryAnotherSearch: "Попробуй изменить запрос или выбрать другую категорию.",
 
     profileTitle: "Твой путь",
     musician: "Музыкант",
@@ -206,6 +215,9 @@ const translations = {
     history: "Тарих",
     read: "Оқу",
     minutes: "мин",
+    nothingFound: "Ештеңе табылмады",
+    tryAnotherSearch:
+      "Сұранысты өзгертіп көр немесе басқа санатты таңда.",
 
     profileTitle: "Сенің жолың",
     musician: "Музыкант",
@@ -294,6 +306,9 @@ const translations = {
     history: "History",
     read: "Read",
     minutes: "min",
+    nothingFound: "Nothing found",
+    tryAnotherSearch:
+      "Try changing your search or choosing another category.",
 
     profileTitle: "Your journey",
     musician: "Musician",
@@ -334,100 +349,432 @@ const instrumentNames = {
   }
 };
 
+/* =========================================================
+   ЭНЦИКЛОПЕДИЯ
+
+   У каждого материала теперь есть category.
+   Это позволяет реально фильтровать материалы.
+   ========================================================= */
+
 const articleData = {
   Русский: [
-    [
-      "Курманғазы Сағырбайұлы",
-      "Великий кюйши XIX века",
-      "🎼",
-      "Кюйши, композитор и один из символов казахской инструментальной музыки."
-    ],
-    [
-      "Қорқыт ата",
-      "Легенда кобыза",
-      "🪕",
-      "Фигура, связанная с древней историей кобыза и тюркской музыкальной традицией."
-    ],
-    [
-      "Тәттімбет Қазанғапұлы",
-      "Мастер шертпе-кюя",
-      "🎵",
-      "Один из крупнейших представителей школы шертпе-кюй."
-    ],
-    [
-      "Домбра",
-      "Две струны — целый мир",
-      "🪕",
-      "Разбираемся в строе, устройстве и роли домбры в казахской культуре."
-    ]
+    {
+      title: "Курманғазы Сағырбайұлы",
+      sub: "Великий кюйши XIX века",
+      icon: "🎼",
+      text:
+        "Кюйши, композитор и один из символов казахской инструментальной музыки.",
+      category: "kuiyshi" as EncyclopediaCategory
+    },
+    {
+      title: "Қорқыт ата",
+      sub: "Легенда кобыза",
+      icon: "🪕",
+      text:
+        "Фигура, связанная с древней историей кобыза и тюркской музыкальной традицией.",
+      category: "history" as EncyclopediaCategory
+    },
+    {
+      title: "Тәттімбет Қазанғапұлы",
+      sub: "Мастер шертпе-кюя",
+      icon: "🎵",
+      text:
+        "Один из крупнейших представителей школы шертпе-кюй.",
+      category: "kuiyshi" as EncyclopediaCategory
+    },
+    {
+      title: "Домбра",
+      sub: "Две струны — целый мир",
+      icon: "🪕",
+      text:
+        "Разбираемся в строе, устройстве и роли домбры в казахской культуре.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Кобыз",
+      sub: "Древний струнный инструмент",
+      icon: "🎻",
+      text:
+        "Один из древнейших казахских музыкальных инструментов, связанный с традицией кобызовой музыки.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Сазсырнай",
+      sub: "Глиняный голос степи",
+      icon: "🎶",
+      text:
+        "Традиционный духовой инструмент из обожжённой глины с мягким и узнаваемым звучанием.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Сарыарқа",
+      sub: "Кюй Курманғазы",
+      icon: "🎵",
+      text:
+        "Один из известных кюев казахской музыкальной традиции.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Адай",
+      sub: "Кюй Курманғазы",
+      icon: "🎵",
+      text:
+        "Энергичный кюй, ставший одним из узнаваемых произведений Курманғазы.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Балбырауын",
+      sub: "Кюй Курманғазы",
+      icon: "🎵",
+      text:
+        "Известный инструментальный кюй казахской традиции.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Ақсақ құлан",
+      sub: "Древний кюй",
+      icon: "🎵",
+      text:
+        "Один из наиболее известных сюжетных кюев, связанный с древними музыкальными преданиями.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "История казахского кюя",
+      sub: "Музыка степи",
+      icon: "📜",
+      text:
+        "Кюй занимает особое место в истории казахской культуры и передаёт музыкальные истории поколений.",
+      category: "history" as EncyclopediaCategory
+    },
+    {
+      title: "Кюй и домбра",
+      sub: "Музыкальная традиция",
+      icon: "🏛️",
+      text:
+        "Домбра стала одним из главных инструментов, через который развивалась традиция исполнения кюев.",
+      category: "history" as EncyclopediaCategory
+    }
   ],
 
   Қазақша: [
-    [
-      "Құрманғазы Сағырбайұлы",
-      "XIX ғасырдың ұлы күйші-композиторы",
-      "🎼",
-      "Қазақтың аспаптық музыкасының көрнекті тұлғасы және күй өнерінің символы."
-    ],
-    [
-      "Қорқыт ата",
-      "Қобыз туралы аңыз",
-      "🪕",
-      "Қобыздың көне тарихымен және түркі музыкалық дәстүрімен байланысты тарихи тұлға."
-    ],
-    [
-      "Тәттімбет Қазанғапұлы",
-      "Шертпе күйдің шебері",
-      "🎵",
-      "Шертпе күй мектебінің ең ірі өкілдерінің бірі."
-    ],
-    [
-      "Домбыра",
-      "Екі ішек — тұтас әлем",
-      "🪕",
-      "Домбыраның құрылысы, күйге келтірілуі және қазақ мәдениетіндегі орны туралы."
-    ]
+    {
+      title: "Құрманғазы Сағырбайұлы",
+      sub: "XIX ғасырдың ұлы күйші-композиторы",
+      icon: "🎼",
+      text:
+        "Қазақтың аспаптық музыкасының көрнекті тұлғасы және күй өнерінің символы.",
+      category: "kuiyshi" as EncyclopediaCategory
+    },
+    {
+      title: "Қорқыт ата",
+      sub: "Қобыз туралы аңыз",
+      icon: "🪕",
+      text:
+        "Қобыздың көне тарихымен және түркі музыкалық дәстүрімен байланысты тарихи тұлға.",
+      category: "history" as EncyclopediaCategory
+    },
+    {
+      title: "Тәттімбет Қазанғапұлы",
+      sub: "Шертпе күйдің шебері",
+      icon: "🎵",
+      text:
+        "Шертпе күй мектебінің ең ірі өкілдерінің бірі.",
+      category: "kuiyshi" as EncyclopediaCategory
+    },
+    {
+      title: "Домбыра",
+      sub: "Екі ішек — тұтас әлем",
+      icon: "🪕",
+      text:
+        "Домбыраның құрылысы, күйге келтірілуі және қазақ мәдениетіндегі орны туралы.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Қобыз",
+      sub: "Ежелгі ішекті аспап",
+      icon: "🎻",
+      text:
+        "Қазақтың көне музыкалық аспаптарының бірі және қобыз өнерінің негізі.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Сазсырнай",
+      sub: "Даланың сазды үні",
+      icon: "🎶",
+      text:
+        "Саздан жасалған дәстүрлі үрмелі аспап. Жұмсақ әрі ерекше дыбысымен танымал.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Сарыарқа",
+      sub: "Құрманғазының күйі",
+      icon: "🎵",
+      text:
+        "Қазақтың күй өнеріндегі кеңінен танымал шығармалардың бірі.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Адай",
+      sub: "Құрманғазының күйі",
+      icon: "🎵",
+      text:
+        "Құрманғазының қуатты әрі кең танылған күйлерінің бірі.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Балбырауын",
+      sub: "Құрманғазының күйі",
+      icon: "🎵",
+      text:
+        "Қазақтың аспаптық музыка дәстүріндегі танымал күй.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Ақсақ құлан",
+      sub: "Көне күй",
+      icon: "🎵",
+      text:
+        "Ежелгі музыкалық аңыздармен байланысты белгілі сюжетті күй.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Қазақ күйінің тарихы",
+      sub: "Дала музыкасы",
+      icon: "📜",
+      text:
+        "Күй қазақ мәдениетінің тарихында ерекше орын алып, ұрпақтан ұрпаққа музыкалық әңгімелер жеткізді.",
+      category: "history" as EncyclopediaCategory
+    },
+    {
+      title: "Күй және домбыра",
+      sub: "Музыкалық дәстүр",
+      icon: "🏛️",
+      text:
+        "Домбыра күй орындау дәстүрінің негізгі аспаптарының біріне айналды.",
+      category: "history" as EncyclopediaCategory
+    }
   ],
 
   English: [
-    [
-      "Kurmangazy Sagyrbayuly",
-      "Great 19th-century kuiishi",
-      "🎼",
-      "A major kuiishi and composer and one of the symbols of Kazakh instrumental music."
-    ],
-    [
-      "Korkyt Ata",
-      "The legend of the kobyz",
-      "🪕",
-      "A historical figure connected with the ancient history of the kobyz and Turkic musical traditions."
-    ],
-    [
-      "Tattimbet Kazangapuly",
-      "Master of shertpe kui",
-      "🎵",
-      "One of the most important representatives of the shertpe kui tradition."
-    ],
-    [
-      "Dombra",
-      "Two strings — a whole world",
-      "🪕",
-      "Explore the tuning, structure and cultural role of the dombra."
-    ]
+    {
+      title: "Kurmangazy Sagyrbayuly",
+      sub: "Great 19th-century kuiishi",
+      icon: "🎼",
+      text:
+        "A major kuiishi and composer and one of the symbols of Kazakh instrumental music.",
+      category: "kuiyshi" as EncyclopediaCategory
+    },
+    {
+      title: "Korkyt Ata",
+      sub: "The legend of the kobyz",
+      icon: "🪕",
+      text:
+        "A historical figure connected with the ancient history of the kobyz and Turkic musical traditions.",
+      category: "history" as EncyclopediaCategory
+    },
+    {
+      title: "Tattimbet Kazangapuly",
+      sub: "Master of shertpe kui",
+      icon: "🎵",
+      text:
+        "One of the most important representatives of the shertpe kui tradition.",
+      category: "kuiyshi" as EncyclopediaCategory
+    },
+    {
+      title: "Dombra",
+      sub: "Two strings — a whole world",
+      icon: "🪕",
+      text:
+        "Explore the tuning, structure and cultural role of the dombra.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Kobyz",
+      sub: "Ancient string instrument",
+      icon: "🎻",
+      text:
+        "One of the ancient Kazakh musical instruments connected with the kobyz tradition.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Sazsyrnai",
+      sub: "The clay voice of the steppe",
+      icon: "🎶",
+      text:
+        "A traditional clay wind instrument with a soft and distinctive sound.",
+      category: "instruments" as EncyclopediaCategory
+    },
+    {
+      title: "Saryarka",
+      sub: "Kui by Kurmangazy",
+      icon: "🎵",
+      text:
+        "One of the well-known kui works of Kazakh musical tradition.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Adai",
+      sub: "Kui by Kurmangazy",
+      icon: "🎵",
+      text:
+        "An energetic kui that became one of Kurmangazy's recognizable works.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Balbyrauyn",
+      sub: "Kui by Kurmangazy",
+      icon: "🎵",
+      text:
+        "A well-known instrumental kui from the Kazakh tradition.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "Aksak Kulan",
+      sub: "Ancient kui",
+      icon: "🎵",
+      text:
+        "A famous narrative kui connected with ancient musical legends.",
+      category: "kuis" as EncyclopediaCategory
+    },
+    {
+      title: "History of Kazakh Kui",
+      sub: "Music of the steppe",
+      icon: "📜",
+      text:
+        "Kui holds a special place in Kazakh culture and carries musical stories between generations.",
+      category: "history" as EncyclopediaCategory
+    },
+    {
+      title: "Kui and Dombra",
+      sub: "Musical tradition",
+      icon: "🏛️",
+      text:
+        "The dombra became one of the main instruments through which the kui tradition developed.",
+      category: "history" as EncyclopediaCategory
+    }
   ]
 };
 
+/* =========================================================
+   ФУНКЦИЯ НОРМАЛИЗАЦИИ ПОИСКА
+
+   Позволяет искать без учёта:
+   - регистра;
+   - лишних пробелов;
+   - некоторых диакритических знаков;
+   - разных вариантов написания.
+   ========================================================= */
+
+function normalizeSearch(value: string) {
+  return value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/ғ/g, "г")
+    .replace(/қ/g, "к")
+    .replace(/ң/g, "н")
+    .replace(/ө/g, "о")
+    .replace(/ұ/g, "у")
+    .replace(/ү/g, "у")
+    .replace(/і/g, "и")
+    .replace(/һ/g, "х")
+    .replace(/ё/g, "е")
+    .replace(/ъ/g, "")
+    .replace(/ь/g, "")
+    .replace(/[^a-zа-я0-9\s]/gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/* =========================================================
+   ПРИБЛИЗИТЕЛЬНЫЙ ПОИСК
+
+   Используется небольшое расстояние Левенштейна,
+   чтобы находить материал даже при небольшой ошибке.
+   ========================================================= */
+
+function levenshtein(a: string, b: string): number {
+  const matrix: number[][] = [];
+
+  for (let i = 0; i <= b.length; i++) {
+    matrix[i] = [i];
+  }
+
+  for (let j = 0; j <= a.length; j++) {
+    matrix[0][j] = j;
+  }
+
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1];
+      } else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1
+        );
+      }
+    }
+  }
+
+  return matrix[b.length][a.length];
+}
+
+function fuzzyIncludes(text: string, query: string) {
+  const normalizedText = normalizeSearch(text);
+  const normalizedQuery = normalizeSearch(query);
+
+  if (!normalizedQuery) {
+    return true;
+  }
+
+  if (normalizedText.includes(normalizedQuery)) {
+    return true;
+  }
+
+  const words = normalizedText.split(" ");
+
+  for (const word of words) {
+    if (word.length < 3) {
+      continue;
+    }
+
+    const distance = levenshtein(
+      word,
+      normalizedQuery
+    );
+
+    const allowedDistance =
+      normalizedQuery.length <= 4
+        ? 1
+        : normalizedQuery.length <= 8
+        ? 2
+        : 3;
+
+    if (distance <= allowedDistance) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export default function Home() {
-  const [lang, setLang] = useState<Language>("Русский");
+  const [lang, setLang] =
+    useState<Language>("Русский");
 
   const [instrument, setInstrument] =
     useState<Instrument>("dombra");
 
-  const [tab, setTab] = useState("home");
+  const [tab, setTab] =
+    useState("home");
 
-  const [xp, setXp] = useState(2450);
+  const [xp, setXp] =
+    useState(2450);
 
-  const [streak] = useState(12);
+  const [streak] =
+    useState(12);
 
   const [lessonOpen, setLessonOpen] =
     useState(false);
@@ -453,6 +800,16 @@ export default function Home() {
   const [audioError, setAudioError] =
     useState(false);
 
+  /* =========================================================
+     НОВЫЕ СОСТОЯНИЯ ЭНЦИКЛОПЕДИИ
+     ========================================================= */
+
+  const [encyclopediaCategory, setEncyclopediaCategory] =
+    useState<EncyclopediaCategory>("all");
+
+  const [encyclopediaSearch, setEncyclopediaSearch] =
+    useState("");
+
   const t = translations[lang];
 
   const instruments =
@@ -465,6 +822,38 @@ export default function Home() {
     [t.lesson4, t.lesson4Sub],
     [t.lesson5, t.lesson5Sub]
   ];
+
+  /* =========================================================
+     ФИЛЬТРАЦИЯ ЭНЦИКЛОПЕДИИ
+     ========================================================= */
+
+  const encyclopediaArticles =
+    articleData[lang];
+
+  const filteredArticles =
+    encyclopediaArticles.filter(item => {
+
+      const categoryMatches =
+        encyclopediaCategory === "all" ||
+        item.category === encyclopediaCategory;
+
+      if (!categoryMatches) {
+        return false;
+      }
+
+      const query =
+        encyclopediaSearch.trim();
+
+      if (!query) {
+        return true;
+      }
+
+      return (
+        fuzzyIncludes(item.title, query) ||
+        fuzzyIncludes(item.sub, query) ||
+        fuzzyIncludes(item.text, query)
+      );
+    });
 
   function stopQuizAudio() {
     const audio =
@@ -586,6 +975,11 @@ export default function Home() {
     stopQuizAudio();
   }
 
+  function openEncyclopedia() {
+    stopAllAudio();
+    setTab("encyclopedia");
+  }
+
   return (
     <main className="app-shell">
 
@@ -621,11 +1015,15 @@ export default function Home() {
           </div>
 
           <div>
-            <b>Álem.Music</b>
+
+            <b>
+              Álem.Music
+            </b>
 
             <span>
               Ұлттық әуен әлемі
             </span>
+
           </div>
 
         </div>
@@ -672,6 +1070,7 @@ export default function Home() {
 
         {tab === "home" && (
           <>
+
             <div className="hero">
 
               <div>
@@ -710,11 +1109,7 @@ export default function Home() {
 
                   <button
                     className="secondary"
-                    onClick={() => {
-                      stopAllAudio();
-
-                      setTab("encyclopedia");
-                    }}
+                    onClick={openEncyclopedia}
                   >
                     {t.openEncyclopedia}
                   </button>
@@ -848,6 +1243,7 @@ export default function Home() {
                       </small>
 
                     </button>
+
                   )
                 )}
 
@@ -866,7 +1262,9 @@ export default function Home() {
                 }}
               >
 
-                <span>🎧</span>
+                <span>
+                  🎧
+                </span>
 
                 <b>
                   {t.quizCard}
@@ -880,14 +1278,12 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() => {
-                  stopAllAudio();
-
-                  setTab("encyclopedia");
-                }}
+                onClick={openEncyclopedia}
               >
 
-                <span>📚</span>
+                <span>
+                  📚
+                </span>
 
                 <b>
                   {t.encyclopediaCard}
@@ -908,7 +1304,9 @@ export default function Home() {
                 }}
               >
 
-                <span>🏆</span>
+                <span>
+                  🏆
+                </span>
 
                 <b>
                   {t.achievements}
@@ -921,6 +1319,7 @@ export default function Home() {
               </button>
 
             </div>
+
           </>
         )}
 
@@ -1040,6 +1439,7 @@ export default function Home() {
                     </button>
 
                   </div>
+
                 )
               )}
 
@@ -1287,6 +1687,10 @@ export default function Home() {
 
         )}
 
+        {/* =====================================================
+            ЭНЦИКЛОПЕДИЯ
+            ===================================================== */}
+
         {tab === "encyclopedia" && (
 
           <div className="page">
@@ -1305,83 +1709,194 @@ export default function Home() {
 
               </div>
 
+              {/* ПОИСК */}
+
               <input
                 className="search"
+                value={encyclopediaSearch}
+                onChange={e =>
+                  setEncyclopediaSearch(
+                    e.target.value
+                  )
+                }
                 placeholder={t.search}
+                aria-label={t.search}
               />
 
             </div>
 
+            {/* КАТЕГОРИИ */}
+
             <div className="category-row">
 
-              <button className="active">
+              <button
+                className={
+                  encyclopediaCategory === "all"
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setEncyclopediaCategory(
+                    "all"
+                  )
+                }
+              >
                 {t.all}
               </button>
 
-              <button>
+              <button
+                className={
+                  encyclopediaCategory ===
+                  "instruments"
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setEncyclopediaCategory(
+                    "instruments"
+                  )
+                }
+              >
                 {t.instruments}
               </button>
 
-              <button>
+              <button
+                className={
+                  encyclopediaCategory ===
+                  "kuiyshi"
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setEncyclopediaCategory(
+                    "kuiyshi"
+                  )
+                }
+              >
                 {t.kuiyshi}
               </button>
 
-              <button>
+              <button
+                className={
+                  encyclopediaCategory ===
+                  "kuis"
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setEncyclopediaCategory(
+                    "kuis"
+                  )
+                }
+              >
                 {t.kuis}
               </button>
 
-              <button>
+              <button
+                className={
+                  encyclopediaCategory ===
+                  "history"
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setEncyclopediaCategory(
+                    "history"
+                  )
+                }
+              >
                 {t.history}
               </button>
 
             </div>
 
-            <div className="article-grid">
+            {/* РЕЗУЛЬТАТЫ */}
 
-              {articleData[lang].map(
-                ([title, sub, icon, text]) => (
+            {filteredArticles.length > 0 ? (
 
-                  <button
-                    className="article-card"
-                    key={title}
-                    onClick={() =>
-                      setArticle(title)
-                    }
-                  >
+              <div className="article-grid">
 
-                    <div className="article-image">
-                      {icon}
-                    </div>
+                {filteredArticles.map(
+                  item => (
 
-                    <div>
+                    <button
+                      className="article-card"
+                      key={item.title}
+                      onClick={() =>
+                        setArticle(
+                          item.title
+                        )
+                      }
+                    >
 
-                      <span>
-                        {sub}
-                      </span>
+                      <div className="article-image">
+                        {item.icon}
+                      </div>
 
-                      <h3>
-                        {title}
-                      </h3>
+                      <div>
 
-                      <p>
-                        {text}
-                      </p>
+                        <span>
+                          {item.sub}
+                        </span>
 
-                      <small>
+                        <h3>
+                          {item.title}
+                        </h3>
 
-                        {t.read} · 5{" "}
-                        {t.minutes}
+                        <p>
+                          {item.text}
+                        </p>
 
-                      </small>
+                        <small>
+                          {t.read} · 5{" "}
+                          {t.minutes}
+                        </small>
 
-                    </div>
+                      </div>
 
-                  </button>
+                    </button>
 
-                )
-              )}
+                  )
+                )}
 
-            </div>
+              </div>
+
+            ) : (
+
+              <div
+                className="result-card"
+                style={{
+                  marginTop: "24px"
+                }}
+              >
+
+                <div className="big-check">
+                  🔎
+                </div>
+
+                <h2>
+                  {t.nothingFound}
+                </h2>
+
+                <p>
+                  {t.tryAnotherSearch}
+                </p>
+
+                <button
+                  className="primary"
+                  onClick={() => {
+                    setEncyclopediaSearch("");
+                    setEncyclopediaCategory(
+                      "all"
+                    );
+                  }}
+                >
+                  {t.all}
+                </button>
+
+              </div>
+
+            )}
 
             {article && (
 
