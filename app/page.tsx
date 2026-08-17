@@ -21,9 +21,8 @@ const lessons = [
    public/
    ├── Adai.mp3
    ├── Aksakkulan.mp3
-   ├── OrchestraBB.mp3
+   ├── BB.mp3
    └── Saryarka.mp3
-
    ========================================================= */
 
 const quiz = [
@@ -33,7 +32,7 @@ const quiz = [
     correct: 0
   },
   {
-    audio: "/OrchestraBB.mp3",
+    audio: "/BB.mp3",
     answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
     correct: 1
   },
@@ -849,7 +848,6 @@ export default function Home() {
                       </small>
 
                     </button>
-
                   )
                 )}
 
@@ -1042,7 +1040,6 @@ export default function Home() {
                     </button>
 
                   </div>
-
                 )
               )}
 
