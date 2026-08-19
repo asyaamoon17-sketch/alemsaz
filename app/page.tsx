@@ -19,27 +19,35 @@ const lessons = [
   { n: 5, done: false },
 ];
 
-const quiz = [
+type QuizQuestion = {
+  title: string;
+  audio: string[];
+};
+
+const quizQuestions: QuizQuestion[] = [
   {
-    audio: "/Saryarka.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 0,
+    title: "Сарыарқа",
+    audio: ["/Saryarka.mp3"],
   },
   {
-    audio: "/BB.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 1,
+    title: "Балбырауын",
+    audio: ["/BB.mp3", "/OrchestraBB.mp3", "/BalbyraunNew.mp3"],
   },
   {
-    audio: "/Adai.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 2,
+    title: "Адай",
+    audio: ["/Adai.mp3"],
   },
   {
-    audio: "/Aksakkulan.mp3",
-    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
-    correct: 3,
+    title: "Ақсақ құлан",
+    audio: ["/Aksakkulan.mp3"],
   },
+];
+
+const kuiAnswers = [
+  "Сарыарқа",
+  "Балбырауын",
+  "Адай",
+  "Ақсақ құлан",
 ];
 
 const translations = {
@@ -55,6 +63,7 @@ const translations = {
     heroTitle2: "чувствуешь.",
     heroText:
       "Учись играть на казахских национальных инструментах, открывай кюи и знакомься с музыкальной историей Казахстана.",
+
     continue: "Продолжить обучение →",
     openEncyclopedia: "Открыть энциклопедию",
 
@@ -66,10 +75,8 @@ const translations = {
 
     quizCard: "Quiz кюев",
     quizCardText: "Угадай мелодию и автора",
-
     encyclopediaCard: "Энциклопедия",
     encyclopediaCardText: "История, инструменты, кюйши",
-
     achievements: "Достижения",
     achievementsText: "12 дней серии • 7 бейджей",
 
@@ -85,16 +92,12 @@ const translations = {
 
     lesson1: "Базовые приёмы",
     lesson1Sub: "Первые звуки",
-
     lesson2: "Переборы",
     lesson2Sub: "Ритм и движение",
-
     lesson3: "Простая мелодия",
     lesson3Sub: "Ақ желкен",
-
     lesson4: "Ритм-паттерны",
     lesson4Sub: "Учимся держать темп",
-
     lesson5: "Первый кюй",
     lesson5Sub: "Сарыарқа",
 
@@ -103,10 +106,14 @@ const translations = {
     question: "Какой кюй звучит в отрывке?",
     questionLabel: "Вопрос",
     of: "из",
+
     wonderful: "Отлично!",
     quizFinished: "Викторина завершена.",
     result: "Результат",
     again: "Ещё раз",
+    nextQuestion: "Следующий вопрос →",
+    correct: "Правильно!",
+    wrong: "Неправильно",
 
     cultureHistory: "CULTURE & HISTORY",
     search: "⌕  Поиск...",
@@ -152,6 +159,7 @@ const translations = {
     heroTitle2: "музыка.",
     heroText:
       "Қазақтың ұлттық аспаптарында ойнауды үйрен, күйлерді танып, Қазақстанның музыкалық тарихымен таныс.",
+
     continue: "Оқуды жалғастыру →",
     openEncyclopedia: "Энциклопедияны ашу",
 
@@ -163,11 +171,9 @@ const translations = {
 
     quizCard: "Күйлер викторинасы",
     quizCardText: "Әуен мен авторды тап",
-
     encyclopediaCard: "Энциклопедия",
     encyclopediaCardText:
       "Тарих, аспаптар, күйші-композиторлар",
-
     achievements: "Жетістіктер",
     achievementsText: "12 күндік серия • 7 белгі",
 
@@ -183,16 +189,12 @@ const translations = {
 
     lesson1: "Негізгі әдістер",
     lesson1Sub: "Алғашқы дыбыстар",
-
     lesson2: "Перне қағыстары",
     lesson2Sub: "Ырғақ және қозғалыс",
-
     lesson3: "Қарапайым әуен",
     lesson3Sub: "Ақ желкен",
-
     lesson4: "Ырғақ үлгілері",
     lesson4Sub: "Темпті сақтауды үйрен",
-
     lesson5: "Алғашқы күй",
     lesson5Sub: "Сарыарқа",
 
@@ -201,10 +203,14 @@ const translations = {
     question: "Бұл үзіндіде қандай күй орындалады?",
     questionLabel: "Сұрақ",
     of: "ішінен",
+
     wonderful: "Тамаша!",
     quizFinished: "Викторина аяқталды.",
     result: "Нәтиже",
     again: "Қайтадан",
+    nextQuestion: "Келесі сұрақ →",
+    correct: "Дұрыс!",
+    wrong: "Қате",
 
     cultureHistory: "CULTURE & HISTORY",
     search: "⌕  Іздеу...",
@@ -250,6 +256,7 @@ const translations = {
     heroTitle2: "feel.",
     heroText:
       "Learn to play Kazakh traditional instruments, discover kui and explore the musical history of Kazakhstan.",
+
     continue: "Continue learning →",
     openEncyclopedia: "Open encyclopedia",
 
@@ -261,10 +268,9 @@ const translations = {
 
     quizCard: "Kui Quiz",
     quizCardText: "Guess the melody and composer",
-
     encyclopediaCard: "Encyclopedia",
-    encyclopediaCardText: "History, instruments and kuiishi",
-
+    encyclopediaCardText:
+      "History, instruments and kuiishi",
     achievements: "Achievements",
     achievementsText: "12 day streak • 7 badges",
 
@@ -280,16 +286,12 @@ const translations = {
 
     lesson1: "Basic techniques",
     lesson1Sub: "First sounds",
-
     lesson2: "Picking patterns",
     lesson2Sub: "Rhythm and movement",
-
     lesson3: "Simple melody",
     lesson3Sub: "Ak zhelken",
-
     lesson4: "Rhythm patterns",
     lesson4Sub: "Learn to keep tempo",
-
     lesson5: "First kui",
     lesson5Sub: "Saryarka",
 
@@ -298,10 +300,14 @@ const translations = {
     question: "Which kui is playing in the excerpt?",
     questionLabel: "Question",
     of: "of",
+
     wonderful: "Great!",
     quizFinished: "Quiz completed.",
     result: "Result",
     again: "Try again",
+    nextQuestion: "Next question →",
+    correct: "Correct!",
+    wrong: "Wrong",
 
     cultureHistory: "CULTURE & HISTORY",
     search: "⌕  Search...",
@@ -336,13 +342,9 @@ const translations = {
   },
 } as const;
 
-/* ВАЖНО:
-   Это общий тип переводов.
-   Именно он исправляет ошибку LessonModal,
-   потому что теперь туда можно передавать русский,
-   казахский или английский язык.
-*/
-type Translation = (typeof translations)[Language];
+type Translation = {
+  [K in keyof typeof translations["Русский"]]: string;
+};
 
 const instrumentNames = {
   Русский: {
@@ -409,7 +411,7 @@ const kurmangazySections = {
     {
       heading: "Основание стиля төкпе",
       paragraphs: [
-        "Курманғазы стал основоположником западной школы исполнительства, получившей название «төкпе». Для этого стиля характерны невероятная динамика, мощные взрывные удары по струнам, стремительный темп и богатырский размах. До него казахская музыка часто была более созерцательной; Курманғазы наполнил ее энергией, страстью и силой.",
+        "Курманғазы стал основоположником западной школы исполнительства, получившей название «төкпе». Для этого стиля характерны невероятная динамика, мощные взрывные удары по струнам, стремительный темп и богатырский размах.",
       ],
     },
     {
@@ -421,14 +423,13 @@ const kurmangazySections = {
     {
       heading: "Воспитание преемников",
       paragraphs: [
-        "Курманғазы оставил после себя сильную плеяду учеников. Самой известной среди них стала Дина Нурпеисова, которая сохранила исполнительские традиции мастера и передала их следующим поколениям.",
+        "Курманғазы оставил после себя сильную плеяду учеников. Самой известной среди них стала Дина Нурпеисова, которая сохранила исполнительские традиции мастера.",
       ],
     },
     {
       heading: "Мировое признание",
       paragraphs: [
-        "Наследие Курманғазы стало важной частью истории казахской музыкальной культуры. Сегодня его имя носят Казахская национальная консерватория в Алматы и Государственный академический оркестр народных инструментов.",
-        "Его жизнь доказала: можно запереть человека в каменных стенах, но невозможно заковать в кандалы музыку, которая выражает дух целого народа.",
+        "Сегодня имя Курманғазы носят Казахская национальная консерватория в Алматы и Государственный академический оркестр народных инструментов. Его жизнь доказала: можно запереть человека в каменных стенах, но невозможно заковать в кандалы музыку, которая выражает дух целого народа.",
       ],
     },
   ],
@@ -470,7 +471,7 @@ const kurmangazySections = {
     {
       heading: "Домбыраның мүмкіндігін кеңейту",
       paragraphs: [
-        "Күйші домбыраның екі ішегін пайдалана отырып, аспаптың дыбыстық мүмкіндігін барынша кеңейтті. Оның орындаушылық мәнері адамның сан алуан сезімдерін жеткізуге мүмкіндік берді.",
+        "Күйші домбыраның екі ішегін пайдалана отырып, аспаптың дыбыстық мүмкіндігін барынша кеңейтті.",
       ],
     },
     {
@@ -497,7 +498,7 @@ const kurmangazySections = {
     {
       heading: "Life and Cultural Legacy",
       paragraphs: [
-        "Kurmangazy Sagyrbayuly (1823–1896) was a brilliant composer, virtuoso performer and one of the key figures in the development of the classical tradition of Kazakh instrumental music. His life was filled with dramatic trials, while his art transformed the musical language of the Great Steppe.",
+        "Kurmangazy Sagyrbayuly (1823–1896) was a brilliant composer, virtuoso performer and one of the key figures in the development of the classical tradition of Kazakh instrumental music.",
       ],
     },
     {
@@ -536,7 +537,7 @@ const kurmangazySections = {
     {
       heading: "Recognition Beyond the Steppe",
       paragraphs: [
-        "Today the Kazakh National Conservatory in Almaty and the State Academic Orchestra of Folk Instruments bear Kurmangazy's name. His legacy remains an important part of Kazakh musical culture.",
+        "Today the Kazakh National Conservatory in Almaty and the State Academic Orchestra of Folk Instruments bear Kurmangazy's name.",
       ],
     },
   ],
@@ -701,20 +702,65 @@ function getArticles(lang: Language): Article[] {
   ];
 }
 
+function shuffleArray<T>(items: T[]): T[] {
+  const array = [...items];
+
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  return array;
+}
+
+type QuizOption = {
+  text: string;
+  correct: boolean;
+};
+
+function createQuizOptions(correctTitle: string): QuizOption[] {
+  return shuffleArray(
+    kuiAnswers.map((answer) => ({
+      text: answer,
+      correct: answer === correctTitle,
+    }))
+  );
+}
+
 export default function Home() {
-  const [lang, setLang] = useState<Language>("Русский");
+  const [lang, setLang] =
+    useState<Language>("Русский");
+
   const [instrument, setInstrument] =
     useState<Instrument>("dombra");
 
-  const [tab, setTab] = useState("home");
+  const [tab, setTab] =
+    useState<
+      "home" | "lessons" | "quiz" | "encyclopedia" | "profile"
+    >("home");
+
   const [xp, setXp] = useState(2450);
   const [streak] = useState(12);
 
-  const [lessonOpen, setLessonOpen] = useState(false);
+  const [lessonOpen, setLessonOpen] =
+    useState(false);
 
-  const [quizIndex, setQuizIndex] = useState(0);
-  const [quizDone, setQuizDone] = useState(false);
-  const [quizScore, setQuizScore] = useState(0);
+  const [quizIndex, setQuizIndex] =
+    useState(0);
+
+  const [quizDone, setQuizDone] =
+    useState(false);
+
+  const [quizScore, setQuizScore] =
+    useState(0);
+
+  const [quizOptions, setQuizOptions] =
+    useState<QuizOption[]>(() =>
+      createQuizOptions(quizQuestions[0].title)
+    );
+
+  const [selectedAnswer, setSelectedAnswer] =
+    useState<number | null>(null);
 
   const [article, setArticle] =
     useState<string | null>(null);
@@ -722,21 +768,33 @@ export default function Home() {
   const [encyclopediaCategory, setEncyclopediaCategory] =
     useState<ArticleCategory>("all");
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] =
+    useState("");
 
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [audioError, setAudioError] = useState(false);
+  const [isPlaying, setIsPlaying] =
+    useState(false);
+
+  const [audioError, setAudioError] =
+    useState(false);
 
   const quizAudioRef =
     useRef<HTMLAudioElement | null>(null);
 
-  const t = translations[lang];
-  const instruments = instrumentNames[lang];
-  const articles = getArticles(lang);
+  const t =
+    translations[lang] as Translation;
 
-  const selectedArticle = article
-    ? articles.find((item) => item.id === article)
-    : undefined;
+  const instruments =
+    instrumentNames[lang];
+
+  const articles =
+    getArticles(lang);
+
+  const selectedArticle =
+    article
+      ? articles.find(
+          (item) => item.id === article
+        )
+      : undefined;
 
   const lessonTitles = [
     [t.lesson1, t.lesson1Sub],
@@ -786,8 +844,73 @@ export default function Home() {
     }
   }
 
+  function loadNextQuizQuestion() {
+    const nextIndex = quizIndex + 1;
+
+    if (nextIndex >= quizQuestions.length) {
+      setQuizDone(true);
+      return;
+    }
+
+    stopQuizAudio();
+
+    setSelectedAnswer(null);
+    setQuizIndex(nextIndex);
+
+    setQuizOptions(
+      createQuizOptions(
+        quizQuestions[nextIndex].title
+      )
+    );
+  }
+
+  function answerQuiz(index: number) {
+    if (selectedAnswer !== null || quizDone) {
+      return;
+    }
+
+    stopQuizAudio();
+
+    setSelectedAnswer(index);
+
+    const correct =
+      quizOptions[index].correct;
+
+    if (correct) {
+      setQuizScore(
+        (score) => score + 1
+      );
+
+      setXp(
+        (currentXp) =>
+          currentXp + 50
+      );
+    } else {
+      setXp(
+        (currentXp) =>
+          currentXp + 10
+      );
+    }
+  }
+
+  function resetQuiz() {
+    stopQuizAudio();
+
+    setQuizIndex(0);
+    setQuizScore(0);
+    setQuizDone(false);
+    setSelectedAnswer(null);
+
+    setQuizOptions(
+      createQuizOptions(
+        quizQuestions[0].title
+      )
+    );
+  }
+
   useEffect(() => {
-    const audio = quizAudioRef.current;
+    const audio =
+      quizAudioRef.current;
 
     if (audio) {
       audio.pause();
@@ -801,58 +924,47 @@ export default function Home() {
 
     setIsPlaying(false);
     setAudioError(false);
+    setSelectedAnswer(null);
   }, [quizIndex]);
 
-  function answerQuiz(i: number) {
-    if (quizDone) return;
+  const normalizedSearch =
+    searchQuery
+      .toLowerCase()
+      .trim();
 
-    stopQuizAudio();
+  const filteredArticles =
+    articles.filter((item) => {
+      if (
+        encyclopediaCategory !==
+          "all" &&
+        item.category !==
+          encyclopediaCategory
+      ) {
+        return false;
+      }
 
-    const correct = i === quiz[quizIndex].correct;
+      if (!normalizedSearch) {
+        return true;
+      }
 
-    if (correct) {
-      setQuizScore((s) => s + 1);
-    }
+      const text = [
+        item.title,
+        item.subtitle,
+        item.description,
+        ...item.sections.flatMap(
+          (section) => [
+            section.heading,
+            ...section.paragraphs,
+          ]
+        ),
+      ]
+        .join(" ")
+        .toLowerCase();
 
-    setXp((x) => x + (correct ? 50 : 10));
-
-    if (quizIndex === quiz.length - 1) {
-      setQuizDone(true);
-    } else {
-      setQuizIndex((i0) => i0 + 1);
-    }
-  }
-
-  const normalizedSearch = searchQuery
-    .toLowerCase()
-    .trim();
-
-  const filteredArticles = articles.filter((item) => {
-    if (
-      encyclopediaCategory !== "all" &&
-      item.category !== encyclopediaCategory
-    ) {
-      return false;
-    }
-
-    if (!normalizedSearch) {
-      return true;
-    }
-
-    const text = [
-      item.title,
-      item.subtitle,
-      item.description,
-      ...item.sections.flatMap((s) => [
-        s.heading,
-        ...s.paragraphs,
-      ]),
-    ]
-      .join(" ")
-      .toLowerCase();
-
-    return text.includes(normalizedSearch);
-  });
+      return text.includes(
+        normalizedSearch
+      );
+    });
 
   return (
     <main className="app-shell">
@@ -861,6 +973,7 @@ export default function Home() {
           className="brand"
           onClick={() => {
             stopAllAudio();
+            setArticle(null);
             setTab("home");
           }}
         >
@@ -885,24 +998,39 @@ export default function Home() {
 
           <div>
             <b>Álem.Music</b>
-            <span>Ұлттық әуен әлемі</span>
+            <span>
+              Ұлттық әуен әлемі
+            </span>
           </div>
         </div>
 
         <div className="top-stats">
           <span>🔥 {streak}</span>
-          <span>⭐ {xp.toLocaleString()}</span>
+
+          <span>
+            ⭐ {xp.toLocaleString()}
+          </span>
 
           <select
             value={lang}
-            onChange={(e) =>
-              setLang(e.target.value as Language)
+            onChange={(event) =>
+              setLang(
+                event.target.value as Language
+              )
             }
             aria-label="Language"
           >
-            <option value="Русский">Русский</option>
-            <option value="Қазақша">Қазақша</option>
-            <option value="English">English</option>
+            <option value="Русский">
+              Русский
+            </option>
+
+            <option value="Қазақша">
+              Қазақша
+            </option>
+
+            <option value="English">
+              English
+            </option>
           </select>
         </div>
       </header>
@@ -942,7 +1070,10 @@ export default function Home() {
                     className="secondary"
                     onClick={() => {
                       stopAllAudio();
-                      setTab("encyclopedia");
+                      setArticle(null);
+                      setTab(
+                        "encyclopedia"
+                      );
                     }}
                   >
                     {t.openEncyclopedia}
@@ -955,7 +1086,8 @@ export default function Home() {
                 style={{
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent:
+                    "center",
                   overflow: "hidden",
                 }}
               >
@@ -980,7 +1112,9 @@ export default function Home() {
                   {t.journey}
                 </span>
 
-                <h2>{t.courseMap}</h2>
+                <h2>
+                  {t.courseMap}
+                </h2>
               </div>
 
               <button
@@ -998,41 +1132,74 @@ export default function Home() {
               <div className="course-top">
                 <div>
                   <span className="pill">
-                    🎵 {instruments[instrument]}
+                    🎵{" "}
+                    {instruments[
+                      instrument
+                    ]}
                   </span>
 
-                  <h3>{t.masteryPath}</h3>
+                  <h3>
+                    {t.masteryPath}
+                  </h3>
 
-                  <p>{t.progress}</p>
+                  <p>
+                    {t.progress}
+                  </p>
                 </div>
 
-                <div className="ring">42%</div>
+                <div className="ring">
+                  42%
+                </div>
               </div>
 
               <div className="path">
-                {lessons.map((l, idx) => (
-                  <button
-                    key={l.n}
-                    className={`lesson-node ${
-                      l.done
-                        ? "done"
-                        : idx === 2
-                        ? "current"
-                        : "locked"
-                    }`}
-                    onClick={() => {
-                      if (idx <= 2) {
-                        stopAllAudio();
-                        setTab("lessons");
-                        setLessonOpen(true);
-                      }
-                    }}
-                  >
-                    <span>{l.done ? "✓" : l.n}</span>
-                    <b>{lessonTitles[idx][0]}</b>
-                    <small>{lessonTitles[idx][1]}</small>
-                  </button>
-                ))}
+                {lessons.map(
+                  (lesson, index) => (
+                    <button
+                      key={lesson.n}
+                      className={`lesson-node ${
+                        lesson.done
+                          ? "done"
+                          : index === 2
+                          ? "current"
+                          : "locked"
+                      }`}
+                      onClick={() => {
+                        if (index <= 2) {
+                          stopAllAudio();
+                          setTab(
+                            "lessons"
+                          );
+                          setLessonOpen(
+                            true
+                          );
+                        }
+                      }}
+                    >
+                      <span>
+                        {lesson.done
+                          ? "✓"
+                          : lesson.n}
+                      </span>
+
+                      <b>
+                        {
+                          lessonTitles[
+                            index
+                          ][0]
+                        }
+                      </b>
+
+                      <small>
+                        {
+                          lessonTitles[
+                            index
+                          ][1]
+                        }
+                      </small>
+                    </button>
+                  )
+                )}
               </div>
             </div>
 
@@ -1045,21 +1212,32 @@ export default function Home() {
                 }}
               >
                 <span>🎧</span>
-                <b>{t.quizCard}</b>
-                <small>{t.quizCardText}</small>
+                <b>
+                  {t.quizCard}
+                </b>
+                <small>
+                  {t.quizCardText}
+                </small>
               </button>
 
               <button
                 className="feature-card"
                 onClick={() => {
                   stopAllAudio();
-                  setTab("encyclopedia");
+                  setArticle(null);
+                  setTab(
+                    "encyclopedia"
+                  );
                 }}
               >
                 <span>📚</span>
-                <b>{t.encyclopediaCard}</b>
+                <b>
+                  {t.encyclopediaCard}
+                </b>
                 <small>
-                  {t.encyclopediaCardText}
+                  {
+                    t.encyclopediaCardText
+                  }
                 </small>
               </button>
 
@@ -1071,8 +1249,12 @@ export default function Home() {
                 }}
               >
                 <span>🏆</span>
-                <b>{t.achievements}</b>
-                <small>{t.achievementsText}</small>
+                <b>
+                  {t.achievements}
+                </b>
+                <small>
+                  {t.achievementsText}
+                </small>
               </button>
             </div>
           </>
@@ -1088,21 +1270,28 @@ export default function Home() {
 
                 <h2>
                   {t.lessonsTitle} ·{" "}
-                  {instruments[instrument]}
+                  {
+                    instruments[
+                      instrument
+                    ]
+                  }
                 </h2>
               </div>
 
               <select
                 className="select"
                 value={instrument}
-                onChange={(e) =>
+                onChange={(event) =>
                   setInstrument(
-                    e.target.value as Instrument
+                    event.target
+                      .value as Instrument
                   )
                 }
               >
                 <option value="dombra">
-                  {instruments.dombra}
+                  {
+                    instruments.dombra
+                  }
                 </option>
 
                 <option value="kobyz">
@@ -1110,7 +1299,10 @@ export default function Home() {
                 </option>
 
                 <option value="sazsyrnai">
-                  {instruments.sazsyrnai}
+                  {
+                    instruments
+                      .sazsyrnai
+                  }
                 </option>
               </select>
             </div>
@@ -1120,52 +1312,88 @@ export default function Home() {
                 {t.beginner}
               </button>
 
-              <button>{t.intermediate}</button>
-              <button>{t.advanced}</button>
+              <button>
+                {t.intermediate}
+              </button>
+
+              <button>
+                {t.advanced}
+              </button>
             </div>
 
             <div className="lesson-list">
-              {lessons.map((l, i) => (
-                <div
-                  className={`lesson-row ${
-                    l.done ? "completed" : ""
-                  }`}
-                  key={l.n}
-                >
-                  <div className="lesson-icon">
-                    {l.done ? "✓" : l.n}
-                  </div>
-
-                  <div>
-                    <b>{lessonTitles[i][0]}</b>
-                    <p>{lessonTitles[i][1]}</p>
-                  </div>
-
-                  <button
-                    className="primary small"
-                    disabled={i > 2}
-                    onClick={() => {
-                      stopAllAudio();
-                      setLessonOpen(true);
-                    }}
+              {lessons.map(
+                (lesson, index) => (
+                  <div
+                    className={`lesson-row ${
+                      lesson.done
+                        ? "completed"
+                        : ""
+                    }`}
+                    key={lesson.n}
                   >
-                    {l.done
-                      ? t.repeat
-                      : i === 2
-                      ? t.start
-                      : t.locked}
-                  </button>
-                </div>
-              ))}
+                    <div className="lesson-icon">
+                      {lesson.done
+                        ? "✓"
+                        : lesson.n}
+                    </div>
+
+                    <div>
+                      <b>
+                        {
+                          lessonTitles[
+                            index
+                          ][0]
+                        }
+                      </b>
+
+                      <p>
+                        {
+                          lessonTitles[
+                            index
+                          ][1]
+                        }
+                      </p>
+                    </div>
+
+                    <button
+                      className="primary small"
+                      disabled={
+                        index > 2
+                      }
+                      onClick={() => {
+                        stopAllAudio();
+                        setLessonOpen(
+                          true
+                        );
+                      }}
+                    >
+                      {lesson.done
+                        ? t.repeat
+                        : index === 2
+                        ? t.start
+                        : t.locked}
+                    </button>
+                  </div>
+                )
+              )}
             </div>
 
             {lessonOpen && (
               <LessonModal
                 t={t}
-                close={() => setLessonOpen(false)}
+                close={() =>
+                  setLessonOpen(false)
+                }
                 onComplete={() => {
-                  setXp((x) => x + 100);
-                  setLessonOpen(false);
+                  setXp(
+                    (currentXp) =>
+                      currentXp + 100
+                  );
+
+                  setLessonOpen(
+                    false
+                  );
                 }}
               />
             )}
@@ -1178,51 +1406,138 @@ export default function Home() {
               {t.kyuiQuiz}
             </span>
 
-            <h2>{t.guessKyui}</h2>
+            <h2>
+              {t.guessKyui}
+            </h2>
 
             {!quizDone ? (
               <div className="quiz-card">
                 <audio
                   ref={quizAudioRef}
-                  src={quiz[quizIndex].audio}
+                  src={
+                    quizQuestions[
+                      quizIndex
+                    ].audio[0]
+                  }
                   preload="auto"
                   onEnded={() =>
-                    setIsPlaying(false)
+                    setIsPlaying(
+                      false
+                    )
                   }
                   onError={() => {
-                    setIsPlaying(false);
-                    setAudioError(true);
-                  }}
-                  style={{ display: "none" }}
-                />
+                    const audio =
+                      quizAudioRef.current;
 
-                <div
-                  className="audio-circle"
-                  onClick={toggleQuizAudio}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(event) => {
+                    if (!audio) {
+                      setIsPlaying(false);
+                      setAudioError(
+                        true
+                      );
+                      return;
+                    }
+
+                    const sources =
+                      quizQuestions[
+                        quizIndex
+                      ].audio;
+
+                    const currentSrc =
+                      audio.src;
+
+                    const currentIndex =
+                      sources.findIndex(
+                        (source) =>
+                          currentSrc.endsWith(
+                            source
+                          )
+                      );
+
+                    const nextIndex =
+                      currentIndex + 1;
+
                     if (
-                      event.key === "Enter" ||
-                      event.key === " "
+                      nextIndex <
+                      sources.length
                     ) {
-                      toggleQuizAudio();
+                      setAudioError(
+                        false
+                      );
+
+                      audio.src =
+                        sources[
+                          nextIndex
+                        ];
+
+                      audio.load();
+
+                      audio
+                        .play()
+                        .then(() =>
+                          setIsPlaying(
+                            true
+                          )
+                        )
+                        .catch(() => {
+                          setIsPlaying(
+                            false
+                          );
+                        });
+                    } else {
+                      setIsPlaying(false);
+                      setAudioError(
+                        true
+                      );
                     }
                   }}
+                  style={{
+                    display: "none",
+                  }}
+                />
+
+                <button
+                  type="button"
+                  className="audio-circle"
+                  onClick={
+                    toggleQuizAudio
+                  }
+                  aria-label="Play audio"
+                  style={{
+                    width: "110px",
+                    height: "110px",
+                    minWidth: "110px",
+                    minHeight: "110px",
+                    borderRadius:
+                      "50%",
+                    fontSize: "34px",
+                    display: "flex",
+                    alignItems:
+                      "center",
+                    justifyContent:
+                      "center",
+                    margin:
+                      "20px auto 28px",
+                    cursor: "pointer",
+                  }}
                 >
-                  {isPlaying ? "❚❚" : "▶️"}
-                </div>
+                  {isPlaying
+                    ? "❚❚"
+                    : "▶"}
+                </button>
 
                 {audioError && (
                   <p
                     style={{
                       color: "#b42318",
-                      textAlign: "center",
+                      textAlign:
+                        "center",
                     }}
                   >
-                    Не удалось воспроизвести аудио.
-                    Проверьте наличие файла в папке
-                    public.
+                    Не удалось
+                    воспроизвести
+                    аудио. Проверьте,
+                    что файл находится
+                    в папке public.
                   </p>
                 )}
 
@@ -1231,25 +1546,167 @@ export default function Home() {
                 </p>
 
                 <div className="quiz-progress">
-                  {t.questionLabel} {quizIndex + 1}{" "}
-                  {t.of} {quiz.length}
+                  {t.questionLabel}{" "}
+                  {quizIndex + 1}{" "}
+                  {t.of}{" "}
+                  {quizQuestions.length}
                 </div>
 
                 <div className="answers">
-                  {quiz[quizIndex].answers.map(
-                    (a, i) => (
-                      <button
-                        key={a}
-                        onClick={() =>
-                          answerQuiz(i)
+                  {quizOptions.map(
+                    (
+                      option,
+                      index
+                    ) => {
+                      const isSelected =
+                        selectedAnswer ===
+                        index;
+
+                      let background =
+                        undefined;
+
+                      let borderColor =
+                        undefined;
+
+                      let textColor =
+                        undefined;
+
+                      if (
+                        selectedAnswer !==
+                        null
+                      ) {
+                        if (
+                          option.correct
+                        ) {
+                          background =
+                            "#dcfce7";
+                          borderColor =
+                            "#22c55e";
+                          textColor =
+                            "#166534";
+                        } else if (
+                          isSelected
+                        ) {
+                          background =
+                            "#fee2e2";
+                          borderColor =
+                            "#ef4444";
+                          textColor =
+                            "#991b1b";
                         }
-                      >
-                        {String.fromCharCode(65 + i)})
-                        {a}
-                      </button>
-                    )
+                      }
+
+                      return (
+                        <button
+                          key={
+                            option.text
+                          }
+                          type="button"
+                          disabled={
+                            selectedAnswer !==
+                            null
+                          }
+                          onClick={() =>
+                            answerQuiz(
+                              index
+                            )
+                          }
+                          style={{
+                            background,
+                            borderColor,
+                            color: textColor,
+                            transition:
+                              "all .2s ease",
+                          }}
+                        >
+                          {String.fromCharCode(
+                            65 + index
+                          )}
+                          ){" "}
+                          {option.text}
+
+                          {selectedAnswer !==
+                            null &&
+                            option.correct && (
+                              <span
+                                style={{
+                                  marginLeft:
+                                    "auto",
+                                }}
+                              >
+                                ✓
+                              </span>
+                            )}
+
+                          {selectedAnswer !==
+                            null &&
+                            isSelected &&
+                            !option.correct && (
+                              <span
+                                style={{
+                                  marginLeft:
+                                    "auto",
+                                }}
+                              >
+                                ✕
+                              </span>
+                            )}
+                        </button>
+                      );
+                    }
                   )}
                 </div>
+
+                {selectedAnswer !==
+                  null && (
+                  <div
+                    style={{
+                      marginTop:
+                        "22px",
+                      textAlign:
+                        "center",
+                    }}
+                  >
+                    <strong
+                      style={{
+                        display:
+                          "block",
+                        marginBottom:
+                          "14px",
+                        fontSize:
+                          "18px",
+                        color:
+                          quizOptions[
+                            selectedAnswer
+                          ].correct
+                            ? "#15803d"
+                            : "#b91c1c",
+                      }}
+                    >
+                      {
+                        quizOptions[
+                          selectedAnswer
+                        ].correct
+                          ? t.correct
+                          : t.wrong
+                      }
+                    </strong>
+
+                    <button
+                      className="primary"
+                      type="button"
+                      onClick={
+                        loadNextQuizQuestion
+                      }
+                    >
+                      {quizIndex ===
+                      quizQuestions.length -
+                        1
+                        ? t.quizFinished
+                        : t.nextQuestion}
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="result-card">
@@ -1257,27 +1714,33 @@ export default function Home() {
                   ✦
                 </div>
 
-                <h2>{t.wonderful}</h2>
+                <h2>
+                  {t.wonderful}
+                </h2>
 
                 <p>
-                  {t.quizFinished} {t.result}:{" "}
-                  {quizScore}/{quiz.length}
+                  {t.quizFinished}{" "}
+                  {t.result}:{" "}
+                  {quizScore}/
+                  {
+                    quizQuestions.length
+                  }
                 </p>
 
                 <b>
                   +
                   {quizScore * 50 +
-                    (quiz.length - quizScore) * 10}{" "}
+                    (quizQuestions.length -
+                      quizScore) *
+                      10}{" "}
                   XP
                 </b>
 
                 <button
                   className="primary"
-                  onClick={() => {
-                    setQuizIndex(0);
-                    setQuizScore(0);
-                    setQuizDone(false);
-                  }}
+                  onClick={
+                    resetQuiz
+                  }
                 >
                   {t.again}
                 </button>
@@ -1293,19 +1756,32 @@ export default function Home() {
                 <div className="section-head">
                   <div>
                     <span className="eyebrow">
-                      {t.cultureHistory}
+                      {
+                        t.cultureHistory
+                      }
                     </span>
 
-                    <h2>{t.encyclopedia}</h2>
+                    <h2>
+                      {
+                        t.encyclopedia
+                      }
+                    </h2>
                   </div>
 
                   <input
                     className="search"
-                    value={searchQuery}
-                    onChange={(e) =>
-                      setSearchQuery(e.target.value)
+                    value={
+                      searchQuery
                     }
-                    placeholder={t.search}
+                    onChange={(event) =>
+                      setSearchQuery(
+                        event.target
+                          .value
+                      )
+                    }
+                    placeholder={
+                      t.search
+                    }
                   />
                 </div>
 
@@ -1318,94 +1794,156 @@ export default function Home() {
                       "kuis",
                       "history",
                     ] as ArticleCategory[]
-                  ).map((cat) => (
-                    <button
-                      key={cat}
-                      className={
-                        encyclopediaCategory === cat
-                          ? "active"
-                          : ""
-                      }
-                      onClick={() =>
-                        setEncyclopediaCategory(cat)
-                      }
-                    >
-                      {cat === "all"
-                        ? t.all
-                        : cat === "instruments"
-                        ? t.instruments
-                        : cat === "kuiyshi"
-                        ? t.kuiyshi
-                        : cat === "kuis"
-                        ? t.kuis
-                        : t.history}
-                    </button>
-                  ))}
+                  ).map(
+                    (category) => (
+                      <button
+                        key={
+                          category
+                        }
+                        className={
+                          encyclopediaCategory ===
+                          category
+                            ? "active"
+                            : ""
+                        }
+                        onClick={() =>
+                          setEncyclopediaCategory(
+                            category
+                          )
+                        }
+                      >
+                        {category ===
+                        "all"
+                          ? t.all
+                          : category ===
+                            "instruments"
+                          ? t.instruments
+                          : category ===
+                            "kuiyshi"
+                          ? t.kuiyshi
+                          : category ===
+                            "kuis"
+                          ? t.kuis
+                          : t.history}
+                      </button>
+                    )
+                  )}
                 </div>
 
                 <div className="article-grid">
-                  {filteredArticles.map((item) => (
-                    <button
-                      className="article-card"
-                      key={item.id}
-                      onClick={() => {
-                        stopAllAudio();
-                        setArticle(item.id);
-                      }}
-                    >
-                      <div
-                        className="article-image"
-                        style={
-                          item.image
-                            ? {
-                                padding: 0,
-                                overflow: "hidden",
-                              }
-                            : undefined
-                        }
+                  {filteredArticles.map(
+                    (item) => (
+                      <button
+                        className="article-card"
+                        key={item.id}
+                        onClick={() => {
+                          stopAllAudio();
+                          setArticle(
+                            item.id
+                          );
+                        }}
                       >
-                        {item.image ? (
-                          <img
-                            src={item.image}
-                            alt={item.title}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                              display: "block",
-                            }}
-                          />
-                        ) : (
-                          item.icon
-                        )}
-                      </div>
+                        <div
+                          className="article-image"
+                          style={{
+                            aspectRatio:
+                              "16 / 9",
+                            padding: 0,
+                            overflow:
+                              "hidden",
+                          }}
+                        >
+                          {item.image ? (
+                            <img
+                              src={
+                                item.image
+                              }
+                              alt={
+                                item.title
+                              }
+                              style={{
+                                width:
+                                  "100%",
+                                height:
+                                  "100%",
+                                objectFit:
+                                  "cover",
+                                objectPosition:
+                                  "center 25%",
+                                display:
+                                  "block",
+                              }}
+                            />
+                          ) : (
+                            <div
+                              style={{
+                                width:
+                                  "100%",
+                                height:
+                                  "100%",
+                                display:
+                                  "flex",
+                                alignItems:
+                                  "center",
+                                justifyContent:
+                                  "center",
+                                fontSize:
+                                  "64px",
+                              }}
+                            >
+                              {
+                                item.icon
+                              }
+                            </div>
+                          )}
+                        </div>
 
-                      <div>
-                        <span>{item.subtitle}</span>
+                        <div>
+                          <span>
+                            {
+                              item.subtitle
+                            }
+                          </span>
 
-                        <h3>{item.title}</h3>
+                          <h3>
+                            {item.title}
+                          </h3>
 
-                        <p>{item.description}</p>
+                          <p>
+                            {
+                              item.description
+                            }
+                          </p>
 
-                        <small>
-                          {t.read} · {item.readTime}
-                        </small>
-                      </div>
-                    </button>
-                  ))}
+                          <small>
+                            {t.read} ·{" "}
+                            {
+                              item.readTime
+                            }
+                          </small>
+                        </div>
+                      </button>
+                    )
+                  )}
 
-                  {filteredArticles.length === 0 && (
+                  {filteredArticles.length ===
+                    0 && (
                     <div
                       style={{
-                        gridColumn: "1 / -1",
-                        padding: "40px",
-                        textAlign: "center",
+                        gridColumn:
+                          "1 / -1",
+                        padding:
+                          "40px",
+                        textAlign:
+                          "center",
                       }}
                     >
                       <p>
-                        {lang === "Қазақша"
+                        {lang ===
+                        "Қазақша"
                           ? "Ештеңе табылмады."
-                          : lang === "English"
+                          : lang ===
+                            "English"
                           ? "Nothing found."
                           : "Ничего не найдено."}
                       </p>
@@ -1420,108 +1958,168 @@ export default function Home() {
                   width: "100%",
                   maxWidth: "1000px",
                   margin: "0 auto",
-                  paddingBottom: "40px",
+                  paddingBottom:
+                    "40px",
                 }}
               >
                 <button
                   className="text-btn article-back"
-                  onClick={() => setArticle(null)}
+                  onClick={() =>
+                    setArticle(null)
+                  }
                 >
-                  ← {t.articleBack}
+                  ←{" "}
+                  {t.articleBack}
                 </button>
 
                 <div
                   className="article-cover"
                   style={{
                     width: "100%",
-                    marginTop: "24px",
-                    marginBottom: "30px",
-                    borderRadius: "28px",
-                    overflow: "hidden",
-                    background: "#181512",
+                    marginTop:
+                      "24px",
+                    marginBottom:
+                      "30px",
+                    borderRadius:
+                      "28px",
+                    overflow:
+                      "hidden",
+                    background:
+                      "#181512",
                     boxShadow:
                       "0 16px 45px rgba(0,0,0,.12)",
                   }}
                 >
                   {selectedArticle.image ? (
-                    <img
-                      src={selectedArticle.image}
-                      alt={selectedArticle.title}
+                    <div
                       style={{
-                        width: "100%",
-                        height: "420px",
-                        objectFit: "cover",
-                        objectPosition: "center",
-                        display: "block",
+                        width:
+                          "100%",
+                        aspectRatio:
+                          "16 / 9",
+                        overflow:
+                          "hidden",
                       }}
-                    />
+                    >
+                      <img
+                        src={
+                          selectedArticle.image
+                        }
+                        alt={
+                          selectedArticle.title
+                        }
+                        style={{
+                          width:
+                            "100%",
+                          height:
+                            "100%",
+                          objectFit:
+                            "cover",
+                          objectPosition:
+                            "center 25%",
+                          display:
+                            "block",
+                        }}
+                      />
+                    </div>
                   ) : (
                     <div
                       style={{
-                        width: "100%",
-                        height: "420px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "90px",
+                        width:
+                          "100%",
+                        aspectRatio:
+                          "16 / 9",
+                        display:
+                          "flex",
+                        alignItems:
+                          "center",
+                        justifyContent:
+                          "center",
+                        fontSize:
+                          "90px",
                       }}
                     >
-                      {selectedArticle.icon}
+                      {
+                        selectedArticle.icon
+                      }
                     </div>
                   )}
 
                   <div
                     style={{
-                      padding: "30px 32px 34px",
-                      color: "#fff",
+                      padding:
+                        "30px 32px 34px",
+                      color:
+                        "#fff",
                     }}
                   >
                     <span
                       className="eyebrow"
                       style={{
-                        display: "block",
-                        marginBottom: "12px",
+                        display:
+                          "block",
+                        marginBottom:
+                          "12px",
                       }}
                     >
-                      ÁLEM.MUSIC · ENCYCLOPEDIA
+                      ÁLEM.MUSIC ·
+                      ENCYCLOPEDIA
                     </span>
 
                     <h1
                       style={{
-                        margin: "0 0 10px",
+                        margin:
+                          "0 0 10px",
                         fontSize:
                           "clamp(30px,5vw,52px)",
-                        lineHeight: 1.08,
+                        lineHeight:
+                          1.08,
                       }}
                     >
-                      {selectedArticle.title}
+                      {
+                        selectedArticle.title
+                      }
                     </h1>
 
                     <p
                       style={{
-                        margin: "0 0 20px",
-                        fontSize: "20px",
-                        lineHeight: 1.4,
-                        opacity: 0.82,
+                        margin:
+                          "0 0 20px",
+                        fontSize:
+                          "20px",
+                        lineHeight:
+                          1.4,
+                        opacity:
+                          0.82,
                       }}
                     >
-                      {selectedArticle.subtitle}
+                      {
+                        selectedArticle.subtitle
+                      }
                     </p>
 
                     <div
                       className="article-meta"
                       style={{
-                        display: "flex",
-                        flexWrap: "wrap",
+                        display:
+                          "flex",
+                        flexWrap:
+                          "wrap",
                         gap: "10px",
                       }}
                     >
                       <span>
-                        📖 {t.articleReadTime}
+                        📖{" "}
+                        {
+                          t.articleReadTime
+                        }
                       </span>
 
                       <span>
-                        🎼 {t.articleSources}
+                        🎼{" "}
+                        {
+                          t.articleSources
+                        }
                       </span>
                     </div>
                   </div>
@@ -1530,26 +2128,37 @@ export default function Home() {
                 <div
                   className="article-body"
                   style={{
-                    width: "100%",
-                    maxWidth: "860px",
-                    margin: "0 auto",
-                    padding: "40px 32px",
-                    boxSizing: "border-box",
-                    background: "#fff",
-                    borderRadius: "26px",
+                    width:
+                      "100%",
+                    maxWidth:
+                      "860px",
+                    margin:
+                      "0 auto",
+                    padding:
+                      "40px 32px",
+                    boxSizing:
+                      "border-box",
+                    background:
+                      "#ffffff",
+                    borderRadius:
+                      "26px",
                     boxShadow:
                       "0 10px 35px rgba(0,0,0,.06)",
                   }}
                 >
                   {selectedArticle.sections.map(
-                    (section, index) => (
+                    (
+                      section,
+                      index
+                    ) => (
                       <section
                         className="article-section"
                         key={`${selectedArticle.id}-${index}`}
                         style={{
                           marginBottom:
                             index ===
-                            selectedArticle.sections
+                            selectedArticle
+                              .sections
                               .length -
                               1
                               ? "0"
@@ -1558,13 +2167,17 @@ export default function Home() {
                       >
                         <h2
                           style={{
-                            margin: "0 0 16px",
+                            margin:
+                              "0 0 16px",
                             fontSize:
                               "clamp(22px,3vw,32px)",
-                            lineHeight: 1.2,
+                            lineHeight:
+                              1.2,
                           }}
                         >
-                          {section.heading}
+                          {
+                            section.heading
+                          }
                         </h2>
 
                         {section.paragraphs.map(
@@ -1573,17 +2186,23 @@ export default function Home() {
                             paragraphIndex
                           ) => (
                             <p
-                              key={paragraphIndex}
+                              key={
+                                paragraphIndex
+                              }
                               style={{
                                 margin:
                                   "0 0 18px",
                                 fontSize:
                                   "clamp(16px,2vw,19px)",
-                                lineHeight: 1.8,
-                                color: "#38332e",
+                                lineHeight:
+                                  1.8,
+                                color:
+                                  "#38332e",
                               }}
                             >
-                              {paragraph}
+                              {
+                                paragraph
+                              }
                             </p>
                           )
                         )}
@@ -1591,17 +2210,23 @@ export default function Home() {
                     )
                   )}
 
-                  {selectedArticle.sections.length ===
+                  {selectedArticle
+                    .sections
+                    .length ===
                     0 && (
                     <div
                       className="article-empty"
                       style={{
-                        textAlign: "center",
-                        padding: "30px 10px",
+                        textAlign:
+                          "center",
+                        padding:
+                          "30px 10px",
                       }}
                     >
                       <p>
-                        {t.articlePlaceholder}
+                        {
+                          t.articlePlaceholder
+                        }
                       </p>
                     </div>
                   )}
@@ -1610,15 +2235,22 @@ export default function Home() {
                 <div
                   className="article-footer"
                   style={{
-                    maxWidth: "860px",
-                    margin: "28px auto 0",
+                    maxWidth:
+                      "860px",
+                    margin:
+                      "28px auto 0",
                   }}
                 >
                   <button
                     className="primary"
-                    onClick={() => setArticle(null)}
+                    onClick={() =>
+                      setArticle(null)
+                    }
                   >
-                    ← {t.articleBack}
+                    ←{" "}
+                    {
+                      t.articleBack
+                    }
                   </button>
                 </div>
               </article>
@@ -1632,55 +2264,81 @@ export default function Home() {
               YOUR PROFILE
             </span>
 
-            <h2>{t.profileTitle}</h2>
+            <h2>
+              {t.profileTitle}
+            </h2>
 
             <div className="profile-card">
-              <div className="avatar">A</div>
+              <div className="avatar">
+                A
+              </div>
 
-              <h3>{t.musician}</h3>
+              <h3>
+                {t.musician}
+              </h3>
 
               <p>
-                {instruments[instrument]} ·{" "}
-                {t.beginner}
+                {
+                  instruments[
+                    instrument
+                  ]
+                }{" "}
+                · {t.beginner}
               </p>
 
               <div className="stats">
                 <div>
-                  <b>{xp.toLocaleString()}</b>
+                  <b>
+                    {xp.toLocaleString()}
+                  </b>
                   <small>XP</small>
                 </div>
 
                 <div>
                   <b>{streak}</b>
-                  <small>{t.days}</small>
+                  <small>
+                    {t.days}
+                  </small>
                 </div>
 
                 <div>
                   <b>7</b>
-                  <small>{t.badges}</small>
+                  <small>
+                    {t.badges}
+                  </small>
                 </div>
               </div>
             </div>
 
-            <h3>{t.achievements}</h3>
+            <h3>
+              {t.achievements}
+            </h3>
 
             <div className="badges">
               <div>
                 🏅
                 <b>{t.beginner}</b>
-                <small>{t.firstLesson}</small>
+                <small>
+                  {t.firstLesson}
+                </small>
               </div>
 
               <div>
                 🔥
                 <b>30 күн</b>
-                <small>{t.learningStreak}</small>
+                <small>
+                  {t.learningStreak}
+                </small>
               </div>
 
               <div>
                 🎵
-                <b>Домбырашы</b>
-                <small>{t.tenKuis}</small>
+                <b>
+                  Домбырашы
+                </b>
+                <small>
+                  {t.tenKuis}
+                </small>
               </div>
             </div>
           </div>
@@ -1700,36 +2358,39 @@ export default function Home() {
             ],
             ["profile", "◉", t.profile],
           ] as const
-        ).map(([id, icon, text]) => (
-          <button
-            key={id}
-            className={
-              tab === id ? "active" : ""
-            }
-            onClick={() => {
-              if (id !== "quiz") {
-                stopAllAudio();
+        ).map(
+          ([id, icon, text]) => (
+            <button
+              key={id}
+              className={
+                tab === id
+                  ? "active"
+                  : ""
               }
+              onClick={() => {
+                if (id !== "quiz") {
+                  stopAllAudio();
+                }
 
-              setTab(id);
+                setTab(id);
 
-              if (id === "encyclopedia") {
-                setArticle(null);
-              }
-            }}
-          >
-            <span>{icon}</span>
-            <small>{text}</small>
-          </button>
-        ))}
+                if (
+                  id ===
+                  "encyclopedia"
+                ) {
+                  setArticle(null);
+                }
+              }}
+            >
+              <span>{icon}</span>
+              <small>{text}</small>
+            </button>
+          )
+        )}
       </nav>
     </main>
   );
 }
-
-/* =================================================
-   ИСПРАВЛЕННЫЙ LESSON MODAL
-   ================================================= */
 
 function LessonModal({
   t,
@@ -1740,6 +2401,40 @@ function LessonModal({
   close: () => void;
   onComplete: () => void;
 }) {
+  const [playing, setPlaying] =
+    useState(false);
+
+  const [audioError, setAudioError] =
+    useState(false);
+
+  const audioRef =
+    useRef<HTMLAudioElement | null>(
+      null
+    );
+
+  async function playLessonAudio() {
+    const audio =
+      audioRef.current;
+
+    if (!audio) return;
+
+    if (!audio.paused) {
+      audio.pause();
+      setPlaying(false);
+      return;
+    }
+
+    setAudioError(false);
+
+    try {
+      await audio.play();
+      setPlaying(true);
+    } catch {
+      setPlaying(false);
+      setAudioError(true);
+    }
+  }
+
   return (
     <div className="overlay">
       <div className="lesson-modal">
@@ -1754,20 +2449,101 @@ function LessonModal({
           {t.module}
         </span>
 
-        <h2>{t.lesson3Sub}</h2>
+        <h2>
+          {t.lesson3Sub}
+        </h2>
 
-        <p>{t.repeatSequence}</p>
+        <p>
+          {t.repeatSequence}
+        </p>
 
-        <div className="video-placeholder">
-          <button type="button">▶️</button>
+        <audio
+          ref={audioRef}
+          src="/Saryarka.mp3"
+          preload="metadata"
+          onEnded={() =>
+            setPlaying(false)
+          }
+          onError={() =>
+            setAudioError(true)
+          }
+        />
+
+        <div
+          className="video-placeholder"
+          style={{
+            position:
+              "relative",
+            minHeight:
+              "220px",
+            display:
+              "flex",
+            flexDirection:
+              "column",
+            alignItems:
+              "center",
+            justifyContent:
+              "center",
+          }}
+        >
+          <button
+            type="button"
+            onClick={
+              playLessonAudio
+            }
+            aria-label="Play lesson"
+            style={{
+              width: "96px",
+              height: "96px",
+              minWidth: "96px",
+              minHeight: "96px",
+              borderRadius:
+                "50%",
+              border:
+                "none",
+              fontSize:
+                "32px",
+              cursor:
+                "pointer",
+              display:
+                "flex",
+              alignItems:
+                "center",
+              justifyContent:
+                "center",
+            }}
+          >
+            {playing
+              ? "❚❚"
+              : "▶"}
+          </button>
+
           <small>
-            {t.video} · 0:15
+            {t.video} ·
+            0:15
           </small>
         </div>
 
+        {audioError && (
+          <p
+            style={{
+              color:
+                "#b42318",
+              textAlign:
+                "center",
+            }}
+          >
+            Не удалось
+            воспроизвести
+            аудио урока.
+          </p>
+        )}
+
         <div className="tab-view">
           <div>
-            1-шек&nbsp;&nbsp;&nbsp;2-шек&nbsp;&nbsp;&nbsp;3-шек
+            1-шек&nbsp;&nbsp;&nbsp;
+            2-шек&nbsp;&nbsp;&nbsp;
+            3-шек
           </div>
 
           <div className="strings">
@@ -1784,16 +2560,24 @@ function LessonModal({
         </div>
 
         <div className="speed">
-          <button>0.5×</button>
+          <button>
+            0.5×
+          </button>
+
           <button className="active">
             1×
           </button>
-          <button>1.5×</button>
+
+          <button>
+            1.5×
+          </button>
         </div>
 
         <button
           className="primary full"
-          onClick={onComplete}
+          onClick={
+            onComplete
+          }
         >
           {t.finishLesson}
         </button>
