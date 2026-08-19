@@ -11,83 +11,6 @@ type ArticleCategory =
   | "kuis"
   | "history";
 
-type Translation = {
-  home: string;
-  lessons: string;
-  quiz: string;
-  encyclopedia: string;
-  profile: string;
-  heroEyebrow: string;
-  heroTitle1: string;
-  heroTitle2: string;
-  heroText: string;
-  continue: string;
-  openEncyclopedia: string;
-  journey: string;
-  courseMap: string;
-  allLessons: string;
-  masteryPath: string;
-  progress: string;
-  quizCard: string;
-  quizCardText: string;
-  encyclopediaCard: string;
-  encyclopediaCardText: string;
-  achievements: string;
-  achievementsText: string;
-  learningPath: string;
-  lessonsTitle: string;
-  beginner: string;
-  intermediate: string;
-  advanced: string;
-  repeat: string;
-  start: string;
-  locked: string;
-  lesson1: string;
-  lesson1Sub: string;
-  lesson2: string;
-  lesson2Sub: string;
-  lesson3: string;
-  lesson3Sub: string;
-  lesson4: string;
-  lesson4Sub: string;
-  lesson5: string;
-  lesson5Sub: string;
-  kyuiQuiz: string;
-  guessKyui: string;
-  question: string;
-  questionLabel: string;
-  of: string;
-  wonderful: string;
-  quizFinished: string;
-  result: string;
-  again: string;
-  cultureHistory: string;
-  search: string;
-  all: string;
-  instruments: string;
-  kuiyshi: string;
-  kuis: string;
-  history: string;
-  read: string;
-  minutes: string;
-  profileTitle: string;
-  musician: string;
-  days: string;
-  badges: string;
-  firstLesson: string;
-  learningStreak: string;
-  tenKuis: string;
-  module: string;
-  repeatSequence: string;
-  video: string;
-  finishLesson: string;
-  understandable: string;
-  articleReadTime: string;
-  articleBack: string;
-  articleSources: string;
-  articlePlaceholder: string;
-};
-
 const lessons = [
   { n: 1, done: true },
   { n: 2, done: true },
@@ -119,7 +42,7 @@ const quiz = [
   },
 ];
 
-const translations: Record<Language, Translation> = {
+const translations = {
   Русский: {
     home: "Главная",
     lessons: "Уроки",
@@ -132,7 +55,6 @@ const translations: Record<Language, Translation> = {
     heroTitle2: "чувствуешь.",
     heroText:
       "Учись играть на казахских национальных инструментах, открывай кюи и знакомься с музыкальной историей Казахстана.",
-
     continue: "Продолжить обучение →",
     openEncyclopedia: "Открыть энциклопедию",
 
@@ -144,8 +66,10 @@ const translations: Record<Language, Translation> = {
 
     quizCard: "Quiz кюев",
     quizCardText: "Угадай мелодию и автора",
+
     encyclopediaCard: "Энциклопедия",
     encyclopediaCardText: "История, инструменты, кюйши",
+
     achievements: "Достижения",
     achievementsText: "12 дней серии • 7 бейджей",
 
@@ -161,12 +85,16 @@ const translations: Record<Language, Translation> = {
 
     lesson1: "Базовые приёмы",
     lesson1Sub: "Первые звуки",
+
     lesson2: "Переборы",
     lesson2Sub: "Ритм и движение",
+
     lesson3: "Простая мелодия",
     lesson3Sub: "Ақ желкен",
+
     lesson4: "Ритм-паттерны",
     lesson4Sub: "Учимся держать темп",
+
     lesson5: "Первый кюй",
     lesson5Sub: "Сарыарқа",
 
@@ -199,7 +127,8 @@ const translations: Record<Language, Translation> = {
     tenKuis: "10 кюев",
 
     module: "МОДУЛЬ 3 · УРОК 2",
-    repeatSequence: "Повтори последовательность и следи за ритмом.",
+    repeatSequence:
+      "Повтори последовательность и следи за ритмом.",
     video: "Видео-демонстрация",
     finishLesson: "✓ Завершить урок · +100 XP",
     understandable: "Понятно",
@@ -207,7 +136,8 @@ const translations: Record<Language, Translation> = {
     articleReadTime: "8 мин чтения",
     articleBack: "Назад к энциклопедии",
     articleSources: "Исторический очерк",
-    articlePlaceholder: "Полная статья будет добавлена позже.",
+    articlePlaceholder:
+      "Полная статья будет добавлена позже.",
   },
 
   Қазақша: {
@@ -222,7 +152,6 @@ const translations: Record<Language, Translation> = {
     heroTitle2: "музыка.",
     heroText:
       "Қазақтың ұлттық аспаптарында ойнауды үйрен, күйлерді танып, Қазақстанның музыкалық тарихымен таныс.",
-
     continue: "Оқуды жалғастыру →",
     openEncyclopedia: "Энциклопедияны ашу",
 
@@ -234,8 +163,11 @@ const translations: Record<Language, Translation> = {
 
     quizCard: "Күйлер викторинасы",
     quizCardText: "Әуен мен авторды тап",
+
     encyclopediaCard: "Энциклопедия",
-    encyclopediaCardText: "Тарих, аспаптар, күйші-композиторлар",
+    encyclopediaCardText:
+      "Тарих, аспаптар, күйші-композиторлар",
+
     achievements: "Жетістіктер",
     achievementsText: "12 күндік серия • 7 белгі",
 
@@ -251,12 +183,16 @@ const translations: Record<Language, Translation> = {
 
     lesson1: "Негізгі әдістер",
     lesson1Sub: "Алғашқы дыбыстар",
+
     lesson2: "Перне қағыстары",
     lesson2Sub: "Ырғақ және қозғалыс",
+
     lesson3: "Қарапайым әуен",
     lesson3Sub: "Ақ желкен",
+
     lesson4: "Ырғақ үлгілері",
     lesson4Sub: "Темпті сақтауды үйрен",
+
     lesson5: "Алғашқы күй",
     lesson5Sub: "Сарыарқа",
 
@@ -289,7 +225,8 @@ const translations: Record<Language, Translation> = {
     tenKuis: "10 күй",
 
     module: "3-МОДУЛЬ · 2-САБАҚ",
-    repeatSequence: "Реттілікті қайталап, ырғаққа назар аудар.",
+    repeatSequence:
+      "Реттілікті қайталап, ырғаққа назар аудар.",
     video: "Бейне-демонстрация",
     finishLesson: "✓ Сабақты аяқтау · +100 XP",
     understandable: "Түсінікті",
@@ -297,7 +234,8 @@ const translations: Record<Language, Translation> = {
     articleReadTime: "8 минут оқу",
     articleBack: "Энциклопедияға оралу",
     articleSources: "Тарихи очерк",
-    articlePlaceholder: "Толық мақала кейінірек қосылады.",
+    articlePlaceholder:
+      "Толық мақала кейінірек қосылады.",
   },
 
   English: {
@@ -312,7 +250,6 @@ const translations: Record<Language, Translation> = {
     heroTitle2: "feel.",
     heroText:
       "Learn to play Kazakh traditional instruments, discover kui and explore the musical history of Kazakhstan.",
-
     continue: "Continue learning →",
     openEncyclopedia: "Open encyclopedia",
 
@@ -324,8 +261,10 @@ const translations: Record<Language, Translation> = {
 
     quizCard: "Kui Quiz",
     quizCardText: "Guess the melody and composer",
+
     encyclopediaCard: "Encyclopedia",
     encyclopediaCardText: "History, instruments and kuiishi",
+
     achievements: "Achievements",
     achievementsText: "12 day streak • 7 badges",
 
@@ -341,12 +280,16 @@ const translations: Record<Language, Translation> = {
 
     lesson1: "Basic techniques",
     lesson1Sub: "First sounds",
+
     lesson2: "Picking patterns",
     lesson2Sub: "Rhythm and movement",
+
     lesson3: "Simple melody",
     lesson3Sub: "Ak zhelken",
+
     lesson4: "Rhythm patterns",
     lesson4Sub: "Learn to keep tempo",
+
     lesson5: "First kui",
     lesson5Sub: "Saryarka",
 
@@ -379,7 +322,8 @@ const translations: Record<Language, Translation> = {
     tenKuis: "10 kui",
 
     module: "MODULE 3 · LESSON 2",
-    repeatSequence: "Repeat the sequence and follow the rhythm.",
+    repeatSequence:
+      "Repeat the sequence and follow the rhythm.",
     video: "Video demonstration",
     finishLesson: "✓ Complete lesson · +100 XP",
     understandable: "Got it",
@@ -387,11 +331,20 @@ const translations: Record<Language, Translation> = {
     articleReadTime: "8 min read",
     articleBack: "Back to encyclopedia",
     articleSources: "Historical feature",
-    articlePlaceholder: "The full article will be added later.",
+    articlePlaceholder:
+      "The full article will be added later.",
   },
-};
+} as const;
 
-const instrumentNames: Record<Language, Record<Instrument, string>> = {
+/* ВАЖНО:
+   Это общий тип переводов.
+   Именно он исправляет ошибку LessonModal,
+   потому что теперь туда можно передавать русский,
+   казахский или английский язык.
+*/
+type Translation = (typeof translations)[Language];
+
+const instrumentNames = {
   Русский: {
     dombra: "Домбра",
     kobyz: "Кобыз",
@@ -409,11 +362,6 @@ const instrumentNames: Record<Language, Record<Instrument, string>> = {
   },
 };
 
-type ArticleSection = {
-  heading: string;
-  paragraphs: string[];
-};
-
 type Article = {
   id: string;
   title: string;
@@ -423,67 +371,64 @@ type Article = {
   category: ArticleCategory;
   description: string;
   readTime: string;
-  sections: ArticleSection[];
+  sections: {
+    heading: string;
+    paragraphs: string[];
+  }[];
 };
 
-const kurmangazySections: Record<
-  "ru" | "kz" | "en",
-  ArticleSection[]
-> = {
+const kurmangazySections = {
   ru: [
     {
       heading: "ГОЛОС СТЕПНОЙ СВОБОДЫ",
       paragraphs: [
-        "Как Курманғазы Сағырбайұлы закодировал душу народа в струнах домбры.",
+        "Как Курманғазы Сагырбайулы закодировал душу народа в струнах домбры.",
       ],
     },
     {
       heading: "Жизненный путь и культурное наследие",
       paragraphs: [
-        "В истории казахской культуры есть имена, ставшие духовными столпами нации. Среди них особое место занимает Курманғазы Сағырбайұлы (1823–1896) — выдающийся композитор, исполнитель-виртуоз и одна из ключевых фигур казахского инструментального искусства.",
-        "Его творчество связано с темами свободы, человеческого достоинства, природы и жизни народа. Через звучание домбры он создавал музыкальные образы, которые стали частью культурной памяти Казахстана.",
+        "В истории казахской культуры есть имена, ставшие духовными столпами нации. Среди них особое место занимает Курманғазы Сағырбайұлы (1823–1896) — гениальный композитор, исполнитель-виртуоз и создатель классической школы инструментальной музыки. Его жизнь была полна драматических испытаний, а его творчество навсегда изменило музыкальный код великой степи.",
       ],
     },
     {
-      heading: "Жизненный путь: сквозь испытания к признанию",
+      heading: "Жизненный путь: Сквозь тернии к признанию",
       paragraphs: [
-        "Курманғазы родился в 1823 году в Бөкейской Орде в семье Сағырбая. Его детство прошло в непростых условиях, однако музыка рано стала важной частью его жизни.",
-        "В юности Курманғазы стремился овладеть домброй и совершенствовал исполнительское мастерство. Важную роль в его становлении сыграла встреча с известным кюйши Ұзақом, у которого он учился музыкальному искусству.",
-        "В XIX веке Курманғазы неоднократно сталкивался с преследованиями и несправедливостью. Его независимый характер и стремление говорить о жизни народа нашли отражение в его кюях.",
-        "Курманғазы умер в 1896 году. Его имя и творчество сохранились в исполнительской традиции и продолжают изучаться музыкантами.",
+        "Курманғазы родился в 1823 году в Букеевской Орде (ныне Западно-Казахстанская область) в семье бедного кочевника Сагырбая. Из-за крайней нужды мальчик уже в 1829 году, будучи шестилетним ребенком, начал работать — пас чужой скот. Единственным его утешением в эти тяжелые годы стала музыка, доносившаяся из аулов.",
+        "В подростковом возрасте Курманғазы твердо решил освоить домбру. Отец был категорически против: в те времена ремесло бродячего музыканта считалось синонимом нищеты. Однако мать композитора, Алма, тайно поддерживала сына, разглядев в нем великий дар. В 1841 году, в возрасте 18 лет, Курманғазы принимает судьбоносное решение: он покидает родной дом, чтобы учиться у знаменитого кюйши Узака, и начинает жизнь странствующего музыканта.",
+        "Вторая половина XIX века стала для Курманғазы временем серьезных испытаний. Обладая обостренным чувством справедливости, он открыто выступал против угнетения простых людей местными баями и царской администрацией. За свой независимый нрав, лидерские качества и поддержку народных движений композитор подвергался жестоким преследованиям. Его неоднократно арестовывали, он сидел в тюрьмах Уральска, Оренбурга и Гурьева, но каждый раз совершал дерзкие побеги, продолжая свой творческий путь.",
+        "Музыкант ушел из жизни в 1896 году и был похоронен в селе Алтынжар (ныне Астраханская область).",
       ],
     },
     {
-      heading: "Вклад в культуру",
+      heading: "Вклад в культуру: Создание музыкальной академии степи",
       paragraphs: [
-        "Курманғазы оказал огромное влияние на развитие домбрового искусства. Его творчество стало одним из важнейших источников западноказахстанской традиции төкпе-кюй.",
+        "Вклад Курманғазы в казахскую культуру невозможно переоценить. Он совершил настоящую революцию в народной музыке, подняв исполнительство на домбре на уровень высочайшего академического искусства.",
       ],
     },
     {
-      heading: "Төкпе күй",
+      heading: "Основание стиля төкпе",
       paragraphs: [
-        "Для төкпе-кюй характерны движение, энергия, мощные қағыстар и широкий исполнительский жест. В произведениях Курманғазы эти особенности получили особенно яркое выражение.",
+        "Курманғазы стал основоположником западной школы исполнительства, получившей название «төкпе». Для этого стиля характерны невероятная динамика, мощные взрывные удары по струнам, стремительный темп и богатырский размах. До него казахская музыка часто была более созерцательной; Курманғазы наполнил ее энергией, страстью и силой.",
       ],
     },
     {
-      heading: "Домбра как голос человека",
+      heading: "Расширение возможностей домбры",
       paragraphs: [
-        "В руках мастера домбра могла передавать широкий спектр эмоциональных состояний: тревогу, печаль, надежду, радость и стремление к свободе.",
-        "Именно поэтому его кюи воспринимаются не только как инструментальная музыка, но и как своеобразные музыкальные рассказы.",
+        "Композитор разработал уникальные технические приемы игры, которые позволяли двум струнам деревянного инструмента звучать подобно целому оркестру. Он научил домбру передавать сложнейшую гамму человеческих чувств — от глубокой философской скорби до ликующей радости свободы.",
       ],
     },
     {
-      heading: "Школа и преемники",
+      heading: "Воспитание преемников",
       paragraphs: [
-        "Музыкальная традиция Курманғазы продолжилась через его учеников и последующие поколения исполнителей. Особое место среди выдающихся продолжателей традиции занимает Дина Нұрпейісова.",
-        "Благодаря передаче исполнительских приёмов из поколения в поколение стиль Курманғазы сохранил свою жизнеспособность и стал частью профессионального музыкального образования.",
+        "Курманғазы оставил после себя сильную плеяду учеников. Самой известной среди них стала Дина Нурпеисова, которая сохранила исполнительские традиции мастера и передала их следующим поколениям.",
       ],
     },
     {
-      heading: "Наследие",
+      heading: "Мировое признание",
       paragraphs: [
-        "Сегодня имя Курманғазы занимает особое место в музыкальной культуре Казахстана. Его произведения исполняются домбристами, оркестрами народных инструментов и профессиональными музыкантами.",
-        "Его наследие показывает, насколько выразительным может быть национальный инструмент и как музыка способна сохранять историческую память народа.",
+        "Наследие Курманғазы стало важной частью истории казахской музыкальной культуры. Сегодня его имя носят Казахская национальная консерватория в Алматы и Государственный академический оркестр народных инструментов.",
+        "Его жизнь доказала: можно запереть человека в каменных стенах, но невозможно заковать в кандалы музыку, которая выражает дух целого народа.",
       ],
     },
   ],
@@ -498,50 +443,46 @@ const kurmangazySections: Record<
     {
       heading: "Өмір жолы және мәдени мұрасы",
       paragraphs: [
-        "Қазақ мәдениетінің тарихында халықтың рухани тірегіне айналған тұлғалар бар. Солардың ішінде Құрманғазы Сағырбайұлының (1823–1896) орны ерекше.",
-        "Ол — ұлы композитор, күйші-виртуоз және қазақтың аспаптық музыкасының дамуына зор үлес қосқан тұлға.",
+        "Қазақ мәдениетінің тарихында халықтың рухани тірегіне айналған тұлғалар бар. Солардың ішінде Құрманғазы Сағырбайұлының (1823–1896) орны ерекше. Ол — ұлы композитор, күйші-виртуоз және қазақтың аспаптық музыкасының классикалық мектебін қалыптастырған көрнекті тұлға.",
       ],
     },
     {
-      heading: "Өмір жолы: қиындықтардан мойындалуға дейін",
+      heading: "Өмір жолы: Қиындықтардан мойындалуға дейін",
       paragraphs: [
-        "Құрманғазы 1823 жылы Бөкей Ордасында Сағырбайдың отбасында дүниеге келген. Балалық шағы күрделі жағдайда өтті, бірақ музыка оның өмірінде ерте кезден маңызды орын алды.",
-        "Жастық шағында ол домбыраны меңгеруге ұмтылып, орындаушылық шеберлігін жетілдірді. Оның қалыптасуына белгілі күйші Ұзақпен кездесуі және одан тәлім алуы әсер етті.",
-        "XIX ғасырда Құрманғазы бірнеше рет қуғын-сүргінге ұшырады. Оның еркіндікке, әділдікке деген көзқарасы күйлерінен көрініс тапты.",
-        "Құрманғазы 1896 жылы дүниеден өтті. Оның шығармалары мен орындаушылық дәстүрі кейінгі ұрпаққа жетті.",
+        "Құрманғазы 1823 жылы Бөкей Ордасында кедей көшпелі Сағырбайдың отбасында дүниеге келген. Отбасының тұрмысы өте ауыр болғандықтан, ол алты жасында еңбек етуге мәжбүр болып, мал баққан. Сол қиын жылдарда оның жалғыз жұбанышы музыка болды.",
+        "Жасөспірім кезінде Құрманғазы домбыраны меңгеруге бел буды. Анасы Алма оның бойындағы үлкен дарынды көріп, қолдау көрсетті. 1841 жылы он сегіз жасында Құрманғазы атақты күйші Ұзақтан білім алу үшін туған үйінен аттанды.",
+        "XIX ғасырдың екінші жартысында ол қарапайым халықты жергілікті байлар мен патша әкімшілігінің қысымынан қорғап, бірнеше рет қудаланып, тұтқындалды. Соған қарамастан шығармашылық жолын жалғастырды.",
+        "Музыкант 1896 жылы дүниеден өтіп, Алтынжар ауылында жерленді.",
       ],
     },
     {
       heading: "Мәдениетке қосқан үлесі",
       paragraphs: [
-        "Құрманғазы домбыра өнерінің дамуына үлкен ықпал етті. Оның шығармашылығы Батыс Қазақстандағы төкпе күй дәстүрінің маңызды негіздерінің біріне айналды.",
+        "Құрманғазы халық музыкасына үлкен өзгеріс әкеліп, домбырада орындау өнерін аса жоғары кәсіби деңгейге көтерді.",
       ],
     },
     {
-      heading: "Төкпе күй дәстүрі",
+      heading: "Төкпе күй дәстүрінің қалыптасуы",
       paragraphs: [
-        "Төкпе күйге қуатты ырғақ, батыл қағыс, шапшаң қозғалыс және кең тынысты орындау мәнері тән. Құрманғазы шығармаларында бұл ерекшеліктер ерекше айқын көрінеді.",
+        "Құрманғазы Батыс Қазақстанда кең тараған төкпе күй орындаушылық мектебінің қалыптасуына үлкен үлес қосты. Бұл дәстүрге қуатты ырғақ, батыл қағыстар, шапшаңдық және кең тынысты орындау мәнері тән.",
       ],
     },
     {
-      heading: "Домбыра — адамның үні",
+      heading: "Домбыраның мүмкіндігін кеңейту",
       paragraphs: [
-        "Құрманғазының орындаушылық шеберлігі домбыра арқылы адамның қуанышын, мұңын, үмітін, алаңын және еркіндікке деген ұмтылысын жеткізуге мүмкіндік берді.",
-        "Сондықтан оның күйлері тек музыкалық шығарма ғана емес, халық өмірін бейнелейтін музыкалық әңгіме ретінде де қабылданады.",
+        "Күйші домбыраның екі ішегін пайдалана отырып, аспаптың дыбыстық мүмкіндігін барынша кеңейтті. Оның орындаушылық мәнері адамның сан алуан сезімдерін жеткізуге мүмкіндік берді.",
       ],
     },
     {
-      heading: "Шәкірттері және жалғастық",
+      heading: "Шәкірт тәрбиесі",
       paragraphs: [
-        "Құрманғазының музыкалық дәстүрі шәкірттері мен кейінгі ұрпақ орындаушылары арқылы жалғасты. Солардың ішіндегі ең танымал тұлғалардың бірі — Дина Нұрпейісова.",
-        "Орындаушылық тәсілдердің ұрпақтан ұрпаққа берілуі Құрманғазы мектебінің сақталуына мүмкіндік берді.",
+        "Құрманғазы өзінен кейін мықты шәкірттер мектебін қалдырды. Солардың ішіндегі ең танымалы — Дина Нұрпейісова.",
       ],
     },
     {
-      heading: "Мұрасы",
+      heading: "Әлемдік мойындау",
       paragraphs: [
-        "Бүгінде Құрманғазының есімі Қазақстанның музыкалық мәдениетінде ерекше орын алады. Оның күйлері домбырашылар, халық аспаптар оркестрлері және кәсіби музыканттар тарапынан орындалады.",
-        "Оның мұрасы ұлттық аспаптың қаншалықты терең ой мен сезімді жеткізе алатынын көрсетеді.",
+        "Құрманғазының шығармашылық мұрасы халықаралық деңгейде де танылды. Бүгінде Алматыдағы Қазақ ұлттық консерваториясы мен Мемлекеттік академиялық халық аспаптар оркестрі Құрманғазының есімін иеленеді.",
       ],
     },
   ],
@@ -550,56 +491,52 @@ const kurmangazySections: Record<
     {
       heading: "THE VOICE OF STEPPE FREEDOM",
       paragraphs: [
-        "How Kurmangazy Sagyrbayuly expressed the spirit of his people through the strings of the dombra.",
+        "How Kurmangazy Sagyrbayuly encoded the spirit of his people in the strings of the dombra.",
       ],
     },
     {
       heading: "Life and Cultural Legacy",
       paragraphs: [
-        "Kurmangazy Sagyrbayuly (1823–1896) was an outstanding Kazakh composer, virtuoso performer and one of the defining figures of Kazakh instrumental music.",
-        "His music explored freedom, dignity, nature and the life of ordinary people. Through the dombra, he created musical images that became part of Kazakhstan's cultural memory.",
+        "Kurmangazy Sagyrbayuly (1823–1896) was a brilliant composer, virtuoso performer and one of the key figures in the development of the classical tradition of Kazakh instrumental music. His life was filled with dramatic trials, while his art transformed the musical language of the Great Steppe.",
       ],
     },
     {
-      heading: "A Life Through Hardship",
+      heading: "A Life Through Hardship to Recognition",
       paragraphs: [
-        "Kurmangazy was born in 1823 in the Bukey Horde into the family of Sagyrbay. His childhood was difficult, but music became an important part of his life at an early age.",
-        "As a young musician, he worked to master the dombra and develop his performance skills. His encounter with the famous kuiishi Uzak became an important stage in his musical education.",
-        "During the nineteenth century, Kurmangazy faced persecution and injustice. His independent character and concern for ordinary people became reflected in his kui.",
-        "Kurmangazy died in 1896, but his music continued through generations of performers.",
+        "Kurmangazy was born in 1823 in the Bukey Horde into the family of a poor nomad named Sagyrbay. Because of poverty, he began working at the age of six, herding livestock.",
+        "As a teenager, he decided to master the dombra. His mother Alma supported his talent. In 1841, at eighteen, he left home to study with the famous kuiishi Uzak and began his life as a travelling musician.",
+        "The second half of the nineteenth century brought serious trials. He opposed oppression and was repeatedly persecuted and imprisoned, yet continued his creative journey.",
+        "Kurmangazy died in 1896 and was buried in Altynzhar.",
       ],
     },
     {
-      heading: "Contribution to Kazakh Culture",
+      heading: "Contribution to Culture",
       paragraphs: [
-        "Kurmangazy had a major influence on the development of dombra performance. His music became one of the defining foundations of the western Kazakh tökpe kui tradition.",
+        "Kurmangazy brought a revolution to traditional music and raised dombra performance to an exceptionally high artistic level.",
       ],
     },
     {
       heading: "The Tökpe Tradition",
       paragraphs: [
-        "Tökpe kui is characterized by powerful rhythm, energetic string strikes, movement and a broad expressive style. These qualities became especially vivid in Kurmangazy's works.",
+        "He became one of the defining figures of the western Kazakh tökpe performance tradition, characterized by powerful rhythm, forceful string strikes, rapid movement and a broad heroic character.",
       ],
     },
     {
-      heading: "The Dombra as a Human Voice",
+      heading: "Expanding the Possibilities of the Dombra",
       paragraphs: [
-        "Through the dombra, Kurmangazy could express sorrow, anxiety, hope, joy and the desire for freedom.",
-        "His kui therefore function not only as instrumental compositions, but also as musical stories about people and their lives.",
+        "His techniques demonstrated how a two-string instrument could express a complex range of human emotions, from philosophical sorrow to joyful freedom.",
       ],
     },
     {
-      heading: "Students and Musical Continuity",
+      heading: "Passing the Tradition to Future Generations",
       paragraphs: [
-        "Kurmangazy's musical tradition continued through his students and later generations. One of the most famous representatives of this legacy was Dina Nurpeisova.",
-        "The transmission of performance techniques from teacher to student helped preserve the tradition and connect it with modern musical education.",
+        "Kurmangazy left a strong circle of students. The most famous was Dina Nurpeisova, who preserved the master's performance traditions.",
       ],
     },
     {
-      heading: "Legacy",
+      heading: "Recognition Beyond the Steppe",
       paragraphs: [
-        "Today Kurmangazy remains one of the most important names in Kazakh musical culture. His compositions are performed by dombra players, folk-instrument orchestras and professional musicians.",
-        "His legacy demonstrates how a national instrument can carry complex emotions and preserve the historical memory of a people.",
+        "Today the Kazakh National Conservatory in Almaty and the State Academic Orchestra of Folk Instruments bear Kurmangazy's name. His legacy remains an important part of Kazakh musical culture.",
       ],
     },
   ],
@@ -769,10 +706,7 @@ export default function Home() {
   const [instrument, setInstrument] =
     useState<Instrument>("dombra");
 
-  const [tab, setTab] = useState<
-    "home" | "lessons" | "quiz" | "encyclopedia" | "profile"
-  >("home");
-
+  const [tab, setTab] = useState("home");
   const [xp, setXp] = useState(2450);
   const [streak] = useState(12);
 
@@ -782,7 +716,8 @@ export default function Home() {
   const [quizDone, setQuizDone] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
 
-  const [article, setArticle] = useState<string | null>(null);
+  const [article, setArticle] =
+    useState<string | null>(null);
 
   const [encyclopediaCategory, setEncyclopediaCategory] =
     useState<ArticleCategory>("all");
@@ -792,7 +727,8 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioError, setAudioError] = useState(false);
 
-  const quizAudioRef = useRef<HTMLAudioElement | null>(null);
+  const quizAudioRef =
+    useRef<HTMLAudioElement | null>(null);
 
   const t = translations[lang];
   const instruments = instrumentNames[lang];
@@ -818,9 +754,7 @@ export default function Home() {
 
       try {
         audio.currentTime = 0;
-      } catch {
-        // Ignore browser media errors.
-      }
+      } catch {}
     }
 
     setIsPlaying(false);
@@ -860,9 +794,7 @@ export default function Home() {
 
       try {
         audio.currentTime = 0;
-      } catch {
-        // Ignore browser media errors.
-      }
+      } catch {}
 
       audio.load();
     }
@@ -871,56 +803,29 @@ export default function Home() {
     setAudioError(false);
   }, [quizIndex]);
 
-  function answerQuiz(answerIndex: number) {
+  function answerQuiz(i: number) {
     if (quizDone) return;
-
-    const currentQuestion = quiz[quizIndex];
 
     stopQuizAudio();
 
-    const correct = answerIndex === currentQuestion.correct;
+    const correct = i === quiz[quizIndex].correct;
 
     if (correct) {
-      setQuizScore((score) => score + 1);
+      setQuizScore((s) => s + 1);
     }
 
-    setXp((currentXp) => currentXp + (correct ? 50 : 10));
+    setXp((x) => x + (correct ? 50 : 10));
 
     if (quizIndex === quiz.length - 1) {
       setQuizDone(true);
     } else {
-      setQuizIndex((index) => index + 1);
+      setQuizIndex((i0) => i0 + 1);
     }
   }
 
-  function resetQuiz() {
-    stopQuizAudio();
-    setQuizIndex(0);
-    setQuizScore(0);
-    setQuizDone(false);
-    setAudioError(false);
-  }
-
-  function navigate(
-    destination:
-      | "home"
-      | "lessons"
-      | "quiz"
-      | "encyclopedia"
-      | "profile"
-  ) {
-    if (destination !== "quiz") {
-      stopAllAudio();
-    }
-
-    if (destination === "encyclopedia") {
-      setArticle(null);
-    }
-
-    setTab(destination);
-  }
-
-  const normalizedSearch = searchQuery.toLowerCase().trim();
+  const normalizedSearch = searchQuery
+    .toLowerCase()
+    .trim();
 
   const filteredArticles = articles.filter((item) => {
     if (
@@ -930,15 +835,17 @@ export default function Home() {
       return false;
     }
 
-    if (!normalizedSearch) return true;
+    if (!normalizedSearch) {
+      return true;
+    }
 
     const text = [
       item.title,
       item.subtitle,
       item.description,
-      ...item.sections.flatMap((section) => [
-        section.heading,
-        ...section.paragraphs,
+      ...item.sections.flatMap((s) => [
+        s.heading,
+        ...s.paragraphs,
       ]),
     ]
       .join(" ")
@@ -952,13 +859,9 @@ export default function Home() {
       <header className="topbar">
         <div
           className="brand"
-          onClick={() => navigate("home")}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              navigate("home");
-            }
+          onClick={() => {
+            stopAllAudio();
+            setTab("home");
           }}
         >
           <div
@@ -992,8 +895,8 @@ export default function Home() {
 
           <select
             value={lang}
-            onChange={(event) =>
-              setLang(event.target.value as Language)
+            onChange={(e) =>
+              setLang(e.target.value as Language)
             }
             aria-label="Language"
           >
@@ -1009,7 +912,9 @@ export default function Home() {
           <>
             <div className="hero">
               <div>
-                <p className="eyebrow">{t.heroEyebrow}</p>
+                <p className="eyebrow">
+                  {t.heroEyebrow}
+                </p>
 
                 <h1>
                   {t.heroTitle1}
@@ -1017,7 +922,9 @@ export default function Home() {
                   <em>{t.heroTitle2}</em>
                 </h1>
 
-                <p className="hero-copy">{t.heroText}</p>
+                <p className="hero-copy">
+                  {t.heroText}
+                </p>
 
                 <div className="hero-actions">
                   <button
@@ -1033,7 +940,10 @@ export default function Home() {
 
                   <button
                     className="secondary"
-                    onClick={() => navigate("encyclopedia")}
+                    onClick={() => {
+                      stopAllAudio();
+                      setTab("encyclopedia");
+                    }}
                   >
                     {t.openEncyclopedia}
                   </button>
@@ -1066,13 +976,19 @@ export default function Home() {
 
             <div className="section-head">
               <div>
-                <span className="eyebrow">{t.journey}</span>
+                <span className="eyebrow">
+                  {t.journey}
+                </span>
+
                 <h2>{t.courseMap}</h2>
               </div>
 
               <button
                 className="text-btn"
-                onClick={() => navigate("lessons")}
+                onClick={() => {
+                  stopAllAudio();
+                  setTab("lessons");
+                }}
               >
                 {t.allLessons}
               </button>
@@ -1086,6 +1002,7 @@ export default function Home() {
                   </span>
 
                   <h3>{t.masteryPath}</h3>
+
                   <p>{t.progress}</p>
                 </div>
 
@@ -1093,30 +1010,27 @@ export default function Home() {
               </div>
 
               <div className="path">
-                {lessons.map((lesson, index) => (
+                {lessons.map((l, idx) => (
                   <button
-                    key={lesson.n}
+                    key={l.n}
                     className={`lesson-node ${
-                      lesson.done
+                      l.done
                         ? "done"
-                        : index === 2
+                        : idx === 2
                         ? "current"
                         : "locked"
                     }`}
                     onClick={() => {
-                      if (index <= 2) {
+                      if (idx <= 2) {
                         stopAllAudio();
                         setTab("lessons");
                         setLessonOpen(true);
                       }
                     }}
                   >
-                    <span>
-                      {lesson.done ? "✓" : lesson.n}
-                    </span>
-
-                    <b>{lessonTitles[index][0]}</b>
-                    <small>{lessonTitles[index][1]}</small>
+                    <span>{l.done ? "✓" : l.n}</span>
+                    <b>{lessonTitles[idx][0]}</b>
+                    <small>{lessonTitles[idx][1]}</small>
                   </button>
                 ))}
               </div>
@@ -1125,7 +1039,10 @@ export default function Home() {
             <div className="grid-3">
               <button
                 className="feature-card"
-                onClick={() => navigate("quiz")}
+                onClick={() => {
+                  stopAllAudio();
+                  setTab("quiz");
+                }}
               >
                 <span>🎧</span>
                 <b>{t.quizCard}</b>
@@ -1134,16 +1051,24 @@ export default function Home() {
 
               <button
                 className="feature-card"
-                onClick={() => navigate("encyclopedia")}
+                onClick={() => {
+                  stopAllAudio();
+                  setTab("encyclopedia");
+                }}
               >
                 <span>📚</span>
                 <b>{t.encyclopediaCard}</b>
-                <small>{t.encyclopediaCardText}</small>
+                <small>
+                  {t.encyclopediaCardText}
+                </small>
               </button>
 
               <button
                 className="feature-card"
-                onClick={() => navigate("profile")}
+                onClick={() => {
+                  stopAllAudio();
+                  setTab("profile");
+                }}
               >
                 <span>🏆</span>
                 <b>{t.achievements}</b>
@@ -1157,27 +1082,33 @@ export default function Home() {
           <div className="page">
             <div className="section-head">
               <div>
-                <span className="eyebrow">{t.learningPath}</span>
+                <span className="eyebrow">
+                  {t.learningPath}
+                </span>
+
                 <h2>
-                  {t.lessonsTitle} · {instruments[instrument]}
+                  {t.lessonsTitle} ·{" "}
+                  {instruments[instrument]}
                 </h2>
               </div>
 
               <select
                 className="select"
                 value={instrument}
-                onChange={(event) =>
+                onChange={(e) =>
                   setInstrument(
-                    event.target.value as Instrument
+                    e.target.value as Instrument
                   )
                 }
               >
                 <option value="dombra">
                   {instruments.dombra}
                 </option>
+
                 <option value="kobyz">
                   {instruments.kobyz}
                 </option>
+
                 <option value="sazsyrnai">
                   {instruments.sazsyrnai}
                 </option>
@@ -1185,39 +1116,42 @@ export default function Home() {
             </div>
 
             <div className="level-tabs">
-              <button className="active">{t.beginner}</button>
+              <button className="active">
+                {t.beginner}
+              </button>
+
               <button>{t.intermediate}</button>
               <button>{t.advanced}</button>
             </div>
 
             <div className="lesson-list">
-              {lessons.map((lesson, index) => (
+              {lessons.map((l, i) => (
                 <div
                   className={`lesson-row ${
-                    lesson.done ? "completed" : ""
+                    l.done ? "completed" : ""
                   }`}
-                  key={lesson.n}
+                  key={l.n}
                 >
                   <div className="lesson-icon">
-                    {lesson.done ? "✓" : lesson.n}
+                    {l.done ? "✓" : l.n}
                   </div>
 
                   <div>
-                    <b>{lessonTitles[index][0]}</b>
-                    <p>{lessonTitles[index][1]}</p>
+                    <b>{lessonTitles[i][0]}</b>
+                    <p>{lessonTitles[i][1]}</p>
                   </div>
 
                   <button
                     className="primary small"
-                    disabled={index > 2}
+                    disabled={i > 2}
                     onClick={() => {
                       stopAllAudio();
                       setLessonOpen(true);
                     }}
                   >
-                    {lesson.done
+                    {l.done
                       ? t.repeat
-                      : index === 2
+                      : i === 2
                       ? t.start
                       : t.locked}
                   </button>
@@ -1230,7 +1164,7 @@ export default function Home() {
                 t={t}
                 close={() => setLessonOpen(false)}
                 onComplete={() => {
-                  setXp((currentXp) => currentXp + 100);
+                  setXp((x) => x + 100);
                   setLessonOpen(false);
                 }}
               />
@@ -1240,7 +1174,10 @@ export default function Home() {
 
         {tab === "quiz" && (
           <div className="page narrow">
-            <span className="eyebrow">{t.kyuiQuiz}</span>
+            <span className="eyebrow">
+              {t.kyuiQuiz}
+            </span>
+
             <h2>{t.guessKyui}</h2>
 
             {!quizDone ? (
@@ -1249,7 +1186,9 @@ export default function Home() {
                   ref={quizAudioRef}
                   src={quiz[quizIndex].audio}
                   preload="auto"
-                  onEnded={() => setIsPlaying(false)}
+                  onEnded={() =>
+                    setIsPlaying(false)
+                  }
                   onError={() => {
                     setIsPlaying(false);
                     setAudioError(true);
@@ -1281,27 +1220,32 @@ export default function Home() {
                       textAlign: "center",
                     }}
                   >
-                    Не удалось воспроизвести аудио. Проверьте
-                    наличие файла в папке public.
+                    Не удалось воспроизвести аудио.
+                    Проверьте наличие файла в папке
+                    public.
                   </p>
                 )}
 
-                <p className="quiz-q">{t.question}</p>
+                <p className="quiz-q">
+                  {t.question}
+                </p>
 
                 <div className="quiz-progress">
-                  {t.questionLabel} {quizIndex + 1} {t.of}{" "}
-                  {quiz.length}
+                  {t.questionLabel} {quizIndex + 1}{" "}
+                  {t.of} {quiz.length}
                 </div>
 
                 <div className="answers">
                   {quiz[quizIndex].answers.map(
-                    (answer, index) => (
+                    (a, i) => (
                       <button
-                        key={`${answer}-${index}`}
-                        onClick={() => answerQuiz(index)}
+                        key={a}
+                        onClick={() =>
+                          answerQuiz(i)
+                        }
                       >
-                        {String.fromCharCode(65 + index)}){" "}
-                        {answer}
+                        {String.fromCharCode(65 + i)})
+                        {a}
                       </button>
                     )
                   )}
@@ -1309,13 +1253,15 @@ export default function Home() {
               </div>
             ) : (
               <div className="result-card">
-                <div className="big-check">✦</div>
+                <div className="big-check">
+                  ✦
+                </div>
 
                 <h2>{t.wonderful}</h2>
 
                 <p>
-                  {t.quizFinished} {t.result}: {quizScore}/
-                  {quiz.length}
+                  {t.quizFinished} {t.result}:{" "}
+                  {quizScore}/{quiz.length}
                 </p>
 
                 <b>
@@ -1327,7 +1273,11 @@ export default function Home() {
 
                 <button
                   className="primary"
-                  onClick={resetQuiz}
+                  onClick={() => {
+                    setQuizIndex(0);
+                    setQuizScore(0);
+                    setQuizDone(false);
+                  }}
                 >
                   {t.again}
                 </button>
@@ -1352,8 +1302,8 @@ export default function Home() {
                   <input
                     className="search"
                     value={searchQuery}
-                    onChange={(event) =>
-                      setSearchQuery(event.target.value)
+                    onChange={(e) =>
+                      setSearchQuery(e.target.value)
                     }
                     placeholder={t.search}
                   />
@@ -1368,25 +1318,25 @@ export default function Home() {
                       "kuis",
                       "history",
                     ] as ArticleCategory[]
-                  ).map((category) => (
+                  ).map((cat) => (
                     <button
-                      key={category}
+                      key={cat}
                       className={
-                        encyclopediaCategory === category
+                        encyclopediaCategory === cat
                           ? "active"
                           : ""
                       }
                       onClick={() =>
-                        setEncyclopediaCategory(category)
+                        setEncyclopediaCategory(cat)
                       }
                     >
-                      {category === "all"
+                      {cat === "all"
                         ? t.all
-                        : category === "instruments"
+                        : cat === "instruments"
                         ? t.instruments
-                        : category === "kuiyshi"
+                        : cat === "kuiyshi"
                         ? t.kuiyshi
-                        : category === "kuis"
+                        : cat === "kuis"
                         ? t.kuis
                         : t.history}
                     </button>
@@ -1432,7 +1382,9 @@ export default function Home() {
 
                       <div>
                         <span>{item.subtitle}</span>
+
                         <h3>{item.title}</h3>
+
                         <p>{item.description}</p>
 
                         <small>
@@ -1564,7 +1516,10 @@ export default function Home() {
                         gap: "10px",
                       }}
                     >
-                      <span>📖 {selectedArticle.readTime}</span>
+                      <span>
+                        📖 {t.articleReadTime}
+                      </span>
+
                       <span>
                         🎼 {t.articleSources}
                       </span>
@@ -1613,11 +1568,15 @@ export default function Home() {
                         </h2>
 
                         {section.paragraphs.map(
-                          (paragraph, paragraphIndex) => (
+                          (
+                            paragraph,
+                            paragraphIndex
+                          ) => (
                             <p
                               key={paragraphIndex}
                               style={{
-                                margin: "0 0 18px",
+                                margin:
+                                  "0 0 18px",
                                 fontSize:
                                   "clamp(16px,2vw,19px)",
                                 lineHeight: 1.8,
@@ -1632,7 +1591,8 @@ export default function Home() {
                     )
                   )}
 
-                  {selectedArticle.sections.length === 0 && (
+                  {selectedArticle.sections.length ===
+                    0 && (
                     <div
                       className="article-empty"
                       style={{
@@ -1640,7 +1600,9 @@ export default function Home() {
                         padding: "30px 10px",
                       }}
                     >
-                      <p>{t.articlePlaceholder}</p>
+                      <p>
+                        {t.articlePlaceholder}
+                      </p>
                     </div>
                   )}
                 </div>
@@ -1666,7 +1628,9 @@ export default function Home() {
 
         {tab === "profile" && (
           <div className="page narrow">
-            <span className="eyebrow">YOUR PROFILE</span>
+            <span className="eyebrow">
+              YOUR PROFILE
+            </span>
 
             <h2>{t.profileTitle}</h2>
 
@@ -1676,7 +1640,8 @@ export default function Home() {
               <h3>{t.musician}</h3>
 
               <p>
-                {instruments[instrument]} · {t.beginner}
+                {instruments[instrument]} ·{" "}
+                {t.beginner}
               </p>
 
               <div className="stats">
@@ -1728,14 +1693,30 @@ export default function Home() {
             ["home", "⌂", t.home],
             ["lessons", "♪", t.lessons],
             ["quiz", "?", t.quiz],
-            ["encyclopedia", "▤", t.encyclopedia],
+            [
+              "encyclopedia",
+              "▤",
+              t.encyclopedia,
+            ],
             ["profile", "◉", t.profile],
           ] as const
         ).map(([id, icon, text]) => (
           <button
             key={id}
-            className={tab === id ? "active" : ""}
-            onClick={() => navigate(id)}
+            className={
+              tab === id ? "active" : ""
+            }
+            onClick={() => {
+              if (id !== "quiz") {
+                stopAllAudio();
+              }
+
+              setTab(id);
+
+              if (id === "encyclopedia") {
+                setArticle(null);
+              }
+            }}
           >
             <span>{icon}</span>
             <small>{text}</small>
@@ -1745,6 +1726,10 @@ export default function Home() {
     </main>
   );
 }
+
+/* =================================================
+   ИСПРАВЛЕННЫЙ LESSON MODAL
+   ================================================= */
 
 function LessonModal({
   t,
@@ -1761,12 +1746,13 @@ function LessonModal({
         <button
           className="close"
           onClick={close}
-          aria-label="Close"
         >
           ×
         </button>
 
-        <span className="eyebrow">{t.module}</span>
+        <span className="eyebrow">
+          {t.module}
+        </span>
 
         <h2>{t.lesson3Sub}</h2>
 
@@ -1799,7 +1785,9 @@ function LessonModal({
 
         <div className="speed">
           <button>0.5×</button>
-          <button className="active">1×</button>
+          <button className="active">
+            1×
+          </button>
           <button>1.5×</button>
         </div>
 
