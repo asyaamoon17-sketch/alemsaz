@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 type Language = "Қазақша" | "Русский" | "English";
 type Instrument = "dombra" | "kobyz" | "sazsyrnai";
+
 type ArticleCategory =
   | "all"
   | "instruments"
@@ -20,34 +21,56 @@ const lessons = [
 ];
 
 type QuizQuestion = {
-  title: string;
+  id: string;
+  titles: {
+    "Қазақша": string;
+    "Русский": string;
+    English: string;
+  };
   audio: string[];
 };
 
 const quizQuestions: QuizQuestion[] = [
   {
-    title: "Сарыарқа",
+    id: "saryarka",
+    titles: {
+      "Қазақша": "Сарыарқа",
+      "Русский": "Сарыарка",
+      English: "Saryarqa",
+    },
     audio: ["/Saryarka.mp3"],
   },
   {
-    title: "Балбырауын",
-    audio: ["/BB.mp3", "/OrchestraBB.mp3", "/BalbyraunNew.mp3"],
+    id: "balbyrauyn",
+    titles: {
+      "Қазақша": "Балбырауын",
+      "Русский": "Балбырауын",
+      English: "Balbyrauyn",
+    },
+    audio: [
+      "/BB.mp3",
+      "/OrchestraBB.mp3",
+      "/BalbyraunNew.mp3",
+    ],
   },
   {
-    title: "Адай",
+    id: "adai",
+    titles: {
+      "Қазақша": "Адай",
+      "Русский": "Адай",
+      English: "Adai",
+    },
     audio: ["/Adai.mp3"],
   },
   {
-    title: "Ақсақ құлан",
+    id: "aqsaq-qulan",
+    titles: {
+      "Қазақша": "Ақсақ құлан",
+      "Русский": "Ақсақ құлан",
+      English: "Aqsaq qulan",
+    },
     audio: ["/Aksakkulan.mp3"],
   },
-];
-
-const kuiAnswers = [
-  "Сарыарқа",
-  "Балбырауын",
-  "Адай",
-  "Ақсақ құлан",
 ];
 
 const translations = {
@@ -718,11 +741,16 @@ type QuizOption = {
   correct: boolean;
 };
 
-function createQuizOptions(correctTitle: string): QuizOption[] {
+function createQuizOptions(
+  question: QuizQuestion,
+  lang: Language
+): QuizOption[] {
+  const correctId = question.id;
+
   return shuffleArray(
-    kuiAnswers.map((answer) => ({
-      text: answer,
-      correct: answer === correctTitle,
+    quizQuestions.map((item) => ({
+      text: item.titles[lang],
+      correct: item.id === correctId,
     }))
   );
 }
@@ -745,6 +773,13 @@ export default function Home() {
   const [lessonOpen, setLessonOpen] =
     useState(false);
 
+  const [quizOrder, setQuizOrder] =
+    useState<number[]>(() =>
+      shuffleArray(
+        quizQuestions.map((_, index) => index)
+      )
+    );
+
   const [quizIndex, setQuizIndex] =
     useState(0);
 
@@ -755,9 +790,19 @@ export default function Home() {
     useState(0);
 
   const [quizOptions, setQuizOptions] =
-    useState<QuizOption[]>(() =>
-      createQuizOptions(quizQuestions[0].title)
-    );
+    useState<QuizOption[]>(() => {
+      const firstQuestion =
+        quizQuestions[
+          shuffleArray(
+            quizQuestions.map((_, index) => index)
+          )[0]
+        ];
+
+      return createQuizOptions(
+        firstQuestion,
+        "Русский"
+      );
+    });
 
   const [selectedAnswer, setSelectedAnswer] =
     useState<number | null>(null);
@@ -788,6 +833,11 @@ export default function Home() {
 
   const articles =
     getArticles(lang);
+
+  const currentQuizQuestion =
+    quizQuestions[
+      quizOrder[quizIndex]
+    ];
 
   const selectedArticle =
     article
@@ -848,6 +898,7 @@ export default function Home() {
     const nextIndex = quizIndex + 1;
 
     if (nextIndex >= quizQuestions.length) {
+      stopQuizAudio();
       setQuizDone(true);
       return;
     }
@@ -857,15 +908,24 @@ export default function Home() {
     setSelectedAnswer(null);
     setQuizIndex(nextIndex);
 
+    const nextQuestion =
+      quizQuestions[
+        quizOrder[nextIndex]
+      ];
+
     setQuizOptions(
       createQuizOptions(
-        quizQuestions[nextIndex].title
+        nextQuestion,
+        lang
       )
     );
   }
 
   function answerQuiz(index: number) {
-    if (selectedAnswer !== null || quizDone) {
+    if (
+      selectedAnswer !== null ||
+      quizDone
+    ) {
       return;
     }
 
@@ -896,14 +956,26 @@ export default function Home() {
   function resetQuiz() {
     stopQuizAudio();
 
+    const newOrder =
+      shuffleArray(
+        quizQuestions.map(
+          (_, index) => index
+        )
+      );
+
+    setQuizOrder(newOrder);
     setQuizIndex(0);
     setQuizScore(0);
     setQuizDone(false);
     setSelectedAnswer(null);
 
+    const firstQuestion =
+      quizQuestions[newOrder[0]];
+
     setQuizOptions(
       createQuizOptions(
-        quizQuestions[0].title
+        firstQuestion,
+        lang
       )
     );
   }
@@ -925,7 +997,20 @@ export default function Home() {
     setIsPlaying(false);
     setAudioError(false);
     setSelectedAnswer(null);
-  }, [quizIndex]);
+
+    if (currentQuizQuestion) {
+      setQuizOptions(
+        createQuizOptions(
+          currentQuizQuestion,
+          lang
+        )
+      );
+    }
+  }, [
+    quizIndex,
+    lang,
+    quizOrder,
+  ]);
 
   const normalizedSearch =
     searchQuery
@@ -1015,7 +1100,8 @@ export default function Home() {
             value={lang}
             onChange={(event) =>
               setLang(
-                event.target.value as Language
+                event.target
+                  .value as Language
               )
             }
             aria-label="Language"
@@ -1133,9 +1219,11 @@ export default function Home() {
                 <div>
                   <span className="pill">
                     🎵{" "}
-                    {instruments[
-                      instrument
-                    ]}
+                    {
+                      instruments[
+                        instrument
+                      ]
+                    }
                   </span>
 
                   <h3>
@@ -1415,9 +1503,8 @@ export default function Home() {
                 <audio
                   ref={quizAudioRef}
                   src={
-                    quizQuestions[
-                      quizIndex
-                    ].audio[0]
+                    currentQuizQuestion
+                      ?.audio[0]
                   }
                   preload="auto"
                   onEnded={() =>
@@ -1438,9 +1525,8 @@ export default function Home() {
                     }
 
                     const sources =
-                      quizQuestions[
-                        quizIndex
-                      ].audio;
+                      currentQuizQuestion
+                        ?.audio ?? [];
 
                     const currentSrc =
                       audio.src;
@@ -1533,11 +1619,13 @@ export default function Home() {
                         "center",
                     }}
                   >
-                    Не удалось
-                    воспроизвести
-                    аудио. Проверьте,
-                    что файл находится
-                    в папке public.
+                    {lang ===
+                    "English"
+                      ? "Unable to play audio. Please check that the file is in the public folder."
+                      : lang ===
+                        "Қазақша"
+                      ? "Аудионы ойнату мүмкін болмады. Файлдың public қалтасында орналасқанын тексеріңіз."
+                      : "Не удалось воспроизвести аудио. Проверьте, что файл находится в папке public."}
                   </p>
                 )}
 
@@ -1562,14 +1650,17 @@ export default function Home() {
                         selectedAnswer ===
                         index;
 
-                      let background =
-                        undefined;
+                      let background:
+                        | string
+                        | undefined;
 
-                      let borderColor =
-                        undefined;
+                      let borderColor:
+                        | string
+                        | undefined;
 
-                      let textColor =
-                        undefined;
+                      let textColor:
+                        | string
+                        | undefined;
 
                       if (
                         selectedAnswer !==
@@ -2533,9 +2624,7 @@ function LessonModal({
                 "center",
             }}
           >
-            Не удалось
-            воспроизвести
-            аудио урока.
+            {t.video}
           </p>
         )}
 
