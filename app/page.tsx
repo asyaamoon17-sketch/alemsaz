@@ -606,6 +606,54 @@ function getArticles(lang: Language): Article[] {
         sections: [],
       },
       {
+        id: "kazangap",
+        title: "Казангап Тлепбергенулы",
+        subtitle: "Кюйши и композитор",
+        icon: "🎼",
+        image: "/KazangapTlepbergenuly.jpeg",
+        category: "kuiyshi",
+        description:
+          "Выдающийся казахский кюйши и композитор, один из мастеров домбровой традиции.",
+        readTime: "5 мин",
+        sections: [],
+      },
+      {
+        id: "dauletkerey",
+        title: "Даулеткерей Шыгайулы",
+        subtitle: "Мастер шертпе-кюй",
+        icon: "🎼",
+        image: "/DauletkereyShigauly.jpeg",
+        category: "kuiyshi",
+        description:
+          "Выдающийся казахский кюйши и композитор, один из крупнейших представителей традиции шертпе-кюй.",
+        readTime: "5 мин",
+        sections: [],
+      },
+      {
+        id: "ykhlas",
+        title: "Ыхлас Дукенулы",
+        subtitle: "Мастер искусства кобыза",
+        icon: "🎼",
+        image: "/YkhlasDukenuly.jpeg",
+        category: "kuiyshi",
+        description:
+          "Выдающийся казахский кюйши и композитор, один из основоположников классической традиции кобызовой музыки.",
+        readTime: "5 мин",
+        sections: [],
+      },
+      {
+        id: "dina",
+        title: "Дина Нурпеисова",
+        subtitle: "Великая кюйши и композитор",
+        icon: "🎼",
+        image: "/DinaNurpeisova.jpeg",
+        category: "kuiyshi",
+        description:
+          "Знаменитая казахская кюйши и композитор, выдающаяся представительница искусства домбры.",
+        readTime: "5 мин",
+        sections: [],
+      },
+      {
         id: "dombra",
         title: "Домбра",
         subtitle: "Две струны — целый мир",
@@ -659,6 +707,54 @@ function getArticles(lang: Language): Article[] {
         sections: [],
       },
       {
+        id: "kazangap",
+        title: "Қазанғап Тілепбергенұлы",
+        subtitle: "Күйші-композитор",
+        icon: "🎼",
+        image: "/KazangapTlepbergenuly.jpeg",
+        category: "kuiyshi",
+        description:
+          "Қазақ күй өнерінің көрнекті өкілі, күйші-композитор.",
+        readTime: "5 мин",
+        sections: [],
+      },
+      {
+        id: "dauletkerey",
+        title: "Дәулеткерей Шығайұлы",
+        subtitle: "Шертпе күйдің көрнекті өкілі",
+        icon: "🎼",
+        image: "/DauletkereyShigauly.jpeg",
+        category: "kuiyshi",
+        description:
+          "Қазақтың дәстүрлі күй өнерінің көрнекті күйші-композиторы.",
+        readTime: "5 мин",
+        sections: [],
+      },
+      {
+        id: "ykhlas",
+        title: "Ықылас Дүкенұлы",
+        subtitle: "Қобыз өнерінің шебері",
+        icon: "🎼",
+        image: "/YkhlasDukenuly.jpeg",
+        category: "kuiyshi",
+        description:
+          "Қазақтың қобыз өнерін биік деңгейге көтерген ұлы күйші-композитор.",
+        readTime: "5 мин",
+        sections: [],
+      },
+      {
+        id: "dina",
+        title: "Дина Нұрпейісова",
+        subtitle: "Ұлы күйші-композитор",
+        icon: "🎼",
+        image: "/DinaNurpeisova.jpeg",
+        category: "kuiyshi",
+        description:
+          "Қазақтың әйгілі күйші-композиторы және домбыра өнерінің көрнекті өкілі.",
+        readTime: "5 мин",
+        sections: [],
+      },
+      {
         id: "dombra",
         title: "Домбыра",
         subtitle: "Екі ішек — тұтас әлем",
@@ -707,6 +803,54 @@ function getArticles(lang: Language): Article[] {
       category: "kuiyshi",
       description:
         "One of the important representatives of the shertpe kui tradition.",
+      readTime: "5 min",
+      sections: [],
+    },
+    {
+      id: "kazangap",
+      title: "Kazangap Tlepbergenuly",
+      subtitle: "Kazakh kuiishi and composer",
+      icon: "🎼",
+      image: "/KazangapTlepbergenuly.jpeg",
+      category: "kuiyshi",
+      description:
+        "A prominent Kazakh kuiishi and composer of the dombra tradition.",
+      readTime: "5 min",
+      sections: [],
+    },
+    {
+      id: "dauletkerey",
+      title: "Dauletkerey Shyǵaiuly",
+      subtitle: "A master of the shertpe kui tradition",
+      icon: "🎼",
+      image: "/DauletkereyShigauly.jpeg",
+      category: "kuiyshi",
+      description:
+        "A prominent Kazakh kuiishi and composer of the traditional dombra repertoire.",
+      readTime: "5 min",
+      sections: [],
+    },
+    {
+      id: "ykhlas",
+      title: "Yqylas Dükenuly",
+      subtitle: "Master of the kobyz tradition",
+      icon: "🎼",
+      image: "/YkhlasDukenuly.jpeg",
+      category: "kuiyshi",
+      description:
+        "A renowned Kazakh composer and kuiishi who elevated the kobyz tradition.",
+      readTime: "5 min",
+      sections: [],
+    },
+    {
+      id: "dina",
+      title: "Dina Nurpeisova",
+      subtitle: "Great Kazakh kuiishi and composer",
+      icon: "🎼",
+      image: "/DinaNurpeisova.jpeg",
+      category: "kuiyshi",
+      description:
+        "A celebrated Kazakh kuiishi and composer, and a major figure in dombra music.",
       readTime: "5 min",
       sections: [],
     },
@@ -1100,8 +1244,7 @@ export default function Home() {
             value={lang}
             onChange={(event) =>
               setLang(
-                event.target
-                  .value as Language
+                event.target.value as Language
               )
             }
             aria-label="Language"
