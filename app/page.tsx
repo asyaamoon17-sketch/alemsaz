@@ -565,7 +565,7 @@ const kurmangazySections = {
     }, 
   ], 
 }; 
- 
+
 const dinaSections = {
   ru: [
     {
@@ -699,6 +699,134 @@ const dinaSections = {
     },
   ],
 };
+
+const kazangapSections = {
+  ru: [
+    {
+      heading: "Повелитель степных стихий: Музыкальный космос кюйши Казангапа",
+      paragraphs: [
+        "Что способна рассказать обычная двухструнная домбра? В руках большинства исполнителей она поет, грустит или радуется. Но во второй половине XIX века в казахских степях жил человек, чье мастерство превращало этот скромный деревянный инструмент в бушующую стихию, подчиняющую себе время, пространство и человеческие сердца.",
+        "Его имя — Казангап Тлепбергенулы. Великий новатор, философ и непревзойденный виртуоз, он вывел степную классическую музыку на космический уровень экспрессии и глубины.",
+      ],
+    },
+    {
+      heading: "Сын сурового Приаралья",
+      paragraphs: [
+        "История Казангапа началась в 1854 году на раскаленных, просоленных берегах Аральского моря, в урочище Акбауыр. Этот край не прощал слабости: ледяные зимние бураны сменялись знойным летним засушьем. Именно здесь ковался железный характер будущего мастера.",
+        "Казангап рос удивительно чутким к окружающему миру. Пока другие дети были заняты играми, он часами сидел на курганах, вслушиваясь в звуки природы. Он улавливал шелест сухого ковыля, крики птиц над уходящей за горизонт водой и далекий гул кочевых караванов. Великая степь стала его первой и главной консерваторией.",
+        "Отец, заметив эту непреодолимую тягу к звукам, сам вырезал для сына первую домбру. С этого момента инструмент стал продолжением рук и мыслей мальчика. Он практиковался сутками, пытаясь переложить саму жизнь на язык двух струн.",
+      ],
+    },
+    {
+      heading: "«Көкторы»: Музыкальный триумф 1875 года",
+      paragraphs: [
+        "К двадцати годам слава о молодом домбристе вышла далеко за пределы родного аула. О Казангапе говорили с восхищением и легким трепетом. Поговаривали, что его пальцы двигаются по грифу быстрее, чем летит стрела, а инструмент способен передавать тончайшие движения человеческой души.",
+        "В 1875 году он создал свой первый признанный шедевр — кюй «Көкторы» («Гнедой скакун»). Произведение произвело колоссальное впечатление на современников. Казангап в совершенстве владел техникой «төкпе» — шквальным, лавинообразным стилем исполнения. Когда он играл «Көкторы», слушатели физически ощущали свист ветра, хрип загоняемого коня, комья земли, летящие из-под копыт, и пьянящее чувство безудержной погони. Это была музыка колоссального накала.",
+      ],
+    },
+    {
+      heading: "Музыкальный мистицизм и грандиозный цикл «Ақжелең»",
+      paragraphs: [
+        "Казангап оставил после себя более 100 кюев. Многие из них были объединены в масштабные циклы — монументальные концептуальные произведения своего времени.",
+        "Вершиной его творчества по праву считается цикл «Ақжелең». Бросая вызов самому себе и соревнуясь с другими степными мастерами, Казангап создал около сорока оригинальных вариаций на эту тему.",
+        "Одни части цикла были легкими, как весеннее утро, воспевая женскую грацию и радость бытия.",
+        "Другие — погружали слушателя в глубокий экзистенциальный кризис, заставляя умудренных опытом старцев скрывать слезы.",
+        "Его знаменитый кюй «Шымырлау» («Кипение») — это вершина музыкального психологизма. Мелодия закручивалась в такой тугой, сложный узел, передавая внутреннее смятение и кипение человеческих страстей, что казалось, будто струны вот-вот порвутся от эмоционального напряжения.",
+      ],
+    },
+    {
+      heading: "Аккорд, ушедший в вечность",
+      paragraphs: [
+        "Казангап Тлепбергенулы ушел из жизни в 1921 году. Он застал тектонические сдвиги в судьбе своего народа, крушение старого кочевого уклада и начало новой эпохи, но до самого последнего вздоха оставался верен своей домбре.",
+        "Его ученики бережно, как священный огонь, передавали из поколения в поколение уникальную технику исполнения мастера. Казангап доказал всему миру: чтобы перевернуть человеческую душу и заставить людей плакать и радоваться, не нужны оркестры из сотен инструментов. Достаточно лишь двух струн, куска дерева и сердца, бьющегося в унисон со всей вселенной.",
+      ],
+    },
+  ],
+
+  kz: [
+    {
+      heading: "Дала стихиясының әміршісі: Күйші Қазанғаптың музыкалық ғарышы",
+      paragraphs: [
+        "Қарапайым екі ішекті домбыра не туралы айта алады? Көп орындаушының қолында ол ән салады, мұңаяды немесе қуанады. Бірақ XIX ғасырдың екінші жартысында қазақ даласында осы қарапайым ағаш аспапты уақытты, кеңістікті және адам жүрегін бағындыратын алып стихияға айналдыратын шебер өмір сүрді.",
+        "Оның есімі — Қазанғап Тілепбергенұлы. Ұлы жаңашыл, философ және теңдессіз виртуоз Қазанғап дала классикалық музыкасын экспрессия мен тереңдіктің жаңа биігіне көтерді.",
+      ],
+    },
+    {
+      heading: "Арал маңының қатал табиғатынан шыққан ұл",
+      paragraphs: [
+        "Қазанғаптың тарихы 1854 жылы Арал теңізінің аптап ыстық, тұзды жағалауларындағы Ақбауыр деген жерде басталды. Бұл өлке әлсіздікті кешірмейтін: қыстың мұзды бораны жаздың аптапты қуаңшылығына ұласатын. Дәл осы жерде болашақ шебердің темірдей мінезі қалыптасты.",
+        "Қазанғап айналасындағы дүниеге ерекше сезімтал болып өсті. Басқа балалар ойынмен айналысып жүргенде, ол сағаттап қырдың төбесінде отырып, табиғаттың үнін тыңдайтын. Кеуіп қалған жусанның сыбдырын, көкжиекке сіңіп бара жатқан судың үстіндегі құстардың үнін және көшпелі керуендердің алыстағы гуілін сезетін. Ұлы дала оның алғашқы әрі басты консерваториясы болды.",
+        "Әкесі баласының дыбысқа деген тоқтаусыз құштарлығын байқап, оған алғашқы домбырасын өзі жасап берді. Сол сәттен бастап аспап баланың қолы мен ойының жалғасына айналды. Ол тәулік бойы жаттығып, өмірдің өзін екі ішектің тіліне аударуға тырысты.",
+      ],
+    },
+    {
+      heading: "«Көкторы»: 1875 жылғы музыкалық жеңіс",
+      paragraphs: [
+        "Жиырма жасқа келгенде жас домбырашының даңқы туған ауылынан әлдеқайда алысқа тарады. Қазанғап туралы жұрт таңданыспен әрі аздап үрейлене айтатын. Оның саусақтары жебеден де жылдам қимылдайды, ал домбырасы адам жанының ең нәзік қозғалыстарын жеткізе алады деген сөз тарады.",
+        "1875 жылы ол өзінің алғашқы мойындалған шедеврі — «Көкторы» күйін шығарды. Бұл шығарма замандастарына орасан әсер етті. Қазанғап «төкпе» орындаушылық техникасын, яғни екпінді, тасқынды мәнерді жетік меңгерді. «Көкторы» орындалғанда тыңдаушылар желдің гуілін, қуылған аттың пысқырығын, тұяқ астынан ұшқан топырақты және тоқтаусыз қуғынның масайтатын сезімін физикалық түрде сезінетіндей еді. Бұл аса қуатты музыка болатын.",
+      ],
+    },
+    {
+      heading: "Музыкалық тылсым және «Ақжелең» алып циклі",
+      paragraphs: [
+        "Қазанғап өзінен кейін жүзден астам күй қалдырды. Олардың көпшілігі өз дәуірінің ауқымды циклдері — тұтас концептуалдық музыкалық шығармаларына біріктірілді.",
+        "Оның шығармашылығының шыңы ретінде «Ақжелең» циклі кеңінен танылады. Өзіне сын тастап, даланың басқа шеберлерімен жарыса отырып, Қазанғап осы тақырыпқа қырыққа жуық түпнұсқа вариация жасады.",
+        "Циклдің кейбір бөлімдері көктемгі таңдай жеңіл болып, әйел сұлулығы мен өмір қуанығын жырлады.",
+        "Ал басқа бөлімдері тыңдаушыны терең рухани дағдарысқа батырып, тәжірибелі қариялардың көз жасын жасыруына себеп болды.",
+        "Оның әйгілі «Шымырлау» күйі — музыкалық психологизмнің биік үлгісі. Әуен адам бойындағы толқыныс пен құмарлықтың қайнауын жеткізетін аса күрделі түйінге айналып, эмоциялық қысымнан ішектер үзіліп кететіндей әсер қалдырды.",
+      ],
+    },
+    {
+      heading: "Мәңгілікке кеткен соңғы аккорд",
+      paragraphs: [
+        "Қазанғап Тілепбергенұлы 1921 жылы дүниеден өтті. Ол халқының тағдырындағы үлкен өзгерістерді, ескі көшпелі өмір салтының күйреуін және жаңа дәуірдің басталуын көрді. Бірақ соңғы деміне дейін домбырасына адал болды.",
+        "Оның шәкірттері шебердің орындаушылық техникасын қасиетті оттай сақтап, ұрпақтан ұрпаққа жеткізді. Қазанғап бүкіл әлемге адам жанын төңкеріп, жылатып әрі қуантау үшін жүздеген аспаптан тұратын оркестр қажет емес екенін дәлелдеді. Кейде екі ішек, ағаштың бір бөлігі және бүкіл ғаламмен үндес соққан жүрек жеткілікті.",
+      ],
+    },
+  ],
+
+  en: [
+    {
+      heading: "Master of the Steppe Elements: The Musical Cosmos of Kuiishi Kazangap",
+      paragraphs: [
+        "What can an ordinary two-string dombra tell? In the hands of most performers, it sings, grieves or rejoices. But in the second half of the nineteenth century, the Kazakh steppe was home to a man whose mastery could transform this modest wooden instrument into a raging force that seemed to command time, space and human hearts.",
+        "His name was Kazangap Tlepbergenuly. A great innovator, philosopher and unrivaled virtuoso, he brought steppe classical music to a new level of expression and depth.",
+      ],
+    },
+    {
+      heading: "A Son of the Harsh Aral Region",
+      paragraphs: [
+        "Kazangap's story began in 1854 on the hot, salt-covered shores of the Aral Sea, in the Akbauyr tract. This land did not forgive weakness: icy winter blizzards were followed by scorching summer droughts. It was here that the future master's iron character was forged.",
+        "Kazangap grew up remarkably sensitive to the world around him. While other children were busy playing, he would spend hours sitting on hillocks, listening to the sounds of nature. He heard the rustling of dry grass, the calls of birds above the water disappearing beyond the horizon and the distant rumble of nomadic caravans. The Great Steppe became his first and most important conservatory.",
+        "Seeing his son's irresistible attraction to sound, his father carved his first dombra for him. From that moment, the instrument became an extension of the boy's hands and thoughts. He practiced endlessly, trying to translate life itself into the language of two strings.",
+      ],
+    },
+    {
+      heading: "“Kök­tory”: The Musical Triumph of 1875",
+      paragraphs: [
+        "By the age of twenty, the fame of the young dombra player had spread far beyond his native village. People spoke of Kazangap with admiration and a slight sense of awe. They said that his fingers moved along the neck faster than an arrow flew and that his instrument could express the most delicate movements of the human soul.",
+        "In 1875, he created his first widely recognized masterpiece, the kui “Köktory” (“The Bay Horse”). The work made a tremendous impression on his contemporaries. Kazangap mastered the tökpe style — a powerful, cascading form of performance. When he played “Köktory”, listeners could almost physically feel the whistle of the wind, the breath of a driven horse, earth flying beneath its hooves and the exhilarating feeling of an unstoppable chase. It was music of enormous intensity.",
+      ],
+    },
+    {
+      heading: "Musical Mysticism and the Grand “Aqzhelen” Cycle",
+      paragraphs: [
+        "Kazangap left more than one hundred kuis. Many of them were united into large cycles — monumental conceptual works of their time.",
+        "The peak of his creativity is rightfully considered the “Aqzhelen” cycle. Challenging himself and competing with other steppe masters, Kazangap created around forty original variations on this theme.",
+        "Some parts of the cycle were light as a spring morning, celebrating feminine grace and the joy of existence.",
+        "Others plunged the listener into a deep existential crisis, making even experienced elders hide their tears.",
+        "His famous kui “Shymyrlau” (“Boiling”) is a pinnacle of musical psychological expression. The melody twisted into such a tense and complex knot, conveying inner turmoil and the boiling of human passions, that it seemed the strings might break under the emotional pressure.",
+      ],
+    },
+    {
+      heading: "An Accord That Passed into Eternity",
+      paragraphs: [
+        "Kazangap Tlepbergenuly died in 1921. He witnessed tectonic changes in the fate of his people, the collapse of the old nomadic way of life and the beginning of a new era, yet he remained faithful to his dombra until his final breath.",
+        "His students carefully preserved the master's unique performance technique like a sacred flame, passing it from generation to generation. Kazangap proved to the world that one does not need orchestras of hundreds of instruments to transform the human soul and make people cry and rejoice. Two strings, a piece of wood and a heart beating in harmony with the entire universe can be enough.",
+      ],
+    },
+  ],
+};
  
 function getArticles(lang: Language): Article[] { 
   if (lang === "Русский") { 
@@ -749,7 +877,7 @@ function getArticles(lang: Language): Article[] {
         description: 
           "Выдающийся казахский кюйши и композитор, один из мастеров домбровой традиции.", 
         readTime: "5 мин", 
-        sections: [], 
+        sections: kazangapSections.ru, 
       }, 
       { 
         id: "dauletkerey", 
@@ -850,7 +978,7 @@ function getArticles(lang: Language): Article[] {
         description: 
           "Қазақ күй өнерінің көрнекті өкілі, күйші-композитор.", 
         readTime: "5 мин", 
-        sections: [], 
+        sections: kazangapSections.kz, 
       }, 
       { 
         id: "dauletkerey", 
@@ -950,7 +1078,7 @@ function getArticles(lang: Language): Article[] {
       description: 
         "A prominent Kazakh kuiishi and composer of the dombra tradition.", 
       readTime: "5 min", 
-      sections: [], 
+      sections: kazangapSections.en, 
     }, 
     { 
       id: "dauletkerey", 
