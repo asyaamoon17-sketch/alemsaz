@@ -1,189 +1,103 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Language = "Қазақша" | "Русский" | "English";
+type Instrument = "dombra" | "kobyz" | "sazsyrnai";
+type ArticleCategory =
+  | "all"
+  | "instruments"
+  | "kuiyshi"
+  | "kuis"
+  | "history";
 
-const translations = {
-  "Русский": {
-    home: "Главная",
-    lessons: "Уроки",
-    quiz: "Викторина",
-    encyclopedia: "Энциклопедия",
-    profile: "Профиль",
-    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
-    heroTitle: "Музыка, которая хранит душу степи",
-    heroText:
-      "Изучай казахскую музыку, инструменты и великих мастеров через интерактивные уроки.",
-    startLearning: "Начать обучение",
-    explore: "Исследовать",
-    instruments: "Инструменты",
-    articles: "Статьи",
-    composers: "Композиторы",
-    progress: "Прогресс",
-    lessonsTitle: "Уроки",
-    quizTitle: "Викторина",
-    encyclopediaTitle: "Энциклопедия",
-    profileTitle: "Профиль",
-    articlePlaceholder: "Полная статья будет добавлена позже.",
-    dynaNurpeisova: "Дина Нурпеисова",
-    kazangap: "Казангап Тлепбергенулы",
-    dauletkerey: "Даулеткерей Шигаулы",
-    ykhlas: "Ыкылас Дукенулы",
-    close: "Закрыть",
-    back: "Назад",
-    next: "Далее",
-    completed: "Завершено",
-    lesson: "Урок",
-    xp: "XP",
-  },
+type Translation = {
+  home: string;
+  lessons: string;
+  quiz: string;
+  encyclopedia: string;
+  profile: string;
 
-  "Қазақша": {
-    home: "Басты бет",
-    lessons: "Сабақтар",
-    quiz: "Викторина",
-    encyclopedia: "Энциклопедия",
-    profile: "Профиль",
-    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
-    heroTitle: "Дала рухын сақтаған музыка",
-    heroText:
-      "Қазақ музыкасын, ұлттық аспаптарды және ұлы күйшілерді интерактивті сабақтар арқылы үйрен.",
-    startLearning: "Оқуды бастау",
-    explore: "Зерттеу",
-    instruments: "Аспаптар",
-    articles: "Мақалалар",
-    composers: "Композиторлар",
-    progress: "Прогресс",
-    lessonsTitle: "Сабақтар",
-    quizTitle: "Викторина",
-    encyclopediaTitle: "Энциклопедия",
-    profileTitle: "Профиль",
-    articlePlaceholder: "Толық мақала кейінірек қосылады.",
-    dynaNurpeisova: "Дина Нұрпейісова",
-    kazangap: "Қазанғап Тлепбергенұлы",
-    dauletkerey: "Дәулеткерей Шығайұлы",
-    ykhlas: "Ықылас Дүкенұлы",
-    close: "Жабу",
-    back: "Артқа",
-    next: "Келесі",
-    completed: "Аяқталды",
-    lesson: "Сабақ",
-    xp: "XP",
-  },
+  heroEyebrow: string;
+  heroTitle1: string;
+  heroTitle2: string;
+  heroText: string;
+  continue: string;
+  openEncyclopedia: string;
 
-  "English": {
-    home: "Home",
-    lessons: "Lessons",
-    quiz: "Quiz",
-    encyclopedia: "Encyclopedia",
-    profile: "Profile",
-    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
-    heroTitle: "Music that carries the spirit of the steppe",
-    heroText:
-      "Learn Kazakh music, traditional instruments and great masters through interactive lessons.",
-    startLearning: "Start learning",
-    explore: "Explore",
-    instruments: "Instruments",
-    articles: "Articles",
-    composers: "Composers",
-    progress: "Progress",
-    lessonsTitle: "Lessons",
-    quizTitle: "Quiz",
-    encyclopediaTitle: "Encyclopedia",
-    profileTitle: "Profile",
-    articlePlaceholder: "The full article will be added later.",
-    dynaNurpeisova: "Dina Nurpeisova",
-    kazangap: "Kazangap Tlepbergenuly",
-    dauletkerey: "Dauletkerey Shigauly",
-    ykhlas: "Ykhlas Dukenuly",
-    close: "Close",
-    back: "Back",
-    next: "Next",
-    completed: "Completed",
-    lesson: "Lesson",
-    xp: "XP",
-  },
-} as const;
+  journey: string;
+  courseMap: string;
+  allLessons: string;
+  masteryPath: string;
+  progress: string;
 
-type Translation = (typeof translations)["Русский"];
+  quizCard: string;
+  quizCardText: string;
+  encyclopediaCard: string;
+  encyclopediaCardText: string;
+  achievements: string;
+  achievementsText: string;
 
-type Article = {
-  id: string;
-  image: string;
-  title: Record<Language, string>;
-  text: Record<Language, string>;
+  learningPath: string;
+  lessonsTitle: string;
+  beginner: string;
+  intermediate: string;
+  advanced: string;
+
+  repeat: string;
+  start: string;
+  locked: string;
+
+  lesson1: string;
+  lesson1Sub: string;
+  lesson2: string;
+  lesson2Sub: string;
+  lesson3: string;
+  lesson3Sub: string;
+  lesson4: string;
+  lesson4Sub: string;
+  lesson5: string;
+  lesson5Sub: string;
+
+  kyuiQuiz: string;
+  guessKyui: string;
+  question: string;
+  questionLabel: string;
+  of: string;
+  wonderful: string;
+  quizFinished: string;
+  result: string;
+  again: string;
+
+  cultureHistory: string;
+  search: string;
+  all: string;
+  instruments: string;
+  kuiyshi: string;
+  kuis: string;
+  history: string;
+  read: string;
+  minutes: string;
+
+  profileTitle: string;
+  musician: string;
+  days: string;
+  badges: string;
+  firstLesson: string;
+  learningStreak: string;
+  tenKuis: string;
+
+  module: string;
+  repeatSequence: string;
+  video: string;
+  finishLesson: string;
+  understandable: string;
+
+  articleReadTime: string;
+  articleBack: string;
+  articleSources: string;
+  articlePlaceholder: string;
 };
-
-const articles: Article[] = [
-  {
-    id: "dina",
-    image: "/DinaNurpeisova.jpeg",
-    title: {
-      "Русский": "Дина Нурпеисова",
-      "Қазақша": "Дина Нұрпейісова",
-      English: "Dina Nurpeisova",
-    },
-    text: {
-      "Русский":
-        "Дина Нурпеисова — выдающаяся казахская домбристка и композитор, одна из крупнейших представительниц традиционного искусства кюя. Она продолжила исполнительскую традицию Курмангазы и внесла огромный вклад в сохранение и развитие казахской домбровой музыки.",
-      "Қазақша":
-        "Дина Нұрпейісова — қазақтың көрнекті домбырашысы әрі композиторы, дәстүрлі күй өнерінің ірі өкілдерінің бірі. Ол Құрманғазының орындаушылық дәстүрін жалғастырып, қазақтың домбыра музыкасын сақтауға және дамытуға зор үлес қосты.",
-      English:
-        "Dina Nurpeisova was an outstanding Kazakh dombra player and composer, and one of the greatest representatives of the traditional art of küy. She continued the performance tradition of Kurmangazy and made a major contribution to preserving and developing Kazakh dombra music.",
-    },
-  },
-  {
-    id: "kazangap",
-    image: "/KazangapTlepbergenuly.jpeg",
-    title: {
-      "Русский": "Казангап Тлепбергенулы",
-      "Қазақша": "Қазанғап Тлепбергенұлы",
-      English: "Kazangap Tlepbergenuly",
-    },
-    text: {
-      "Русский":
-        "Казангап Тлепбергенулы — выдающийся казахский кюйши и композитор, известный своим самобытным стилем исполнения и большим вкладом в развитие домбрового искусства.",
-      "Қазақша":
-        "Қазанғап Тлепбергенұлы — қазақтың көрнекті күйші-композиторы. Ол өзіндік орындаушылық мәнерімен және домбыра өнерінің дамуына қосқан үлкен үлесімен танымал.",
-      English:
-        "Kazangap Tlepbergenuly was an outstanding Kazakh küyshi and composer, known for his distinctive performance style and significant contribution to the development of dombra music.",
-    },
-  },
-  {
-    id: "ykhlas",
-    image: "/YkhlasDukenuly.jpeg",
-    title: {
-      "Русский": "Ыкылас Дукенулы",
-      "Қазақша": "Ықылас Дүкенұлы",
-      English: "Ykhlas Dukenuly",
-    },
-    text: {
-      "Русский":
-        "Ыкылас Дукенулы — выдающийся казахский кобызшы и композитор, сыгравший важную роль в развитии традиционного искусства кобыза и формировании современной школы кобызовой музыки.",
-      "Қазақша":
-        "Ықылас Дүкенұлы — қазақтың көрнекті қобызшысы әрі композиторы. Ол дәстүрлі қобыз өнерінің дамуына және қазіргі қобыз музыкасы мектебінің қалыптасуына зор үлес қосты.",
-      English:
-        "Ykhlas Dukenuly was an outstanding Kazakh kobyz player and composer who played an important role in the development of traditional kobyz art and the formation of the modern kobyz music school.",
-    },
-  },
-  {
-    id: "dauletkerey",
-    image: "/DauletkereyShigauly.jpeg",
-    title: {
-      "Русский": "Даулеткерей Шигаулы",
-      "Қазақша": "Дәулеткерей Шығайұлы",
-      English: "Dauletkerey Shigauly",
-    },
-    text: {
-      "Русский":
-        "Даулеткерей Шигаулы — выдающийся казахский кюйши и композитор, один из крупнейших представителей западноказахстанской домбровой традиции.",
-      "Қазақша":
-        "Дәулеткерей Шығайұлы — қазақтың көрнекті күйші-композиторы, Батыс Қазақстандағы домбыра күй дәстүрінің ірі өкілдерінің бірі.",
-      English:
-        "Dauletkerey Shigauly was an outstanding Kazakh küyshi and composer and one of the major representatives of the Western Kazakh dombra tradition.",
-    },
-  },
-];
 
 const lessons = [
   { n: 1, done: true },
@@ -191,434 +105,1467 @@ const lessons = [
   { n: 3, done: false },
   { n: 4, done: false },
   { n: 5, done: false },
-  { n: 6, done: false },
 ];
 
-const quizQuestions = [
+const quiz = [
   {
-    question: {
-      "Русский": "Какой инструмент является главным символом казахской кюйовой традиции?",
-      "Қазақша": "Қазақтың күй дәстүрінің негізгі аспабы қандай?",
-      English: "Which instrument is the main symbol of the Kazakh küy tradition?",
-    },
-    answers: {
-      "Русский": ["Домбра", "Кобыз", "Сазсырнай", "Жетіген"],
-      "Қазақша": ["Домбыра", "Қобыз", "Сазсырнай", "Жетіген"],
-      English: ["Dombra", "Kobyz", "Sazsyrnai", "Zhetygen"],
-    },
+    audio: "/Saryarka.mp3",
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
     correct: 0,
   },
   {
-    question: {
-      "Русский": "Кто известен как выдающаяся представительница искусства домбры?",
-      "Қазақша": "Домбыра өнерінің көрнекті өкілі кім?",
-      English: "Who is known as an outstanding representative of dombra art?",
-    },
-    answers: {
-      "Русский": ["Дина Нурпеисова", "Ықылас Дукенулы", "Коркыт", "Даулеткерей"],
-      "Қазақша": ["Дина Нұрпейісова", "Ықылас Дүкенұлы", "Қорқыт", "Дәулеткерей"],
-      English: ["Dina Nurpeisova", "Ykhlas Dukenuly", "Korkyt", "Dauletkerey"],
-    },
-    correct: 0,
+    audio: "/BB.mp3",
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 1,
   },
   {
-    question: {
-      "Русский": "Какой инструмент особенно связан с Ыкыласом Дукенулы?",
-      "Қазақша": "Ықылас Дүкенұлы қай аспаппен ерекше байланысты?",
-      English: "Which instrument is especially associated with Ykhlas Dukenuly?",
-    },
-    answers: {
-      "Русский": ["Кобыз", "Домбра", "Сазсырнай", "Жетіген"],
-      "Қазақша": ["Қобыз", "Домбыра", "Сазсырнай", "Жетіген"],
-      English: ["Kobyz", "Dombra", "Sazsyrnai", "Zhetygen"],
-    },
-    correct: 0,
+    audio: "/Adai.mp3",
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 2,
+  },
+  {
+    audio: "/Aksakkulan.mp3",
+    answers: ["Сарыарқа", "Балбырауын", "Адай", "Ақсақ құлан"],
+    correct: 3,
   },
 ];
 
-function Header({
-  language,
-  setLanguage,
-  active,
-  setActive,
-  t,
-}: {
-  language: Language;
-  setLanguage: (value: Language) => void;
-  active: string;
-  setActive: (value: string) => void;
-  t: Translation;
-}) {
-  return (
-    <header className="topbar">
-      <button className="logo" onClick={() => setActive("home")}>
-        <span className="logo-mark">A</span>
-        <span>ÁlemSaz</span>
-      </button>
+const translations: Record<Language, Translation> = {
+  Русский: {
+    home: "Главная",
+    lessons: "Уроки",
+    quiz: "Викторина",
+    encyclopedia: "Энциклопедия",
+    profile: "Профиль",
 
-      <nav>
-        <button
-          className={active === "home" ? "nav-active" : ""}
-          onClick={() => setActive("home")}
-        >
-          {t.home}
-        </button>
-        <button
-          className={active === "lessons" ? "nav-active" : ""}
-          onClick={() => setActive("lessons")}
-        >
-          {t.lessons}
-        </button>
-        <button
-          className={active === "quiz" ? "nav-active" : ""}
-          onClick={() => setActive("quiz")}
-        >
-          {t.quiz}
-        </button>
-        <button
-          className={active === "encyclopedia" ? "nav-active" : ""}
-          onClick={() => setActive("encyclopedia")}
-        >
-          {t.encyclopedia}
-        </button>
-        <button
-          className={active === "profile" ? "nav-active" : ""}
-          onClick={() => setActive("profile")}
-        >
-          {t.profile}
-        </button>
-      </nav>
+    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
+    heroTitle1: "Музыка, которую",
+    heroTitle2: "чувствуешь.",
+    heroText:
+      "Учись играть на казахских национальных инструментах, открывай кюи и знакомься с музыкальной историей Казахстана.",
+    continue: "Продолжить обучение →",
+    openEncyclopedia: "Открыть энциклопедию",
 
-      <select
-        value={language}
-        onChange={(e) => setLanguage(e.target.value as Language)}
-        aria-label="Language"
-      >
-        <option value="Қазақша">Қазақша</option>
-        <option value="Русский">Русский</option>
-        <option value="English">English</option>
-      </select>
-    </header>
-  );
+    journey: "YOUR JOURNEY",
+    courseMap: "Карта курса",
+    allLessons: "Все уроки →",
+    masteryPath: "Путь к мастерству",
+    progress: "3 из 5 модулей • 42% прогресса",
+
+    quizCard: "Quiz кюев",
+    quizCardText: "Угадай мелодию и автора",
+    encyclopediaCard: "Энциклопедия",
+    encyclopediaCardText: "История, инструменты, кюйши",
+    achievements: "Достижения",
+    achievementsText: "12 дней серии • 7 бейджей",
+
+    learningPath: "LEARNING PATH",
+    lessonsTitle: "Уроки",
+    beginner: "Начальный",
+    intermediate: "Средний",
+    advanced: "Высокий",
+
+    repeat: "Повторить",
+    start: "Начать",
+    locked: "Закрыто",
+
+    lesson1: "Базовые приёмы",
+    lesson1Sub: "Первые звуки",
+    lesson2: "Переборы",
+    lesson2Sub: "Ритм и движение",
+    lesson3: "Простая мелодия",
+    lesson3Sub: "Ақ желкен",
+    lesson4: "Ритм-паттерны",
+    lesson4Sub: "Учимся держать темп",
+    lesson5: "Первый кюй",
+    lesson5Sub: "Сарыарқа",
+
+    kyuiQuiz: "KYUI QUIZ",
+    guessKyui: "Угадай кюй",
+    question: "Какой кюй звучит в отрывке?",
+    questionLabel: "Вопрос",
+    of: "из",
+    wonderful: "Отлично!",
+    quizFinished: "Викторина завершена.",
+    result: "Результат",
+    again: "Ещё раз",
+
+    cultureHistory: "CULTURE & HISTORY",
+    search: "⌕  Поиск...",
+    all: "Все",
+    instruments: "Инструменты",
+    kuiyshi: "Кюйши",
+    kuis: "Кюи",
+    history: "История",
+    read: "Читать",
+    minutes: "мин",
+
+    profileTitle: "Твой путь",
+    musician: "Музыкант",
+    days: "дней серии",
+    badges: "бейджей",
+    firstLesson: "Первый урок",
+    learningStreak: "Серия обучения",
+    tenKuis: "10 кюев",
+
+    module: "МОДУЛЬ 3 · УРОК 2",
+    repeatSequence: "Повтори последовательность и следи за ритмом.",
+    video: "Видео-демонстрация",
+    finishLesson: "✓ Завершить урок · +100 XP",
+    understandable: "Понятно",
+
+    articleReadTime: "8 мин чтения",
+    articleBack: "Назад к энциклопедии",
+    articleSources: "Исторический очерк",
+    articlePlaceholder: "Полная статья будет добавлена позже.",
+  },
+
+  Қазақша: {
+    home: "Басты бет",
+    lessons: "Сабақтар",
+    quiz: "Викторина",
+    encyclopedia: "Энциклопедия",
+    profile: "Профиль",
+
+    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
+    heroTitle1: "Сезінетін",
+    heroTitle2: "музыка.",
+    heroText:
+      "Қазақтың ұлттық аспаптарында ойнауды үйрен, күйлерді танып, Қазақстанның музыкалық тарихымен таныс.",
+    continue: "Оқуды жалғастыру →",
+    openEncyclopedia: "Энциклопедияны ашу",
+
+    journey: "YOUR JOURNEY",
+    courseMap: "Курс картасы",
+    allLessons: "Барлық сабақтар →",
+    masteryPath: "Шеберлікке жол",
+    progress: "5 модульдің 3-і • 42% прогресс",
+
+    quizCard: "Күйлер викторинасы",
+    quizCardText: "Әуен мен авторды тап",
+    encyclopediaCard: "Энциклопедия",
+    encyclopediaCardText: "Тарих, аспаптар, күйші-композиторлар",
+    achievements: "Жетістіктер",
+    achievementsText: "12 күндік серия • 7 белгі",
+
+    learningPath: "LEARNING PATH",
+    lessonsTitle: "Сабақтар",
+    beginner: "Бастауыш",
+    intermediate: "Орта",
+    advanced: "Жоғары",
+
+    repeat: "Қайталау",
+    start: "Бастау",
+    locked: "Жабық",
+
+    lesson1: "Негізгі әдістер",
+    lesson1Sub: "Алғашқы дыбыстар",
+    lesson2: "Перне қағыстары",
+    lesson2Sub: "Ырғақ және қозғалыс",
+    lesson3: "Қарапайым әуен",
+    lesson3Sub: "Ақ желкен",
+    lesson4: "Ырғақ үлгілері",
+    lesson4Sub: "Темпті сақтауды үйрен",
+    lesson5: "Алғашқы күй",
+    lesson5Sub: "Сарыарқа",
+
+    kyuiQuiz: "KYUI QUIZ",
+    guessKyui: "Күйді тап",
+    question: "Бұл үзіндіде қандай күй орындалады?",
+    questionLabel: "Сұрақ",
+    of: "ішінен",
+    wonderful: "Тамаша!",
+    quizFinished: "Викторина аяқталды.",
+    result: "Нәтиже",
+    again: "Қайтадан",
+
+    cultureHistory: "CULTURE & HISTORY",
+    search: "⌕  Іздеу...",
+    all: "Барлығы",
+    instruments: "Аспаптар",
+    kuiyshi: "Күйшілер",
+    kuis: "Күйлер",
+    history: "Тарих",
+    read: "Оқу",
+    minutes: "мин",
+
+    profileTitle: "Сенің жолың",
+    musician: "Музыкант",
+    days: "күндік серия",
+    badges: "жетістік",
+    firstLesson: "Алғашқы сабақ",
+    learningStreak: "Оқу сериясы",
+    tenKuis: "10 күй",
+
+    module: "3-МОДУЛЬ · 2-САБАҚ",
+    repeatSequence: "Реттілікті қайталап, ырғаққа назар аудар.",
+    video: "Бейне-демонстрация",
+    finishLesson: "✓ Сабақты аяқтау · +100 XP",
+    understandable: "Түсінікті",
+
+    articleReadTime: "8 минут оқу",
+    articleBack: "Энциклопедияға оралу",
+    articleSources: "Тарихи очерк",
+    articlePlaceholder: "Толық мақала кейінірек қосылады.",
+  },
+
+  English: {
+    home: "Home",
+    lessons: "Lessons",
+    quiz: "Quiz",
+    encyclopedia: "Encyclopedia",
+    profile: "Profile",
+
+    heroEyebrow: "NEO-NOMAD MUSIC LEARNING",
+    heroTitle1: "Music you can",
+    heroTitle2: "feel.",
+    heroText:
+      "Learn to play Kazakh traditional instruments, discover kui and explore the musical history of Kazakhstan.",
+    continue: "Continue learning →",
+    openEncyclopedia: "Open encyclopedia",
+
+    journey: "YOUR JOURNEY",
+    courseMap: "Course map",
+    allLessons: "All lessons →",
+    masteryPath: "Path to mastery",
+    progress: "3 of 5 modules • 42% progress",
+
+    quizCard: "Kui Quiz",
+    quizCardText: "Guess the melody and composer",
+    encyclopediaCard: "Encyclopedia",
+    encyclopediaCardText: "History, instruments and kuiishi",
+    achievements: "Achievements",
+    achievementsText: "12 day streak • 7 badges",
+
+    learningPath: "LEARNING PATH",
+    lessonsTitle: "Lessons",
+    beginner: "Beginner",
+    intermediate: "Intermediate",
+    advanced: "Advanced",
+
+    repeat: "Repeat",
+    start: "Start",
+    locked: "Locked",
+
+    lesson1: "Basic techniques",
+    lesson1Sub: "First sounds",
+    lesson2: "Picking patterns",
+    lesson2Sub: "Rhythm and movement",
+    lesson3: "Simple melody",
+    lesson3Sub: "Ak zhelken",
+    lesson4: "Rhythm patterns",
+    lesson4Sub: "Learn to keep tempo",
+    lesson5: "First kui",
+    lesson5Sub: "Saryarka",
+
+    kyuiQuiz: "KYUI QUIZ",
+    guessKyui: "Guess the kui",
+    question: "Which kui is playing in the excerpt?",
+    questionLabel: "Question",
+    of: "of",
+    wonderful: "Great!",
+    quizFinished: "Quiz completed.",
+    result: "Result",
+    again: "Try again",
+
+    cultureHistory: "CULTURE & HISTORY",
+    search: "⌕  Search...",
+    all: "All",
+    instruments: "Instruments",
+    kuiyshi: "Kuiishi",
+    kuis: "Kui",
+    history: "History",
+    read: "Read",
+    minutes: "min",
+
+    profileTitle: "Your journey",
+    musician: "Musician",
+    days: "day streak",
+    badges: "badges",
+    firstLesson: "First lesson",
+    learningStreak: "Learning streak",
+    tenKuis: "10 kui",
+
+    module: "MODULE 3 · LESSON 2",
+    repeatSequence: "Repeat the sequence and follow the rhythm.",
+    video: "Video demonstration",
+    finishLesson: "✓ Complete lesson · +100 XP",
+    understandable: "Got it",
+
+    articleReadTime: "8 min read",
+    articleBack: "Back to encyclopedia",
+    articleSources: "Historical feature",
+    articlePlaceholder: "The full article will be added later.",
+  },
+};
+
+const instrumentNames: Record<
+  Language,
+  Record<Instrument, string>
+> = {
+  Русский: {
+    dombra: "Домбра",
+    kobyz: "Кобыз",
+    sazsyrnai: "Сазсырнай",
+  },
+  Қазақша: {
+    dombra: "Домбыра",
+    kobyz: "Қобыз",
+    sazsyrnai: "Сазсырнай",
+  },
+  English: {
+    dombra: "Dombra",
+    kobyz: "Kobyz",
+    sazsyrnai: "Sazsyrnai",
+  },
+};
+
+type Article = {
+  id: string;
+  title: string;
+  subtitle: string;
+  icon: string;
+  image: string | null;
+  category: ArticleCategory;
+  description: string;
+  readTime: string;
+  sections: {
+    heading: string;
+    paragraphs: string[];
+  }[];
+};
+
+function getArticles(lang: Language): Article[] {
+  if (lang === "Русский") {
+    return [
+      {
+        id: "dina",
+        title: "Дина Нурпеисова",
+        subtitle: "Королева домбры",
+        icon: "🎼",
+        image: "/DinaNurpeisova.jpeg",
+        category: "kuiyshi",
+        description:
+          "Великая казахская кюйши, сохранившая традиции домбрового искусства и наследие Курманғазы.",
+        readTime: "8 мин",
+        sections: [],
+      },
+    ];
+  }
+
+  if (lang === "Қазақша") {
+    return [
+      {
+        id: "dina",
+        title: "Дина Нұрпейісова",
+        subtitle: "Домбыра ханшайымы",
+        icon: "🎼",
+        image: "/DinaNurpeisova.jpeg",
+        category: "kuiyshi",
+        description:
+          "Ұлы қазақ күйші-композиторы, домбыра өнерінің дәстүрін сақтап, Құрманғазы мұрасын кейінгі ұрпаққа жеткізген тұлға.",
+        readTime: "8 минут",
+        sections: [],
+      },
+    ];
+  }
+
+  return [
+    {
+      id: "dina",
+      title: "Dina Nurpeisova",
+      subtitle: "The Queen of the Dombra",
+      icon: "🎼",
+      image: "/DinaNurpeisova.jpeg",
+      category: "kuiyshi",
+      description:
+        "A great Kazakh kuiishi who preserved the traditions of dombra performance and the musical legacy of Kurmangazy.",
+      readTime: "8 min",
+      sections: [],
+    },
+  ];
 }
 
-function Home({
-  t,
-  language,
-  setActive,
-  setArticle,
-}: {
-  t: Translation;
-  language: Language;
-  setActive: (value: string) => void;
-  setArticle: (article: Article) => void;
-}) {
-  return (
-    <main>
-      <section className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">{t.heroEyebrow}</p>
-          <h1>{t.heroTitle}</h1>
-          <p>{t.heroText}</p>
+export default function Home() {
+  const [lang, setLang] = useState<Language>("Русский");
+  const [instrument, setInstrument] =
+    useState<Instrument>("dombra");
 
-          <div className="hero-actions">
-            <button
-              className="primary"
-              onClick={() => setActive("lessons")}
-            >
-              {t.startLearning}
-            </button>
-            <button
-              className="secondary"
-              onClick={() => setActive("encyclopedia")}
-            >
-              {t.explore}
-            </button>
-          </div>
-        </div>
+  const [tab, setTab] = useState("home");
 
-        <div className="hero-art">
-          <div className="sun" />
-          <div className="mountain mountain-one" />
-          <div className="mountain mountain-two" />
-          <div className="dombra-shape">
-            <div className="dombra-neck" />
-            <div className="dombra-body" />
-          </div>
-        </div>
-      </section>
+  const [xp, setXp] = useState(2450);
+  const [streak] = useState(12);
 
-      <section className="section">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">{t.encyclopedia}</p>
-            <h2>{t.articles}</h2>
-          </div>
-          <button className="text-button" onClick={() => setActive("encyclopedia")}>
-            {t.explore} →
-          </button>
-        </div>
+  const [lessonOpen, setLessonOpen] = useState(false);
 
-        <div className="article-grid">
-          {articles.map((article) => (
-            <article
-              className="article-card"
-              key={article.id}
-              onClick={() => setArticle(article)}
-            >
-              <img src={article.image} alt={article.title[language]} />
-              <div className="article-content">
-                <span>{t.composers}</span>
-                <h3>{article.title[language]}</h3>
-                <p>{article.text[language]}</p>
-                <button
-                  className="read-more"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setArticle(article);
-                  }}
-                >
-                  {t.explore} →
-                </button>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    </main>
-  );
-}
+  const [quizIndex, setQuizIndex] = useState(0);
+  const [quizDone, setQuizDone] = useState(false);
+  const [quizScore, setQuizScore] = useState(0);
 
-function Lessons({
-  t,
-  setLessonOpen,
-}: {
-  t: Translation;
-  setLessonOpen: (value: boolean) => void;
-}) {
-  return (
-    <main className="page">
-      <div className="page-heading">
-        <p className="eyebrow">{t.lessons}</p>
-        <h1>{t.lessonsTitle}</h1>
-      </div>
+  const [article, setArticle] = useState<string | null>(null);
 
-      <div className="lesson-grid">
-        {lessons.map((lesson) => (
-          <button
-            className={`lesson-card ${lesson.done ? "lesson-done" : ""}`}
-            key={lesson.n}
-            onClick={() => setLessonOpen(true)}
-          >
-            <span className="lesson-number">{lesson.n}</span>
-            <div>
-              <small>
-                {t.lesson} {lesson.n}
-              </small>
-              <h3>
-                {lesson.done ? t.completed : `${t.lesson} ${lesson.n}`}
-              </h3>
-            </div>
-            <span className="lesson-arrow">→</span>
-          </button>
-        ))}
-      </div>
-    </main>
-  );
-}
+  const [encyclopediaCategory, setEncyclopediaCategory] =
+    useState<ArticleCategory>("all");
 
-function Quiz({ language, t }: { language: Language; t: Translation }) {
-  const [question, setQuestion] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
-  const [score, setScore] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const current = quizQuestions[question];
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audioError, setAudioError] = useState(false);
 
-  const answer = (index: number) => {
-    if (selected !== null) return;
+  const quizAudioRef = useRef<HTMLAudioElement | null>(null);
 
-    setSelected(index);
+  const t = translations[lang];
+  const instruments = instrumentNames[lang];
+  const articles = getArticles(lang);
 
-    if (index === current.correct) {
-      setScore((value) => value + 1);
+  const selectedArticle = article
+    ? articles.find((item) => item.id === article)
+    : undefined;
+
+  const lessonTitles = [
+    [t.lesson1, t.lesson1Sub],
+    [t.lesson2, t.lesson2Sub],
+    [t.lesson3, t.lesson3Sub],
+    [t.lesson4, t.lesson4Sub],
+    [t.lesson5, t.lesson5Sub],
+  ];
+
+  function stopQuizAudio() {
+    const audio = quizAudioRef.current;
+
+    if (audio) {
+      audio.pause();
+
+      try {
+        audio.currentTime = 0;
+      } catch {}
     }
-  };
 
-  const next = () => {
-    if (question < quizQuestions.length - 1) {
-      setQuestion((value) => value + 1);
-      setSelected(null);
+    setIsPlaying(false);
+  }
+
+  function stopAllAudio() {
+    stopQuizAudio();
+  }
+
+  async function toggleQuizAudio() {
+    const audio = quizAudioRef.current;
+
+    if (!audio) {
+      return;
+    }
+
+    if (!audio.paused) {
+      audio.pause();
+      setIsPlaying(false);
+      return;
+    }
+
+    setAudioError(false);
+
+    try {
+      await audio.play();
+      setIsPlaying(true);
+    } catch {
+      setIsPlaying(false);
+      setAudioError(true);
+    }
+  }
+
+  useEffect(() => {
+    const audio = quizAudioRef.current;
+
+    if (audio) {
+      audio.pause();
+
+      try {
+        audio.currentTime = 0;
+      } catch {}
+
+      audio.load();
+    }
+
+    setIsPlaying(false);
+    setAudioError(false);
+  }, [quizIndex]);
+
+  function answerQuiz(index: number) {
+    if (quizDone) {
+      return;
+    }
+
+    stopQuizAudio();
+
+    const correct = index === quiz[quizIndex].correct;
+
+    if (correct) {
+      setQuizScore((score) => score + 1);
+    }
+
+    setXp((currentXp) =>
+      currentXp + (correct ? 50 : 10)
+    );
+
+    if (quizIndex === quiz.length - 1) {
+      setQuizDone(true);
     } else {
-      setQuestion(0);
-      setSelected(null);
-      setScore(0);
+      setQuizIndex((currentIndex) => currentIndex + 1);
     }
-  };
+  }
+
+  function resetQuiz() {
+    stopQuizAudio();
+    setQuizIndex(0);
+    setQuizScore(0);
+    setQuizDone(false);
+    setAudioError(false);
+  }
+
+  const normalizedSearch = searchQuery
+    .toLowerCase()
+    .trim();
+
+  const filteredArticles = articles.filter((item) => {
+    if (
+      encyclopediaCategory !== "all" &&
+      item.category !== encyclopediaCategory
+    ) {
+      return false;
+    }
+
+    if (!normalizedSearch) {
+      return true;
+    }
+
+    const text = [
+      item.title,
+      item.subtitle,
+      item.description,
+      ...item.sections.flatMap((section) => [
+        section.heading,
+        ...section.paragraphs,
+      ]),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return text.includes(normalizedSearch);
+  });
 
   return (
-    <main className="page">
-      <div className="page-heading">
-        <p className="eyebrow">{t.quiz}</p>
-        <h1>{t.quizTitle}</h1>
-      </div>
-
-      <section className="quiz-card">
-        <div className="quiz-top">
-          <span>
-            {question + 1} / {quizQuestions.length}
-          </span>
-          <span>
-            {t.xp}: {score * 100}
-          </span>
-        </div>
-
-        <h2>{current.question[language]}</h2>
-
-        <div className="answers">
-          {current.answers[language].map((answerText, index) => (
-            <button
-              key={answerText}
-              onClick={() => answer(index)}
-              className={
-                selected === index
-                  ? index === current.correct
-                    ? "answer correct"
-                    : "answer wrong"
-                  : "answer"
-              }
-            >
-              <span>{String.fromCharCode(65 + index)}</span>
-              {answerText}
-            </button>
-          ))}
-        </div>
-
-        {selected !== null && (
-          <button className="primary next-button" onClick={next}>
-            {t.next}
-          </button>
-        )}
-      </section>
-    </main>
-  );
-}
-
-function Encyclopedia({
-  t,
-  language,
-  setArticle,
-}: {
-  t: Translation;
-  language: Language;
-  setArticle: (article: Article) => void;
-}) {
-  return (
-    <main className="page">
-      <div className="page-heading">
-        <p className="eyebrow">{t.encyclopedia}</p>
-        <h1>{t.encyclopediaTitle}</h1>
-      </div>
-
-      <div className="article-grid">
-        {articles.map((article) => (
-          <article
-            className="article-card"
-            key={article.id}
-            onClick={() => setArticle(article)}
+    <main className="app-shell">
+      <header className="topbar">
+        <div
+          className="brand"
+          onClick={() => {
+            stopAllAudio();
+            setTab("home");
+          }}
+        >
+          <div
+            className="brand-mark"
+            style={{
+              overflow: "hidden",
+              padding: 0,
+            }}
           >
-            <img src={article.image} alt={article.title[language]} />
-            <div className="article-content">
-              <span>{t.composers}</span>
-              <h3>{article.title[language]}</h3>
-              <p>{article.text[language]}</p>
-              <button
-                className="read-more"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setArticle(article);
+            <img
+              src="/avatar.jpeg"
+              alt="Álem.Music"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+              }}
+            />
+          </div>
+
+          <div>
+            <b>Álem.Music</b>
+            <span>Ұлттық әуен әлемі</span>
+          </div>
+        </div>
+
+        <div className="top-stats">
+          <span>🔥 {streak}</span>
+
+          <span>
+            ⭐ {xp.toLocaleString()}
+          </span>
+
+          <select
+            value={lang}
+            onChange={(event) =>
+              setLang(event.target.value as Language)
+            }
+            aria-label="Language"
+          >
+            <option value="Русский">Русский</option>
+            <option value="Қазақша">Қазақша</option>
+            <option value="English">English</option>
+          </select>
+        </div>
+      </header>
+
+      <section className="content">
+        {tab === "home" && (
+          <>
+            <div className="hero">
+              <div>
+                <p className="eyebrow">
+                  {t.heroEyebrow}
+                </p>
+
+                <h1>
+                  {t.heroTitle1}
+                  <br />
+                  <em>{t.heroTitle2}</em>
+                </h1>
+
+                <p className="hero-copy">
+                  {t.heroText}
+                </p>
+
+                <div className="hero-actions">
+                  <button
+                    className="primary"
+                    onClick={() => {
+                      stopAllAudio();
+                      setTab("lessons");
+                      setLessonOpen(true);
+                    }}
+                  >
+                    {t.continue}
+                  </button>
+
+                  <button
+                    className="secondary"
+                    onClick={() => {
+                      stopAllAudio();
+                      setTab("encyclopedia");
+                    }}
+                  >
+                    {t.openEncyclopedia}
+                  </button>
+                </div>
+              </div>
+
+              <div
+                className="instrument-art"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
                 }}
               >
-                {t.explore} →
+                <img
+                  src="/hero.jpeg"
+                  alt="Kazakh traditional music"
+                  style={{
+                    width: "100%",
+                    maxWidth: "520px",
+                    height: "360px",
+                    objectFit: "cover",
+                    borderRadius: "28px",
+                    display: "block",
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="section-head">
+              <div>
+                <span className="eyebrow">
+                  {t.journey}
+                </span>
+
+                <h2>{t.courseMap}</h2>
+              </div>
+
+              <button
+                className="text-btn"
+                onClick={() => {
+                  stopAllAudio();
+                  setTab("lessons");
+                }}
+              >
+                {t.allLessons}
               </button>
             </div>
-          </article>
-        ))}
-      </div>
-    </main>
-  );
-}
 
-function Profile({ t }: { t: Translation }) {
-  const [xp] = useState(200);
+            <div className="course-card">
+              <div className="course-top">
+                <div>
+                  <span className="pill">
+                    🎵 {instruments[instrument]}
+                  </span>
 
-  return (
-    <main className="page">
-      <div className="page-heading">
-        <p className="eyebrow">{t.profile}</p>
-        <h1>{t.profileTitle}</h1>
-      </div>
+                  <h3>{t.masteryPath}</h3>
 
-      <section className="profile-card">
-        <div className="avatar">A</div>
-        <div>
-          <h2>ÁlemSaz</h2>
-          <p>
-            {t.progress}: 2 / 6 {t.lessons}
-          </p>
-        </div>
-        <strong>
-          {xp} {t.xp}
-        </strong>
+                  <p>{t.progress}</p>
+                </div>
+
+                <div className="ring">
+                  42%
+                </div>
+              </div>
+
+              <div className="path">
+                {lessons.map((lesson, index) => (
+                  <button
+                    key={lesson.n}
+                    className={`lesson-node ${
+                      lesson.done
+                        ? "done"
+                        : index === 2
+                        ? "current"
+                        : "locked"
+                    }`}
+                    onClick={() => {
+                      if (index <= 2) {
+                        stopAllAudio();
+                        setTab("lessons");
+                        setLessonOpen(true);
+                      }
+                    }}
+                  >
+                    <span>
+                      {lesson.done ? "✓" : lesson.n}
+                    </span>
+
+                    <b>
+                      {lessonTitles[index][0]}
+                    </b>
+
+                    <small>
+                      {lessonTitles[index][1]}
+                    </small>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid-3">
+              <button
+                className="feature-card"
+                onClick={() => {
+                  stopAllAudio();
+                  setTab("quiz");
+                }}
+              >
+                <span>🎧</span>
+                <b>{t.quizCard}</b>
+                <small>{t.quizCardText}</small>
+              </button>
+
+              <button
+                className="feature-card"
+                onClick={() => {
+                  stopAllAudio();
+                  setTab("encyclopedia");
+                }}
+              >
+                <span>📚</span>
+                <b>{t.encyclopediaCard}</b>
+                <small>
+                  {t.encyclopediaCardText}
+                </small>
+              </button>
+
+              <button
+                className="feature-card"
+                onClick={() => {
+                  stopAllAudio();
+                  setTab("profile");
+                }}
+              >
+                <span>🏆</span>
+                <b>{t.achievements}</b>
+                <small>
+                  {t.achievementsText}
+                </small>
+              </button>
+            </div>
+          </>
+        )}
+
+        {tab === "lessons" && (
+          <div className="page">
+            <div className="section-head">
+              <div>
+                <span className="eyebrow">
+                  {t.learningPath}
+                </span>
+
+                <h2>
+                  {t.lessonsTitle} ·{" "}
+                  {instruments[instrument]}
+                </h2>
+              </div>
+
+              <select
+                className="select"
+                value={instrument}
+                onChange={(event) =>
+                  setInstrument(
+                    event.target.value as Instrument
+                  )
+                }
+              >
+                <option value="dombra">
+                  {instruments.dombra}
+                </option>
+
+                <option value="kobyz">
+                  {instruments.kobyz}
+                </option>
+
+                <option value="sazsyrnai">
+                  {instruments.sazsyrnai}
+                </option>
+              </select>
+            </div>
+
+            <div className="level-tabs">
+              <button className="active">
+                {t.beginner}
+              </button>
+
+              <button>{t.intermediate}</button>
+
+              <button>{t.advanced}</button>
+            </div>
+
+            <div className="lesson-list">
+              {lessons.map((lesson, index) => (
+                <div
+                  className={`lesson-row ${
+                    lesson.done ? "completed" : ""
+                  }`}
+                  key={lesson.n}
+                >
+                  <div className="lesson-icon">
+                    {lesson.done ? "✓" : lesson.n}
+                  </div>
+
+                  <div>
+                    <b>{lessonTitles[index][0]}</b>
+                    <p>{lessonTitles[index][1]}</p>
+                  </div>
+
+                  <button
+                    className="primary small"
+                    disabled={index > 2}
+                    onClick={() => {
+                      stopAllAudio();
+                      setLessonOpen(true);
+                    }}
+                  >
+                    {lesson.done
+                      ? t.repeat
+                      : index === 2
+                      ? t.start
+                      : t.locked}
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {lessonOpen && (
+              <LessonModal
+                t={t}
+                close={() => setLessonOpen(false)}
+                onComplete={() => {
+                  setXp((currentXp) => currentXp + 100);
+                  setLessonOpen(false);
+                }}
+              />
+            )}
+          </div>
+        )}
+
+        {tab === "quiz" && (
+          <div className="page narrow">
+            <span className="eyebrow">
+              {t.kyuiQuiz}
+            </span>
+
+            <h2>{t.guessKyui}</h2>
+
+            {!quizDone ? (
+              <div className="quiz-card">
+                <audio
+                  ref={quizAudioRef}
+                  src={quiz[quizIndex].audio}
+                  preload="auto"
+                  onEnded={() =>
+                    setIsPlaying(false)
+                  }
+                  onError={() => {
+                    setIsPlaying(false);
+                    setAudioError(true);
+                  }}
+                  style={{
+                    display: "none",
+                  }}
+                />
+
+                <div
+                  className="audio-circle"
+                  onClick={toggleQuizAudio}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(event) => {
+                    if (
+                      event.key === "Enter" ||
+                      event.key === " "
+                    ) {
+                      toggleQuizAudio();
+                    }
+                  }}
+                >
+                  {isPlaying ? "❚❚" : "▶️"}
+                </div>
+
+                {audioError && (
+                  <p
+                    style={{
+                      color: "#b42318",
+                      textAlign: "center",
+                    }}
+                  >
+                    Не удалось воспроизвести аудио.
+                    Проверьте наличие файла в папке
+                    public.
+                  </p>
+                )}
+
+                <p className="quiz-q">
+                  {t.question}
+                </p>
+
+                <div className="quiz-progress">
+                  {t.questionLabel}{" "}
+                  {quizIndex + 1} {t.of}{" "}
+                  {quiz.length}
+                </div>
+
+                <div className="answers">
+                  {quiz[
+                    quizIndex
+                  ].answers.map((answer, index) => (
+                    <button
+                      key={`${answer}-${index}`}
+                      onClick={() =>
+                        answerQuiz(index)
+                      }
+                    >
+                      {String.fromCharCode(
+                        65 + index
+                      )}
+                      ) {answer}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="result-card">
+                <div className="big-check">
+                  ✦
+                </div>
+
+                <h2>{t.wonderful}</h2>
+
+                <p>
+                  {t.quizFinished} {t.result}:{" "}
+                  {quizScore}/{quiz.length}
+                </p>
+
+                <b>
+                  +
+                  {quizScore * 50 +
+                    (quiz.length - quizScore) *
+                      10}{" "}
+                  XP
+                </b>
+
+                <button
+                  className="primary"
+                  onClick={resetQuiz}
+                >
+                  {t.again}
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === "encyclopedia" && (
+          <div className="page">
+            {!article ? (
+              <>
+                <div className="section-head">
+                  <div>
+                    <span className="eyebrow">
+                      {t.cultureHistory}
+                    </span>
+
+                    <h2>{t.encyclopedia}</h2>
+                  </div>
+
+                  <input
+                    className="search"
+                    value={searchQuery}
+                    onChange={(event) =>
+                      setSearchQuery(
+                        event.target.value
+                      )
+                    }
+                    placeholder={t.search}
+                  />
+                </div>
+
+                <div className="category-row">
+                  {(
+                    [
+                      "all",
+                      "instruments",
+                      "kuiyshi",
+                      "kuis",
+                      "history",
+                    ] as ArticleCategory[]
+                  ).map((category) => (
+                    <button
+                      key={category}
+                      className={
+                        encyclopediaCategory ===
+                        category
+                          ? "active"
+                          : ""
+                      }
+                      onClick={() =>
+                        setEncyclopediaCategory(
+                          category
+                        )
+                      }
+                    >
+                      {category === "all"
+                        ? t.all
+                        : category ===
+                          "instruments"
+                        ? t.instruments
+                        : category === "kuiyshi"
+                        ? t.kuiyshi
+                        : category === "kuis"
+                        ? t.kuis
+                        : t.history}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="article-grid">
+                  {filteredArticles.map((item) => (
+                    <button
+                      className="article-card"
+                      key={item.id}
+                      onClick={() => {
+                        stopAllAudio();
+                        setArticle(item.id);
+                      }}
+                    >
+                      <div
+                        className="article-image"
+                        style={
+                          item.image
+                            ? {
+                                padding: 0,
+                                overflow:
+                                  "hidden",
+                              }
+                            : undefined
+                        }
+                      >
+                        {item.image ? (
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                              display: "block",
+                            }}
+                          />
+                        ) : (
+                          item.icon
+                        )}
+                      </div>
+
+                      <div>
+                        <span>
+                          {item.subtitle}
+                        </span>
+
+                        <h3>{item.title}</h3>
+
+                        <p>
+                          {item.description}
+                        </p>
+
+                        <small>
+                          {t.read} ·{" "}
+                          {item.readTime}
+                        </small>
+                      </div>
+                    </button>
+                  ))}
+
+                  {filteredArticles.length ===
+                    0 && (
+                    <div
+                      style={{
+                        gridColumn: "1 / -1",
+                        padding: "40px",
+                        textAlign: "center",
+                      }}
+                    >
+                      <p>
+                        {lang === "Қазақша"
+                          ? "Ештеңе табылмады."
+                          : lang === "English"
+                          ? "Nothing found."
+                          : "Ничего не найдено."}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : selectedArticle ? (
+              <article
+                className="encyclopedia-article"
+                style={{
+                  width: "100%",
+                  maxWidth: "1000px",
+                  margin: "0 auto",
+                  paddingBottom: "40px",
+                }}
+              >
+                <button
+                  className="text-btn article-back"
+                  onClick={() => setArticle(null)}
+                >
+                  ← {t.articleBack}
+                </button>
+
+                <div
+                  className="article-cover"
+                  style={{
+                    width: "100%",
+                    marginTop: "24px",
+                    marginBottom: "30px",
+                    borderRadius: "28px",
+                    overflow: "hidden",
+                    background: "#181512",
+                    boxShadow:
+                      "0 16px 45px rgba(0,0,0,.12)",
+                  }}
+                >
+                  {selectedArticle.image ? (
+                    <img
+                      src={selectedArticle.image}
+                      alt={selectedArticle.title}
+                      style={{
+                        width: "100%",
+                        height: "420px",
+                        objectFit: "cover",
+                        objectPosition:
+                          "center",
+                        display: "block",
+                      }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: "100%",
+                        height: "420px",
+                        display: "flex",
+                        alignItems:
+                          "center",
+                        justifyContent:
+                          "center",
+                        fontSize: "90px",
+                      }}
+                    >
+                      {selectedArticle.icon}
+                    </div>
+                  )}
+
+                  <div
+                    style={{
+                      padding:
+                        "30px 32px 34px",
+                      color: "#fff",
+                    }}
+                  >
+                    <span
+                      className="eyebrow"
+                      style={{
+                        display: "block",
+                        marginBottom: "12px",
+                      }}
+                    >
+                      ÁLEM.MUSIC ·
+                      ENCYCLOPEDIA
+                    </span>
+
+                    <h1
+                      style={{
+                        margin: "0 0 10px",
+                        fontSize:
+                          "clamp(30px,5vw,52px)",
+                        lineHeight: 1.08,
+                      }}
+                    >
+                      {selectedArticle.title}
+                    </h1>
+
+                    <p
+                      style={{
+                        margin: "0 0 20px",
+                        fontSize: "20px",
+                        lineHeight: 1.4,
+                        opacity: 0.82,
+                      }}
+                    >
+                      {selectedArticle.subtitle}
+                    </p>
+
+                    <div
+                      className="article-meta"
+                      style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: "10px",
+                      }}
+                    >
+                      <span>
+                        📖 {t.articleReadTime}
+                      </span>
+
+                      <span>
+                        🎼 {t.articleSources}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  className="article-body"
+                  style={{
+                    width: "100%",
+                    maxWidth: "860px",
+                    margin: "0 auto",
+                    padding: "40px 32px",
+                    boxSizing: "border-box",
+                    background: "#fff",
+                    borderRadius: "26px",
+                    boxShadow:
+                      "0 10px 35px rgba(0,0,0,.06)",
+                  }}
+                >
+                  {selectedArticle.sections.map(
+                    (section, index) => (
+                      <section
+                        className="article-section"
+                        key={`${selectedArticle.id}-${index}`}
+                        style={{
+                          marginBottom:
+                            index ===
+                            selectedArticle
+                              .sections.length -
+                              1
+                              ? "0"
+                              : "38px",
+                        }}
+                      >
+                        <h2
+                          style={{
+                            margin:
+                              "0 0 16px",
+                            fontSize:
+                              "clamp(22px,3vw,32px)",
+                            lineHeight: 1.2,
+                          }}
+                        >
+                          {section.heading}
+                        </h2>
+
+                        {section.paragraphs.map(
+                          (
+                            paragraph,
+                            paragraphIndex
+                          ) => (
+                            <p
+                              key={
+                                paragraphIndex
+                              }
+                              style={{
+                                margin:
+                                  "0 0 18px",
+                                fontSize:
+                                  "clamp(16px,2vw,19px)",
+                                lineHeight: 1.8,
+                                color:
+                                  "#38332e",
+                              }}
+                            >
+                              {paragraph}
+                            </p>
+                          )
+                        )}
+                      </section>
+                    )
+                  )}
+
+                  {selectedArticle.sections
+                    .length === 0 && (
+                    <div
+                      className="article-empty"
+                      style={{
+                        textAlign: "center",
+                        padding: "30px 10px",
+                      }}
+                    >
+                      <p>
+                        {t.articlePlaceholder}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div
+                  className="article-footer"
+                  style={{
+                    maxWidth: "860px",
+                    margin: "28px auto 0",
+                  }}
+                >
+                  <button
+                    className="primary"
+                    onClick={() =>
+                      setArticle(null)
+                    }
+                  >
+                    ← {t.articleBack}
+                  </button>
+                </div>
+              </article>
+            ) : null}
+          </div>
+        )}
+
+        {tab === "profile" && (
+          <div className="page narrow">
+            <span className="eyebrow">
+              YOUR PROFILE
+            </span>
+
+            <h2>{t.profileTitle}</h2>
+
+            <div className="profile-card">
+              <div className="avatar">A</div>
+
+              <h3>{t.musician}</h3>
+
+              <p>
+                {instruments[instrument]} ·{" "}
+                {t.beginner}
+              </p>
+
+              <div className="stats">
+                <div>
+                  <b>{xp.toLocaleString()}</b>
+                  <small>XP</small>
+                </div>
+
+                <div>
+                  <b>{streak}</b>
+                  <small>{t.days}</small>
+                </div>
+
+                <div>
+                  <b>7</b>
+                  <small>{t.badges}</small>
+                </div>
+              </div>
+            </div>
+
+            <h3>{t.achievements}</h3>
+
+            <div className="badges">
+              <div>
+                🏅
+                <b>{t.beginner}</b>
+                <small>{t.firstLesson}</small>
+              </div>
+
+              <div>
+                🔥
+                <b>30 күн</b>
+                <small>
+                  {t.learningStreak}
+                </small>
+              </div>
+
+              <div>
+                🎵
+                <b>Домбырашы</b>
+                <small>{t.tenKuis}</small>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
-      <section className="progress-card">
-        <div className="progress-header">
-          <span>{t.progress}</span>
-          <span>33%</span>
-        </div>
-        <div className="progress-bar">
-          <div className="progress-value" />
-        </div>
-      </section>
-    </main>
-  );
-}
+      <nav className="bottom-nav">
+        {(
+          [
+            ["home", "⌂", t.home],
+            ["lessons", "♪", t.lessons],
+            ["quiz", "?", t.quiz],
+            [
+              "encyclopedia",
+              "▤",
+              t.encyclopedia,
+            ],
+            ["profile", "◉", t.profile],
+          ] as const
+        ).map(([id, icon, text]) => (
+          <button
+            key={id}
+            className={
+              tab === id ? "active" : ""
+            }
+            onClick={() => {
+              if (id !== "quiz") {
+                stopAllAudio();
+              }
 
-function ArticleModal({
-  article,
-  language,
-  t,
-  close,
-}: {
-  article: Article;
-  language: Language;
-  t: Translation;
-  close: () => void;
-}) {
-  return (
-    <div className="modal-backdrop" onClick={close}>
-      <div className="article-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={close}>
-          ×
-        </button>
+              setTab(id);
 
-        <img
-          className="modal-image"
-          src={article.image}
-          alt={article.title[language]}
-        />
-
-        <div className="modal-content">
-          <p className="eyebrow">{t.composers}</p>
-          <h1>{article.title[language]}</h1>
-          <p>{article.text[language]}</p>
-
-          <button className="primary" onClick={close}>
-            {t.close}
+              if (id === "encyclopedia") {
+                setArticle(null);
+              }
+            }}
+          >
+            <span>{icon}</span>
+            <small>{text}</small>
           </button>
-        </div>
-      </div>
-    </div>
+        ))}
+      </nav>
+    </main>
   );
 }
 
@@ -632,772 +1579,67 @@ function LessonModal({
   onComplete: () => void;
 }) {
   return (
-    <div className="modal-backdrop" onClick={close}>
-      <div className="lesson-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={close}>
+    <div className="overlay">
+      <div className="lesson-modal">
+        <button
+          className="close"
+          onClick={close}
+          aria-label="Close"
+        >
           ×
         </button>
 
-        <p className="eyebrow">{t.lesson}</p>
-        <h1>
-          {t.lesson} 3
-        </h1>
-        <p>{t.heroText}</p>
+        <span className="eyebrow">
+          {t.module}
+        </span>
+
+        <h2>{t.lesson3Sub}</h2>
+
+        <p>{t.repeatSequence}</p>
+
+        <div className="video-placeholder">
+          <button type="button">
+            ▶️
+          </button>
+
+          <small>
+            {t.video} · 0:15
+          </small>
+        </div>
+
+        <div className="tab-view">
+          <div>
+            1-шек&nbsp;&nbsp;&nbsp;2-шек&nbsp;&nbsp;&nbsp;3-шек
+          </div>
+
+          <div className="strings">
+            —●—————
+            <br />
+            ————●——
+            <br />
+            ——●————
+          </div>
+
+          <div className="playbar">
+            ━━━━━━●━━━━━━
+          </div>
+        </div>
+
+        <div className="speed">
+          <button>0.5×</button>
+          <button className="active">
+            1×
+          </button>
+          <button>1.5×</button>
+        </div>
 
         <button
-          className="primary"
-          onClick={() => {
-            onComplete();
-            close();
-          }}
+          className="primary full"
+          onClick={onComplete}
         >
-          {t.completed}
+          {t.finishLesson}
         </button>
       </div>
     </div>
-  );
-}
-
-export default function Page() {
-  const [language, setLanguage] = useState<Language>("Русский");
-  const [active, setActive] = useState("home");
-  const [article, setArticle] = useState<Article | null>(null);
-  const [lessonOpen, setLessonOpen] = useState(false);
-  const [xp, setXp] = useState(200);
-
-  const t: Translation = translations[language];
-
-  return (
-    <>
-      <style jsx global>{`
-        * {
-          box-sizing: border-box;
-        }
-
-        html {
-          scroll-behavior: smooth;
-        }
-
-        body {
-          margin: 0;
-          background: #f5f1e8;
-          color: #1d1b17;
-          font-family:
-            Inter,
-            ui-sans-serif,
-            system-ui,
-            -apple-system,
-            BlinkMacSystemFont,
-            "Segoe UI",
-            sans-serif;
-        }
-
-        button,
-        select {
-          font: inherit;
-        }
-
-        button {
-          cursor: pointer;
-        }
-
-        .topbar {
-          position: sticky;
-          top: 0;
-          z-index: 30;
-          min-height: 76px;
-          padding: 14px 5vw;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 28px;
-          background: rgba(245, 241, 232, 0.94);
-          border-bottom: 1px solid rgba(29, 27, 23, 0.1);
-          backdrop-filter: blur(14px);
-        }
-
-        .logo {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          border: 0;
-          background: transparent;
-          color: #1d1b17;
-          font-size: 22px;
-          font-weight: 800;
-        }
-
-        .logo-mark {
-          width: 38px;
-          height: 38px;
-          display: grid;
-          place-items: center;
-          border-radius: 50%;
-          background: #1d1b17;
-          color: #f5f1e8;
-        }
-
-        nav {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-
-        nav button {
-          border: 0;
-          background: transparent;
-          padding: 10px 13px;
-          color: #68635a;
-          border-radius: 12px;
-          font-size: 14px;
-        }
-
-        nav button:hover,
-        nav .nav-active {
-          background: #e7dfd0;
-          color: #1d1b17;
-        }
-
-        select {
-          border: 1px solid #cfc7b8;
-          border-radius: 12px;
-          background: #fffdf8;
-          padding: 9px 12px;
-          color: #1d1b17;
-          outline: none;
-        }
-
-        .hero {
-          width: min(1280px, 90vw);
-          min-height: 600px;
-          margin: 30px auto 0;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          overflow: hidden;
-          border-radius: 32px;
-          background: #d8c4a8;
-        }
-
-        .hero-copy {
-          padding: clamp(40px, 6vw, 90px);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-        }
-
-        .eyebrow {
-          margin: 0 0 12px;
-          color: #8b5d34;
-          font-size: 12px;
-          font-weight: 800;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-        }
-
-        h1,
-        h2,
-        h3,
-        p {
-          margin-top: 0;
-        }
-
-        .hero h1 {
-          max-width: 600px;
-          margin-bottom: 22px;
-          font-size: clamp(44px, 5vw, 76px);
-          line-height: 0.98;
-          letter-spacing: -0.055em;
-        }
-
-        .hero-copy > p:not(.eyebrow) {
-          max-width: 540px;
-          color: #514b42;
-          font-size: 18px;
-          line-height: 1.65;
-        }
-
-        .hero-actions {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 12px;
-          margin-top: 24px;
-        }
-
-        .primary,
-        .secondary {
-          border-radius: 14px;
-          padding: 13px 20px;
-          border: 1px solid #1d1b17;
-          font-weight: 700;
-        }
-
-        .primary {
-          background: #1d1b17;
-          color: #fffdf8;
-        }
-
-        .primary:hover {
-          transform: translateY(-1px);
-        }
-
-        .secondary {
-          background: transparent;
-          color: #1d1b17;
-        }
-
-        .hero-art {
-          position: relative;
-          min-height: 600px;
-          overflow: hidden;
-          background: linear-gradient(180deg, #d9c6a9 0%, #b69a78 100%);
-        }
-
-        .sun {
-          position: absolute;
-          top: 18%;
-          right: 20%;
-          width: 150px;
-          height: 150px;
-          border-radius: 50%;
-          background: #ead5a7;
-        }
-
-        .mountain {
-          position: absolute;
-          left: -10%;
-          width: 120%;
-          transform: rotate(-8deg);
-        }
-
-        .mountain-one {
-          bottom: -8%;
-          height: 52%;
-          background: #776653;
-          clip-path: polygon(
-            0 80%,
-            13% 60%,
-            27% 75%,
-            44% 35%,
-            60% 70%,
-            76% 42%,
-            100% 72%,
-            100% 100%,
-            0 100%
-          );
-        }
-
-        .mountain-two {
-          bottom: -18%;
-          height: 46%;
-          background: #4c4034;
-          clip-path: polygon(
-            0 72%,
-            18% 50%,
-            35% 75%,
-            52% 38%,
-            72% 66%,
-            87% 45%,
-            100% 68%,
-            100% 100%,
-            0 100%
-          );
-        }
-
-        .dombra-shape {
-          position: absolute;
-          left: 48%;
-          top: 18%;
-          width: 90px;
-          height: 360px;
-          transform: rotate(18deg);
-        }
-
-        .dombra-neck {
-          position: absolute;
-          left: 38px;
-          top: 0;
-          width: 18px;
-          height: 250px;
-          border-radius: 8px;
-          background: #31271f;
-        }
-
-        .dombra-body {
-          position: absolute;
-          bottom: 10px;
-          left: 0;
-          width: 90px;
-          height: 130px;
-          border-radius: 50% 50% 42% 42%;
-          background: #31271f;
-        }
-
-        .section,
-        .page {
-          width: min(1280px, 90vw);
-          margin: 90px auto;
-        }
-
-        .section-heading,
-        .page-heading {
-          display: flex;
-          align-items: end;
-          justify-content: space-between;
-          gap: 30px;
-          margin-bottom: 30px;
-        }
-
-        .section-heading h2,
-        .page-heading h1 {
-          margin-bottom: 0;
-          font-size: clamp(36px, 4vw, 56px);
-          line-height: 1;
-          letter-spacing: -0.04em;
-        }
-
-        .text-button,
-        .read-more {
-          border: 0;
-          background: transparent;
-          color: #8b5d34;
-          font-weight: 700;
-        }
-
-        .article-grid {
-          display: grid;
-          grid-template-columns: repeat(4, minmax(0, 1fr));
-          gap: 20px;
-        }
-
-        .article-card {
-          overflow: hidden;
-          border: 1px solid #ded6c8;
-          border-radius: 22px;
-          background: #fffdf8;
-          transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease;
-        }
-
-        .article-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 18px 45px rgba(38, 31, 22, 0.1);
-        }
-
-        .article-card img {
-          display: block;
-          width: 100%;
-          height: 240px;
-          object-fit: cover;
-        }
-
-        .article-content {
-          padding: 22px;
-        }
-
-        .article-content > span {
-          color: #8b5d34;
-          font-size: 11px;
-          font-weight: 800;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
-
-        .article-content h3 {
-          margin: 10px 0;
-          font-size: 24px;
-          line-height: 1.08;
-        }
-
-        .article-content p {
-          display: -webkit-box;
-          overflow: hidden;
-          margin-bottom: 18px;
-          color: #6a645b;
-          line-height: 1.55;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 4;
-        }
-
-        .lesson-grid {
-          display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 18px;
-        }
-
-        .lesson-card {
-          display: flex;
-          align-items: center;
-          gap: 18px;
-          min-height: 130px;
-          padding: 22px;
-          text-align: left;
-          border: 1px solid #ded6c8;
-          border-radius: 22px;
-          background: #fffdf8;
-          color: #1d1b17;
-        }
-
-        .lesson-card:hover {
-          border-color: #8b5d34;
-        }
-
-        .lesson-number {
-          width: 50px;
-          height: 50px;
-          flex: 0 0 50px;
-          display: grid;
-          place-items: center;
-          border-radius: 50%;
-          background: #e7dfd0;
-          font-weight: 800;
-        }
-
-        .lesson-card small {
-          color: #8b5d34;
-        }
-
-        .lesson-card h3 {
-          margin: 5px 0 0;
-        }
-
-        .lesson-arrow {
-          margin-left: auto;
-          font-size: 22px;
-        }
-
-        .lesson-done .lesson-number {
-          background: #1d1b17;
-          color: #fff;
-        }
-
-        .quiz-card,
-        .profile-card,
-        .progress-card {
-          border: 1px solid #ded6c8;
-          border-radius: 28px;
-          background: #fffdf8;
-          padding: clamp(25px, 5vw, 50px);
-        }
-
-        .quiz-card {
-          max-width: 800px;
-          margin: 0 auto;
-        }
-
-        .quiz-top,
-        .progress-header {
-          display: flex;
-          justify-content: space-between;
-          color: #8b5d34;
-          font-size: 13px;
-          font-weight: 800;
-        }
-
-        .quiz-card h2 {
-          margin: 35px 0;
-          font-size: clamp(28px, 4vw, 46px);
-          line-height: 1.1;
-        }
-
-        .answers {
-          display: grid;
-          gap: 12px;
-        }
-
-        .answer {
-          display: flex;
-          align-items: center;
-          gap: 14px;
-          padding: 16px;
-          border: 1px solid #d8d0c2;
-          border-radius: 15px;
-          background: #fffdf8;
-          text-align: left;
-          color: #1d1b17;
-        }
-
-        .answer:hover {
-          border-color: #8b5d34;
-        }
-
-        .answer span {
-          width: 32px;
-          height: 32px;
-          display: grid;
-          place-items: center;
-          border-radius: 50%;
-          background: #eee7db;
-          font-weight: 800;
-        }
-
-        .answer.correct {
-          border-color: #47734d;
-          background: #e7f0e7;
-        }
-
-        .answer.wrong {
-          border-color: #a04f4f;
-          background: #f5e5e5;
-        }
-
-        .next-button {
-          margin-top: 22px;
-        }
-
-        .profile-card {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-          margin-bottom: 20px;
-        }
-
-        .avatar {
-          width: 75px;
-          height: 75px;
-          display: grid;
-          place-items: center;
-          border-radius: 50%;
-          background: #1d1b17;
-          color: #fffdf8;
-          font-size: 28px;
-          font-weight: 800;
-        }
-
-        .profile-card h2 {
-          margin-bottom: 6px;
-        }
-
-        .profile-card p {
-          margin-bottom: 0;
-          color: #777067;
-        }
-
-        .profile-card strong {
-          margin-left: auto;
-        }
-
-        .progress-card {
-          max-width: 700px;
-        }
-
-        .progress-bar {
-          height: 14px;
-          margin-top: 15px;
-          overflow: hidden;
-          border-radius: 20px;
-          background: #e5ddd0;
-        }
-
-        .progress-value {
-          width: 33%;
-          height: 100%;
-          border-radius: inherit;
-          background: #1d1b17;
-        }
-
-        .modal-backdrop {
-          position: fixed;
-          inset: 0;
-          z-index: 100;
-          display: grid;
-          place-items: center;
-          padding: 20px;
-          background: rgba(20, 17, 13, 0.65);
-          backdrop-filter: blur(8px);
-        }
-
-        .article-modal,
-        .lesson-modal {
-          position: relative;
-          width: min(900px, 95vw);
-          max-height: 90vh;
-          overflow: auto;
-          border-radius: 28px;
-          background: #fffdf8;
-        }
-
-        .article-modal {
-          display: grid;
-          grid-template-columns: 40% 60%;
-        }
-
-        .modal-image {
-          width: 100%;
-          height: 100%;
-          min-height: 500px;
-          object-fit: cover;
-        }
-
-        .modal-content,
-        .lesson-modal {
-          padding: 50px;
-        }
-
-        .modal-content h1,
-        .lesson-modal h1 {
-          font-size: clamp(36px, 5vw, 60px);
-          line-height: 1;
-          letter-spacing: -0.04em;
-        }
-
-        .modal-content p:not(.eyebrow),
-        .lesson-modal p:not(.eyebrow) {
-          color: #625c53;
-          font-size: 17px;
-          line-height: 1.75;
-        }
-
-        .modal-close {
-          position: absolute;
-          top: 16px;
-          right: 16px;
-          z-index: 2;
-          width: 40px;
-          height: 40px;
-          border: 0;
-          border-radius: 50%;
-          background: rgba(255, 253, 248, 0.9);
-          font-size: 25px;
-        }
-
-        .lesson-modal {
-          width: min(600px, 95vw);
-        }
-
-        @media (max-width: 1000px) {
-          .article-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
-
-          .lesson-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-          }
-
-          .hero {
-            grid-template-columns: 1fr;
-          }
-
-          .hero-art {
-            min-height: 420px;
-          }
-
-          nav {
-            display: none;
-          }
-        }
-
-        @media (max-width: 650px) {
-          .topbar {
-            padding: 12px 4vw;
-          }
-
-          .section,
-          .page {
-            width: 92vw;
-            margin: 60px auto;
-          }
-
-          .article-grid,
-          .lesson-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .hero {
-            width: 92vw;
-            margin-top: 15px;
-            border-radius: 24px;
-          }
-
-          .hero-copy {
-            padding: 38px 25px;
-          }
-
-          .hero-art {
-            min-height: 350px;
-          }
-
-          .article-modal {
-            grid-template-columns: 1fr;
-          }
-
-          .modal-image {
-            min-height: 280px;
-            height: 280px;
-          }
-
-          .modal-content,
-          .lesson-modal {
-            padding: 30px 25px;
-          }
-
-          .section-heading,
-          .page-heading {
-            align-items: flex-start;
-            flex-direction: column;
-          }
-
-          .profile-card {
-            align-items: flex-start;
-            flex-wrap: wrap;
-          }
-
-          .profile-card strong {
-            width: 100%;
-            margin-left: 0;
-          }
-        }
-      `}</style>
-
-      <Header
-        language={language}
-        setLanguage={setLanguage}
-        active={active}
-        setActive={setActive}
-        t={t}
-      />
-
-      {active === "home" && (
-        <Home
-          t={t}
-          language={language}
-          setActive={setActive}
-          setArticle={setArticle}
-        />
-      )}
-
-      {active === "lessons" && (
-        <Lessons t={t} setLessonOpen={setLessonOpen} />
-      )}
-
-      {active === "quiz" && <Quiz language={language} t={t} />}
-
-      {active === "encyclopedia" && (
-        <Encyclopedia
-          t={t}
-          language={language}
-          setArticle={setArticle}
-        />
-      )}
-
-      {active === "profile" && <Profile t={t} />}
-
-      {article && (
-        <ArticleModal
-          article={article}
-          language={language}
-          t={t}
-          close={() => setArticle(null)}
-        />
-      )}
-
-      {lessonOpen && (
-        <LessonModal
-          t={t}
-          close={() => setLessonOpen(false)}
-          onComplete={() => setXp((x) => x + 100)}
-        />
-      )}
-    </>
   );
 }
