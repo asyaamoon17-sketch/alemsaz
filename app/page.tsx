@@ -564,7 +564,7 @@ const kurmangazySections = {
       ], 
     }, 
   ], 
-}; 
+};
 
 const dinaSections = {
   ru: [
@@ -802,7 +802,7 @@ const kazangapSections = {
       ],
     },
     {
-      heading: "“Kök­tory”: The Musical Triumph of 1875",
+      heading: "“Köktory”: The Musical Triumph of 1875",
       paragraphs: [
         "By the age of twenty, the fame of the young dombra player had spread far beyond his native village. People spoke of Kazangap with admiration and a slight sense of awe. They said that his fingers moved along the neck faster than an arrow flew and that his instrument could express the most delicate movements of the human soul.",
         "In 1875, he created his first widely recognized masterpiece, the kui “Köktory” (“The Bay Horse”). The work made a tremendous impression on his contemporaries. Kazangap mastered the tökpe style — a powerful, cascading form of performance. When he played “Köktory”, listeners could almost physically feel the whistle of the wind, the breath of a driven horse, earth flying beneath its hooves and the exhilarating feeling of an unstoppable chase. It was music of enormous intensity.",
@@ -827,7 +827,7 @@ const kazangapSections = {
     },
   ],
 };
- 
+
 function getArticles(lang: Language): Article[] { 
   if (lang === "Русский") { 
     return [ 
@@ -1178,6 +1178,9 @@ export default function Home() {
  
   const [lessonOpen, setLessonOpen] = 
     useState(false); 
+
+  const [aboutOpen, setAboutOpen] = 
+    useState(false); 
  
   const [quizOrder, setQuizOrder] = 
     useState<number[]>(() => 
@@ -1501,6 +1504,21 @@ export default function Home() {
           <span> 
             ⭐ {xp.toLocaleString()} 
           </span> 
+
+          <button
+            type="button"
+            onClick={() => setAboutOpen(true)}
+            style={{
+              border: "none",
+              background: "transparent",
+              cursor: "pointer",
+              fontWeight: 700,
+              padding: "8px 4px",
+              whiteSpace: "nowrap",
+            }}
+          >
+            О ALEM.MUSIC
+          </button>
  
           <select 
             value={lang} 
@@ -2322,7 +2340,7 @@ export default function Home() {
                           ? t.kuis 
                           : t.history} 
                       </button> 
-                    ) 
+                    )
                   )} 
                 </div> 
  
@@ -2883,7 +2901,122 @@ export default function Home() {
             </button> 
           ) 
         )} 
-      </nav> 
+      </nav>
+
+      {aboutOpen && (
+        <div
+          className="overlay"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) {
+              setAboutOpen(false);
+            }
+          }}
+        >
+          <div
+            style={{
+              width: "min(920px, calc(100% - 32px))",
+              maxHeight: "85vh",
+              overflowY: "auto",
+              background: "#fff",
+              borderRadius: "28px",
+              padding: "34px",
+              boxSizing: "border-box",
+              position: "relative",
+              boxShadow: "0 25px 70px rgba(0,0,0,.22)",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => setAboutOpen(false)}
+              aria-label="Закрыть"
+              style={{
+                position: "absolute",
+                top: "16px",
+                right: "18px",
+                width: "42px",
+                height: "42px",
+                border: "none",
+                borderRadius: "50%",
+                background: "#f3f0eb",
+                cursor: "pointer",
+                fontSize: "24px",
+                lineHeight: 1,
+              }}
+            >
+              ×
+            </button>
+
+            <span
+              className="eyebrow"
+              style={{
+                display: "block",
+                marginBottom: "12px",
+              }}
+            >
+              ALEM.MUSIC
+            </span>
+
+            <h1
+              style={{
+                margin: "0 0 24px",
+                fontSize: "clamp(30px, 5vw, 52px)",
+                lineHeight: 1.08,
+              }}
+            >
+              О ALEM.MUSIC
+            </h1>
+
+            <div
+              style={{
+                fontSize: "clamp(16px, 2vw, 19px)",
+                lineHeight: 1.8,
+                color: "#38332e",
+              }}
+            >
+              <p>
+                <strong>ALEM.MUSIC</strong> — это пространство, созданное для того, чтобы сделать казахскую музыку ближе и доступнее каждому.
+              </p>
+
+              <p>
+                Идея проекта появилась из желания дать людям со всего мира возможность познакомиться с казахскими национальными инструментами и научиться играть на них независимо от места проживания, возраста и музыкального опыта. Мы хотим, чтобы интерес к казахской музыке не ограничивался только Казахстаном, а мог распространяться далеко за его пределами.
+              </p>
+
+              <p>
+                ALEM.MUSIC объединяет <strong>обучение, музыку и культуру</strong>. Здесь можно не только изучать национальные инструменты, но и узнавать об их истории, традициях, произведениях, композиторах и музыкантах, которые внесли свой вклад в развитие казахского музыкального искусства.
+              </p>
+
+              <p>
+                Для нас важно не просто сохранить музыкальное наследие, а <strong>дать ему возможность жить и развиваться дальше</strong>. Казахская музыка имеет глубокую историю и уникальное звучание, и мы хотим показать, что она может быть интересна людям любого возраста и национальности.
+              </p>
+
+              <p>
+                Мы верим, что музыка способна объединять людей, стирать границы и помогать открывать культуру через её самое искреннее выражение — звук.
+              </p>
+
+              <p>
+                <strong>ALEM.MUSIC — это путь от знакомства с казахской музыкой к её пониманию, исполнению и любви к ней.</strong>
+              </p>
+
+              <p>
+                В будущем мы стремимся развивать проект, добавлять новые инструменты, образовательные материалы и возможности для пользователей, чтобы ALEM.MUSIC постепенно превратился в большое международное пространство, посвящённое казахской музыке и культуре.
+              </p>
+
+              <p>
+                <strong>Открываем казахскую музыку миру. И открываем мир казахской музыке.</strong>
+              </p>
+
+              <p
+                style={{
+                  marginBottom: 0,
+                  marginTop: "28px",
+                }}
+              >
+                <strong>Основатель и автор проекта — Асемай Аль-Фараби</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </main> 
   ); 
 } 
