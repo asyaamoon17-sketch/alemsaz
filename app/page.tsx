@@ -13,8 +13,8 @@ type ArticleCategory =
   | "history";
 
 const lessons = [
-  { n: 1, done: false },
-  { n: 2, done: false },
+  { n: 1, done: true },
+  { n: 2, done: true },
   { n: 3, done: false },
   { n: 4, done: false },
   { n: 5, done: false },
@@ -94,7 +94,7 @@ const translations = {
     courseMap: "Карта курса",
     allLessons: "Все уроки →",
     masteryPath: "Путь к мастерству",
-    progress: "0 из 5 модулей • 0% прогресса",
+    progress: "3 из 5 модулей • 42% прогресса",
 
     quizCard: "Quiz кюев",
     quizCardText: "Угадай мелодию и автора",
@@ -133,22 +133,22 @@ const translations = {
     dombyraFinish: "Завершить урок",
     dombyraPart1: "Құлақ — колки",
     dombyraPart1Text:
-      "Құлақ — домбрының жоғарғы бөлігінде орналасқан күйге келтіру тетіктері. Олар ішектердің тартылуын реттеп, аспапты дұрыс күйге келтіруге көмектеседі.",
+      "Құлақ — домбыраның жоғарғы бөлігіндегі колки. Олар ішектердің тартылуын реттеп, аспапты күйге келтіруге көмектеседі.",
     dombyraPart2: "Мойын — шея",
     dombyraPart2Text:
-      "Мойын — домбрының құлақтары орналасқан жоғарғы бөлігін шанақпен жалғастыратын ұзын ағаш бөлік. Оның бойында ішектер мен пернелер орналасады.",
+      "Мойын — домбыраның жоғарғы бөлігін шанақпен жалғастыратын ұзын ағаш бөлік. Ол ішектер мен пернелердің орналасуына негіз болады.",
     dombyraPart3: "Перне — лады",
     dombyraPart3Text:
-      "Перне — мойын бойында орналасқан ладтар. Олар дыбыстың биіктігін анықтауға және қажетті нотаны дәл табуға көмектеседі.",
+      "Перне — мойын бойында орналасқан белгіленген орындар. Олар орындаушыға қажетті дыбыстың биіктігін дәл табуға көмектеседі.",
     dombyraPart4: "Шанақ — корпус",
     dombyraPart4Text:
-      "Шанақ — домбрының негізгі көлемді корпусы. Ол ішектердің тербелісінен пайда болған дыбысты күшейтіп, аспаптың өзіне тән үнін қалыптастырады.",
+      "Шанақ — домбыраның негізгі көлемді бөлігі. Ол ішектердің тербелісінен пайда болған дыбысты күшейтіп, аспаптың үнін қалыптастырады.",
     dombyraPart5: "Тиек — подставка",
     dombyraPart5Text:
-      "Тиек — домбрының шанағының үстінде орналасқан кішкентай ағаш бөлік. Ол ішектерді ұстап тұрады және олардың тербелісін аспаптың шанағына жеткізеді.",
-    dombyraPart6: "Ішектер — струны",
+      "Тиек — ішектерді шанақтың үстінде ұстап тұратын бөлік. Ол ішектердің тербелісін домбыраның корпусына жеткізеді.",
+    dombyraPart6: "Ішек — струны",
     dombyraPart6Text:
-      "Домбырада екі ішек бар. Оларды саусақпен шерткенде тербеліс пайда болып, аспаптың үні шығады.",
+      "Ішек — домбырада дыбыс шығаратын екі ішек. Оларды саусақпен қағу арқылы тербеліс пайда болып, аспаптың үні шығады.",
 
     kyuiQuiz: "KYUI QUIZ",
     guessKyui: "Угадай кюй",
@@ -216,7 +216,7 @@ const translations = {
     courseMap: "Курс картасы",
     allLessons: "Барлық сабақтар →",
     masteryPath: "Шеберлікке жол",
-    progress: "5 модульдің 0-і • 0% прогресс",
+    progress: "5 модульдің 3-і • 42% прогресс",
 
     quizCard: "Күйлер викторинасы",
     quizCardText: "Әуен мен авторды тап",
@@ -339,7 +339,7 @@ const translations = {
     courseMap: "Course map",
     allLessons: "All lessons →",
     masteryPath: "Path to mastery",
-    progress: "0 of 5 modules • 0% progress",
+    progress: "3 of 5 modules • 42% progress",
 
     quizCard: "Kui Quiz",
     quizCardText: "Guess the melody and composer",
@@ -377,22 +377,22 @@ const translations = {
     dombyraNext: "Next →",
     dombyraBack: "← Back",
     dombyraFinish: "Complete lesson",
-    dombyraPart1: "Qulaq — tuning pegs",
+    dombyraPart1: "Құлақ — tuning pegs",
     dombyraPart1Text:
       "The tuning pegs are located at the top of the dombra. They adjust the tension of the strings and help tune the instrument.",
-    dombyraPart2: "Moyin — neck",
+    dombyraPart2: "Мойын — neck",
     dombyraPart2Text:
       "The neck is the long wooden part that connects the upper section of the dombra to the body. The strings and frets run along it.",
-    dombyraPart3: "Perne — frets",
+    dombyraPart3: "Пернелер — frets",
     dombyraPart3Text:
       "Frets are the marked positions along the neck. They help determine the pitch of each note and allow the player to find the correct sounds.",
-    dombyraPart4: "Shanak — body",
+    dombyraPart4: "Шанақ — body",
     dombyraPart4Text:
       "The body is the main resonating part of the dombra. It amplifies the vibrations of the strings and helps create the instrument’s characteristic sound.",
-    dombyraPart5: "Tiek — bridge",
+    dombyraPart5: "Тиек — bridge",
     dombyraPart5Text:
       "The bridge supports the strings above the body and transfers their vibrations to the dombra’s soundboard.",
-    dombyraPart6: "Ishekter — strings",
+    dombyraPart6: "Ішектер — strings",
     dombyraPart6Text:
       "The dombra has two strings. Plucking them makes them vibrate, producing the sound of the instrument.",
 
@@ -1801,7 +1801,7 @@ export default function Home() {
                 </div>
 
                 <div className="ring">
-                  0%
+                  42%
                 </div>
               </div>
 
@@ -1811,7 +1811,9 @@ export default function Home() {
                     <button
                       key={lesson.n}
                       className={`lesson-node ${
-                        index === 0
+                        lesson.done
+                          ? "done"
+                          : index === 2
                           ? "current"
                           : "locked"
                       }`}
@@ -3176,62 +3178,48 @@ function DombyraLessonModal({
 }) {
   const [step, setStep] = useState(0);
 
-  // Координаты указывают именно на те места изображения, которые объясняются.
-  // При необходимости их можно немного подстроить под конкретную фотографию dombyra.jpeg.
   const parts = [
     {
       title: t.dombyraPart1,
       text: t.dombyraPart1Text,
-      pointX: 50,
-      pointY: 10,
-      labelX: 78,
-      labelY: 10,
-      scale: 1.0,
+      top: "13%",
+      left: "50%",
+      scale: 1.55,
     },
     {
       title: t.dombyraPart2,
       text: t.dombyraPart2Text,
-      pointX: 50,
-      pointY: 29,
-      labelX: 78,
-      labelY: 29,
-      scale: 1.0,
+      top: "34%",
+      left: "50%",
+      scale: 1.28,
     },
     {
       title: t.dombyraPart3,
       text: t.dombyraPart3Text,
-      pointX: 50,
-      pointY: 43,
-      labelX: 78,
-      labelY: 43,
-      scale: 1.0,
+      top: "47%",
+      left: "50%",
+      scale: 1.22,
     },
     {
       title: t.dombyraPart4,
       text: t.dombyraPart4Text,
-      pointX: 50,
-      pointY: 64,
-      labelX: 78,
-      labelY: 64,
-      scale: 1.0,
+      top: "68%",
+      left: "50%",
+      scale: 1.12,
     },
     {
       title: t.dombyraPart5,
       text: t.dombyraPart5Text,
-      pointX: 50,
-      pointY: 73,
-      labelX: 78,
-      labelY: 73,
-      scale: 1.0,
+      top: "73%",
+      left: "50%",
+      scale: 1.3,
     },
     {
       title: t.dombyraPart6,
       text: t.dombyraPart6Text,
-      pointX: 50,
-      pointY: 56,
-      labelX: 78,
-      labelY: 56,
-      scale: 1.0,
+      top: "54%",
+      left: "50%",
+      scale: 1.12,
     },
   ];
 
@@ -3256,17 +3244,17 @@ function DombyraLessonModal({
       className="overlay"
       style={{
         zIndex: 1000,
-        padding: "16px",
+        padding: "20px",
         overflowY: "auto",
       }}
     >
       <div
         className="lesson-modal"
         style={{
-          width: "min(1080px, 100%)",
-          maxHeight: "calc(100vh - 32px)",
+          width: "min(1120px, 100%)",
+          maxHeight: "calc(100vh - 40px)",
           overflowY: "auto",
-          padding: "clamp(18px, 3vw, 38px)",
+          padding: "clamp(20px, 4vw, 42px)",
           boxSizing: "border-box",
         }}
       >
@@ -3284,27 +3272,22 @@ function DombyraLessonModal({
           style={{
             display: "grid",
             gridTemplateColumns:
-              "minmax(0, .92fr) minmax(430px, 1.08fr)",
-            gap: "clamp(20px, 3vw, 42px)",
-            alignItems: "stretch",
+              "minmax(0, 1.15fr) minmax(300px, .85fr)",
+            gap: "clamp(24px, 4vw, 52px)",
+            alignItems: "center",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              padding: "8px 0",
-            }}
-          >
+          <div>
             <span className="eyebrow">
               {t.dombyraLessonTitle}
             </span>
 
             <h2
               style={{
-                fontSize: "clamp(30px, 5vw, 54px)",
-                margin: "8px 0 14px",
+                fontSize:
+                  "clamp(30px, 5vw, 54px)",
+                margin:
+                  "8px 0 14px",
                 lineHeight: 1.08,
               }}
             >
@@ -3313,7 +3296,8 @@ function DombyraLessonModal({
 
             <p
               style={{
-                fontSize: "clamp(16px, 2vw, 19px)",
+                fontSize:
+                  "clamp(16px, 2vw, 19px)",
                 lineHeight: 1.75,
                 margin: 0,
                 color: "#514a43",
@@ -3324,23 +3308,28 @@ function DombyraLessonModal({
 
             <div
               style={{
-                marginTop: "24px",
+                marginTop: "28px",
                 display: "flex",
                 alignItems: "center",
-                gap: "7px",
+                gap: "8px",
               }}
-              aria-label="Lesson progress"
             >
               {parts.map((_, index) => (
                 <span
                   key={index}
                   style={{
-                    width: index === step ? "28px" : "7px",
-                    height: "7px",
+                    width:
+                      index === step
+                        ? "30px"
+                        : "8px",
+                    height: "8px",
                     borderRadius: "99px",
                     background:
-                      index === step ? "#181512" : "#d8d1c9",
-                    transition: "all .35s ease",
+                      index === step
+                        ? "#181512"
+                        : "#d8d1c9",
+                    transition:
+                      "all .35s ease",
                   }}
                 />
               ))}
@@ -3349,14 +3338,34 @@ function DombyraLessonModal({
             <div
               key={`text-${step}`}
               style={{
-                marginTop: "26px",
-                animation: "dombyraLessonFade .55s ease both",
+                marginTop: "30px",
+                animation:
+                  "dombyraLessonFade .55s ease both",
               }}
             >
+              <span
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "42px",
+                  height: "42px",
+                  borderRadius: "50%",
+                  background: "#181512",
+                  color: "#fff",
+                  fontWeight: 800,
+                  marginBottom: "14px",
+                }}
+              >
+                {step + 1}
+              </span>
+
               <h3
                 style={{
-                  fontSize: "clamp(23px, 3vw, 34px)",
-                  margin: "0 0 10px",
+                  fontSize:
+                    "clamp(23px, 3vw, 34px)",
+                  margin:
+                    "0 0 10px",
                   lineHeight: 1.15,
                 }}
               >
@@ -3365,7 +3374,8 @@ function DombyraLessonModal({
 
               <p
                 style={{
-                  fontSize: "clamp(15px, 1.8vw, 18px)",
+                  fontSize:
+                    "clamp(15px, 1.8vw, 18px)",
                   lineHeight: 1.7,
                   margin: 0,
                   color: "#514a43",
@@ -3380,7 +3390,7 @@ function DombyraLessonModal({
                 display: "flex",
                 flexWrap: "wrap",
                 gap: "12px",
-                marginTop: "28px",
+                marginTop: "30px",
               }}
             >
               {step > 0 && (
@@ -3409,8 +3419,8 @@ function DombyraLessonModal({
             className="dombyra-lesson-visual"
             style={{
               position: "relative",
-              height: "min(62vh, 560px)",
-              minHeight: "420px",
+              minHeight:
+                "min(66vh, 650px)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -3420,111 +3430,90 @@ function DombyraLessonModal({
                 "linear-gradient(145deg, #f4eee6, #ebe2d6)",
               boxShadow:
                 "inset 0 0 0 1px rgba(24,21,18,.06)",
+              padding: "20px",
+              boxSizing: "border-box",
             }}
           >
             <div
-              key={`scene-${step}`}
+              className="dombyra-lesson-image-wrap"
               style={{
                 position: "relative",
                 width: "100%",
                 height: "100%",
+                minHeight: "min(62vh, 610px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                animation: "dombyraSceneIn .75s cubic-bezier(.22,.8,.2,1) both",
               }}
             >
-              <div
+              <img
+                src="/dombyra.jpeg"
+                alt={t.dombyraLessonSubtitle}
                 style={{
-                  position: "relative",
-                  width: "68%",
-                  height: "88%",
-                  transform: `scale(${current.scale})`,
-                  transformOrigin: `${current.pointX}% ${current.pointY}%`,
+                  width: "100%",
+                  height: "100%",
+                  maxHeight:
+                    "min(62vh, 610px)",
+                  objectFit: "contain",
+                  display: "block",
                   transition:
-                    "transform .95s cubic-bezier(.22,.8,.2,1)",
+                    "transform .85s cubic-bezier(.22,.8,.2,1), filter .55s ease",
+                  transformOrigin:
+                    `${current.left} ${current.top}`,
+                  transform:
+                    `scale(${current.scale})`,
+                  filter:
+                    "drop-shadow(0 18px 28px rgba(0,0,0,.16))",
+                }}
+              />
+
+              <div
+                key={`spot-${step}`}
+                style={{
+                  position: "absolute",
+                  top: current.top,
+                  left: current.left,
+                  width: "72px",
+                  height: "72px",
+                  transform:
+                    "translate(-50%, -50%)",
+                  borderRadius: "50%",
+                  border:
+                    "3px solid rgba(255,255,255,.95)",
+                  boxShadow:
+                    "0 0 0 8px rgba(24,21,18,.12), 0 0 35px rgba(24,21,18,.45)",
+                  pointerEvents: "none",
+                  animation:
+                    "dombyraSpot .9s ease-out both, dombyraPulse 1.8s ease-in-out .9s infinite",
+                }}
+              />
+
+              <div
+                key={`label-${step}`}
+                style={{
+                  position: "absolute",
+                  top: current.top,
+                  left:
+                    "calc(50% + 58px)",
+                  transform:
+                    "translateY(-50%)",
+                  background:
+                    "rgba(24,21,18,.92)",
+                  color: "#fff",
+                  borderRadius: "14px",
+                  padding:
+                    "9px 13px",
+                  fontSize: "13px",
+                  fontWeight: 800,
+                  whiteSpace: "nowrap",
+                  boxShadow:
+                    "0 10px 25px rgba(0,0,0,.18)",
+                  animation:
+                    "dombyraLabel .55s ease both",
+                  pointerEvents: "none",
                 }}
               >
-                <img
-                  src="/dombyra.jpeg"
-                  alt={t.dombyraLessonSubtitle}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "contain",
-                    display: "block",
-                    filter:
-                      "drop-shadow(0 18px 28px rgba(0,0,0,.16))",
-                  }}
-                />
-
-                {/* Стрелка вместо круговой отметки */}
-                <svg
-                  key={`arrow-${step}`}
-                  viewBox="0 0 100 100"
-                  preserveAspectRatio="none"
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    width: "100%",
-                    height: "100%",
-                    overflow: "visible",
-                    pointerEvents: "none",
-                    zIndex: 3,
-                  }}
-                >
-                  <defs>
-                    <marker
-                      id={`dombyra-arrow-${step}`}
-                      markerWidth="7"
-                      markerHeight="7"
-                      refX="5.5"
-                      refY="3.5"
-                      orient="auto"
-                      markerUnits="strokeWidth"
-                    >
-                      <path
-                        d="M0,0 L7,3.5 L0,7 Z"
-                        fill="#181512"
-                      />
-                    </marker>
-                  </defs>
-                  <line
-                    x1={current.labelX - 7}
-                    y1={current.labelY}
-                    x2={current.pointX + 1.5}
-                    y2={current.pointY}
-                    stroke="#181512"
-                    strokeWidth="0.8"
-                    markerEnd={`url(#dombyra-arrow-${step})`}
-                    strokeLinecap="round"
-                    style={{
-                      animation: "dombyraArrow .6s ease both",
-                    }}
-                  />
-                </svg>
-
-                <div
-                  key={`label-${step}`}
-                  style={{
-                    position: "absolute",
-                    top: `${current.labelY}%`,
-                    left: `${current.labelX}%`,
-                    transform: "translateY(-50%)",
-                    background: "rgba(24,21,18,.94)",
-                    color: "#fff",
-                    borderRadius: "14px",
-                    padding: "10px 13px",
-                    fontSize: "13px",
-                    fontWeight: 800,
-                    whiteSpace: "nowrap",
-                    boxShadow: "0 10px 25px rgba(0,0,0,.18)",
-                    animation: "dombyraLabel .55s ease both",
-                    zIndex: 5,
-                  }}
-                >
-                  {current.title}
-                </div>
+                {current.title}
               </div>
             </div>
           </div>
@@ -3532,44 +3521,86 @@ function DombyraLessonModal({
 
         <style>{`
           @keyframes dombyraLessonFade {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+              opacity: 0;
+              transform: translateY(12px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
           }
 
-          @keyframes dombyraSceneIn {
-            from { opacity: .55; transform: translateX(18px); }
-            to { opacity: 1; transform: translateX(0); }
+          @keyframes dombyraSpot {
+            from {
+              opacity: 0;
+              transform: translate(-50%, -50%) scale(.45);
+            }
+            to {
+              opacity: 1;
+              transform: translate(-50%, -50%) scale(1);
+            }
           }
 
-          @keyframes dombyraArrow {
-            from { opacity: 0; stroke-dasharray: 80; stroke-dashoffset: 80; }
-            to { opacity: 1; stroke-dasharray: 80; stroke-dashoffset: 0; }
+          @keyframes dombyraPulse {
+            0%, 100% {
+              box-shadow:
+                0 0 0 8px rgba(24,21,18,.12),
+                0 0 35px rgba(24,21,18,.45);
+            }
+            50% {
+              box-shadow:
+                0 0 0 14px rgba(24,21,18,.04),
+                0 0 48px rgba(24,21,18,.6);
+            }
           }
 
           @keyframes dombyraLabel {
-            from { opacity: 0; transform: translateY(-50%) translateX(12px); }
-            to { opacity: 1; transform: translateY(-50%) translateX(0); }
+            from {
+              opacity: 0;
+              transform: translateY(-50%) translateX(12px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(-50%) translateX(0);
+            }
           }
 
-          @media (max-width: 900px) {
+          @media (max-width: 820px) {
             .dombyra-lesson-layout {
               grid-template-columns: 1fr !important;
             }
 
             .dombyra-lesson-visual {
-              height: 500px !important;
-              min-height: 400px !important;
+              min-height: 430px !important;
+            }
+
+            .dombyra-lesson-image-wrap {
+              min-height: 410px !important;
+            }
+
+            .dombyra-lesson-image-wrap img {
+              max-height: 410px !important;
             }
           }
 
           @media (max-width: 520px) {
             .dombyra-lesson-visual {
-              height: 400px !important;
-              min-height: 350px !important;
+              min-height: 360px !important;
             }
 
-            .dombyra-lesson-visual > div > div {
-              width: 78% !important;
+            .dombyra-lesson-image-wrap {
+              min-height: 340px !important;
+            }
+
+            .dombyra-lesson-image-wrap img {
+              max-height: 340px !important;
+            }
+
+            .dombyra-lesson-image-wrap > div:last-child {
+              left: calc(50% + 42px) !important;
+              font-size: 11px !important;
+              padding: 7px 9px !important;
             }
           }
         `}</style>
