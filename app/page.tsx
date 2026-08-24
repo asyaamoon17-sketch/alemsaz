@@ -131,19 +131,19 @@ const translations = {
     dombyraNext: "Далее →",
     dombyraBack: "← Назад",
     dombyraFinish: "Завершить урок",
-    dombyraPart1: "Құлақ — колки",
+    dombyraPart1: "Колки",
     dombyraPart1Text:
       "Колки — верхняя часть домбры, предназначенная для настройки инструмента. Они регулируют натяжение струн и помогают точно настроить домбру.",
-    dombyraPart2: "Мойын — шея",
+    dombyraPart2: "Шея (гриф)",
     dombyraPart2Text:
       "Мойын — домбрының құлақтары орналасқан жоғарғы бөлігін шанақпен жалғастыратын ұзын ағаш бөлік. Оның бойында ішектер мен пернелер орналасады.",
-    dombyraPart3: "Перне — лады",
+    dombyraPart3: "Лады",
     dombyraPart3Text:
       "Перне — мойын бойында орналасқан ладтар. Олар дыбыстың биіктігін анықтауға және қажетті нотаны дәл табуға көмектеседі.",
-    dombyraPart4: "Шанақ — корпус",
+    dombyraPart4: "Корпус",
     dombyraPart4Text:
       "Шанақ — домбрының негізгі көлемді корпусы. Ол ішектердің тербелісінен пайда болған дыбысты күшейтіп, аспаптың өзіне тән үнін қалыптастырады.",
-    dombyraPart5: "Тиек — подставка",
+    dombyraPart5: "Подставка",
     dombyraPart5Text:
       "Тиек — домбрының шанағының үстінде орналасқан кішкентай ағаш бөлік. Ол ішектерді ұстап тұрады және олардың тербелісін аспаптың шанағына жеткізеді.",
     dombyraPart6: "Ішектер — струны",
@@ -464,6 +464,24 @@ const instrumentNames = {
     sazsyrnai: "Sazsyrnai",
   },
 };
+
+const introLessonTitles = {
+  Русский: {
+    dombra: "Знакомство с домброй",
+    kobyz: "Знакомство с кобызом",
+    sazsyrnai: "Знакомство с сазсырнаем",
+  },
+  Қазақша: {
+    dombra: "Домбырамен танысу",
+    kobyz: "Қобызбен танысу",
+    sazsyrnai: "Сазсырнаймен танысу",
+  },
+  English: {
+    dombra: "Getting to Know the Dombra",
+    kobyz: "Getting to Know the Kobyz",
+    sazsyrnai: "Getting to Know the Sazsyrnai",
+  },
+} as const;
 
 type Article = {
   id: string;
@@ -1311,6 +1329,7 @@ export default function Home() {
     >("home");
 
   const [xp, setXp] = useState(2450);
+  const [courseProgress, setCourseProgress] = useState(0);
   const [streak] = useState(12);
 
   const [lessonOpen, setLessonOpen] =
@@ -1377,6 +1396,13 @@ export default function Home() {
   const t =
     translations[lang] as Translation;
 
+  const progressText =
+    lang === "English"
+      ? `0 of 5 modules • ${Math.round(courseProgress)}% progress`
+      : lang === "Қазақша"
+      ? `5 модульдің 0-і • ${Math.round(courseProgress)}% прогресс`
+      : `0 из 5 модулей • ${Math.round(courseProgress)}% прогресса`;
+
   const instruments =
     instrumentNames[lang];
 
@@ -1398,7 +1424,7 @@ export default function Home() {
   const about = aboutTexts[lang];
 
   const lessonTitles = [
-    [t.lesson1, t.lesson1Sub],
+    [introLessonTitles[lang][instrument], t.lesson1Sub],
     [t.lesson2, t.lesson2Sub],
     [t.lesson3, t.lesson3Sub],
     [t.lesson4, t.lesson4Sub],
@@ -1796,12 +1822,20 @@ export default function Home() {
                   </h3>
 
                   <p>
-                    {t.progress}
+                    {progressText}
                   </p>
                 </div>
 
-                <div className="ring">
-                  0%
+                <div
+                  className="ring"
+                  style={{
+                    background:
+                      courseProgress <= 0
+                        ? "conic-gradient(#d9d5cf 0deg 360deg)"
+                        : `conic-gradient(#181512 ${Math.min(100, courseProgress) * 3.6}deg, #d9d5cf ${Math.min(100, courseProgress) * 3.6}deg 360deg)`,
+                  }}
+                >
+                  {Math.round(courseProgress)}%
                 </div>
               </div>
 
@@ -1821,7 +1855,9 @@ export default function Home() {
                           setTab("lessons");
 
                           if (index === 0) {
-                            setDombyraLessonOpen(true);
+                            if (instrument === "dombra") {
+                              setDombyraLessonOpen(true);
+                            }
                           } else {
                             setLessonOpen(true);
                           }
@@ -1993,7 +2029,9 @@ export default function Home() {
                         stopAllAudio();
 
                         if (index === 0) {
-                          setDombyraLessonOpen(true);
+                          if (instrument === "dombra") {
+                            setDombyraLessonOpen(true);
+                          }
                         } else {
                           setLessonOpen(true);
                         }
@@ -2022,6 +2060,9 @@ export default function Home() {
                   setXp(
                     (currentXp) =>
                       currentXp + 100
+                  );
+                  setCourseProgress((value) =>
+                    Math.max(value, 20)
                   );
 
                   setDombyraLessonOpen(false);
@@ -3181,8 +3222,8 @@ function DombyraLessonModal({
     { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 50, pointY: 31, labelX: 78, labelY: 31, scale: 1.0 },
     { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 50, pointY: 43, labelX: 78, labelY: 43, scale: 1.0 },
     { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 50, pointY: 64, labelX: 78, labelY: 64, scale: 1.0 },
-    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 50, pointY: 73, labelX: 78, labelY: 73, scale: 1.0 },
-    { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 50, pointY: 56, labelX: 78, labelY: 56, scale: 1.0 },
+    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 50, pointY: 72, labelX: 78, labelY: 72, scale: 1.0 },
+    { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 50, pointY: 52, labelX: 78, labelY: 52, scale: 1.0 },
   ];
 
   const current = parts[step];
@@ -3299,7 +3340,7 @@ function DombyraLessonModal({
                   width: "100%",
                   height: "100%",
                   maxHeight: "min(62vh, 610px)",
-                  objectFit: "contain",
+                  objectFit: "cover",
                   display: "block",
                   transition: "transform .85s cubic-bezier(.22,.8,.2,1), filter .55s ease",
                   transformOrigin: `${current.pointX}% ${current.pointY}%`,
@@ -3308,29 +3349,25 @@ function DombyraLessonModal({
                 }}
               />
 
-              <svg
-                key={`arrow-${step}`}
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 3 }}
+              <div
+                key={`finger-${step}`}
+                style={{
+                  position: "absolute",
+                  top: `${current.pointY}%`,
+                  left: `${current.pointX}%`,
+                  transform: "translate(-12%, -82%) rotate(-12deg)",
+                  fontSize: "clamp(34px, 4vw, 58px)",
+                  lineHeight: 1,
+                  zIndex: 6,
+                  pointerEvents: "none",
+                  filter: "drop-shadow(0 6px 9px rgba(0,0,0,.25))",
+                  animation:
+                    "dombyraFingerIn .65s cubic-bezier(.22,.8,.2,1) both, dombyraFingerFloat 1.8s ease-in-out .65s infinite",
+                }}
+                aria-hidden="true"
               >
-                <defs>
-                  <marker id={`dombyra-arrow-${step}`} markerWidth="7" markerHeight="7" refX="5.5" refY="3.5" orient="auto" markerUnits="strokeWidth">
-                    <path d="M0,0 L7,3.5 L0,7 Z" fill="#181512" />
-                  </marker>
-                </defs>
-                <line
-                  x1={current.labelX - 7}
-                  y1={current.labelY}
-                  x2={current.pointX + 1.5}
-                  y2={current.pointY}
-                  stroke="#181512"
-                  strokeWidth="0.8"
-                  markerEnd={`url(#dombyra-arrow-${step})`}
-                  strokeLinecap="round"
-                  style={{ animation: "dombyraArrow .7s ease both" }}
-                />
-              </svg>
+                👆
+              </div>
 
               <div
                 key={`label-${step}`}
@@ -3370,6 +3407,24 @@ function DombyraLessonModal({
           @keyframes dombyraArrow {
             from { opacity: 0; stroke-dasharray: 80; stroke-dashoffset: 80; }
             to { opacity: 1; stroke-dasharray: 80; stroke-dashoffset: 0; }
+          }
+          @keyframes dombyraFingerIn {
+            from {
+              opacity: 0;
+              transform: translate(-12%, -82%) rotate(-12deg) scale(.72);
+            }
+            to {
+              opacity: 1;
+              transform: translate(-12%, -82%) rotate(-12deg) scale(1);
+            }
+          }
+          @keyframes dombyraFingerFloat {
+            0%, 100% {
+              transform: translate(-12%, -82%) rotate(-12deg) translateY(0);
+            }
+            50% {
+              transform: translate(-12%, -82%) rotate(-12deg) translateY(-5px);
+            }
           }
           @keyframes dombyraLabel {
             from { opacity: 0; transform: translateY(-50%) translateX(12px); }
