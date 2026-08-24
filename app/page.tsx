@@ -3186,7 +3186,7 @@ function DombyraLessonModal({
       pointY: 10,
       labelX: 78,
       labelY: 10,
-      scale: 2.15,
+      scale: 1.0,
     },
     {
       title: t.dombyraPart2,
@@ -3195,7 +3195,7 @@ function DombyraLessonModal({
       pointY: 29,
       labelX: 78,
       labelY: 29,
-      scale: 2.0,
+      scale: 1.0,
     },
     {
       title: t.dombyraPart3,
@@ -3204,7 +3204,7 @@ function DombyraLessonModal({
       pointY: 43,
       labelX: 78,
       labelY: 43,
-      scale: 2.05,
+      scale: 1.0,
     },
     {
       title: t.dombyraPart4,
@@ -3213,7 +3213,7 @@ function DombyraLessonModal({
       pointY: 64,
       labelX: 78,
       labelY: 64,
-      scale: 1.65,
+      scale: 1.0,
     },
     {
       title: t.dombyraPart5,
@@ -3222,7 +3222,7 @@ function DombyraLessonModal({
       pointY: 73,
       labelX: 78,
       labelY: 73,
-      scale: 2.25,
+      scale: 1.0,
     },
     {
       title: t.dombyraPart6,
@@ -3231,7 +3231,7 @@ function DombyraLessonModal({
       pointY: 56,
       labelX: 78,
       labelY: 56,
-      scale: 1.85,
+      scale: 1.0,
     },
   ];
 
@@ -3263,7 +3263,7 @@ function DombyraLessonModal({
       <div
         className="lesson-modal"
         style={{
-          width: "min(1180px, 100%)",
+          width: "min(1080px, 100%)",
           maxHeight: "calc(100vh - 32px)",
           overflowY: "auto",
           padding: "clamp(18px, 3vw, 38px)",
@@ -3409,8 +3409,8 @@ function DombyraLessonModal({
             className="dombyra-lesson-visual"
             style={{
               position: "relative",
-              height: "min(76vh, 720px)",
-              minHeight: "540px",
+              height: "min(62vh, 560px)",
+              minHeight: "420px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -3437,8 +3437,8 @@ function DombyraLessonModal({
               <div
                 style={{
                   position: "relative",
-                  width: "72%",
-                  height: "94%",
+                  width: "68%",
+                  height: "88%",
                   transform: `scale(${current.scale})`,
                   transformOrigin: `${current.pointX}% ${current.pointY}%`,
                   transition:
@@ -3557,15 +3557,15 @@ function DombyraLessonModal({
             }
 
             .dombyra-lesson-visual {
-              height: 560px !important;
-              min-height: 480px !important;
+              height: 500px !important;
+              min-height: 400px !important;
             }
           }
 
           @media (max-width: 520px) {
             .dombyra-lesson-visual {
-              height: 430px !important;
-              min-height: 380px !important;
+              height: 400px !important;
+              min-height: 350px !important;
             }
 
             .dombyra-lesson-visual > div > div {
