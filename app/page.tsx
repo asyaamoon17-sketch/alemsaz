@@ -48,7 +48,7 @@ const quizQuestions: QuizQuestion[] = [
       English: "Balbyrauyn",
     },
     audio: [
-      "/BB.mp3",
+      "/BalbyraunNew.mp3",
       "/OrchestraBB.mp3",
       "/BalbyraunNew.mp3",
     ],
