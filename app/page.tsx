@@ -131,7 +131,7 @@ const translations = {
     dombyraNext: "Далее →",
     dombyraBack: "← Назад",
     dombyraFinish: "Завершить урок",
-    dombyraPart1: "Колки",
+    dombyraPart1: "Құлақ — Колки",
     dombyraPart1Text:
       "Колки — верхняя часть домбры, предназначенная для настройки инструмента. Они регулируют натяжение струн и помогают точно настроить домбру.",
     dombyraPart2: "Шея (гриф)",
@@ -1831,7 +1831,7 @@ export default function Home() {
                   style={{
                     background:
                       courseProgress <= 0
-                        ? "conic-gradient(#d9d5cf 0deg 360deg)"
+                        ? "#e8e4df"
                         : `conic-gradient(#181512 ${Math.min(100, courseProgress) * 3.6}deg, #d9d5cf ${Math.min(100, courseProgress) * 3.6}deg 360deg)`,
                   }}
                 >
@@ -3218,12 +3218,12 @@ function DombyraLessonModal({
   const [step, setStep] = useState(0);
 
   const parts = [
-    { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 50, pointY: 9, labelX: 78, labelY: 9, scale: 1.0 },
-    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 50, pointY: 31, labelX: 78, labelY: 31, scale: 1.0 },
-    { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 50, pointY: 43, labelX: 78, labelY: 43, scale: 1.0 },
-    { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 50, pointY: 64, labelX: 78, labelY: 64, scale: 1.0 },
-    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 50, pointY: 72, labelX: 78, labelY: 72, scale: 1.0 },
-    { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 50, pointY: 52, labelX: 78, labelY: 52, scale: 1.0 },
+    { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 82, pointY: 10, labelX: 58, labelY: 8, scale: 1.0 },
+    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 68, pointY: 28, labelX: 42, labelY: 26, scale: 1.0 },
+    { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 58, pointY: 40, labelX: 32, labelY: 38, scale: 1.0 },
+    { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 38, pointY: 66, labelX: 62, labelY: 64, scale: 1.0 },
+    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 48, pointY: 58, labelX: 70, labelY: 56, scale: 1.0 },
+    { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 55, pointY: 48, labelX: 78, labelY: 46, scale: 1.0 },
   ];
 
   const current = parts[step];
@@ -3315,7 +3315,7 @@ function DombyraLessonModal({
               overflow: "hidden",
               background: "linear-gradient(145deg, #f4eee6, #ebe2d6)",
               boxShadow: "inset 0 0 0 1px rgba(24,21,18,.06)",
-              padding: "20px",
+              padding: "8px",
               boxSizing: "border-box",
             }}
           >
@@ -3340,7 +3340,8 @@ function DombyraLessonModal({
                   width: "100%",
                   height: "100%",
                   maxHeight: "min(62vh, 610px)",
-                  objectFit: "cover",
+                  objectFit: "contain",
+                  objectPosition: "center center",
                   display: "block",
                   transition: "transform .85s cubic-bezier(.22,.8,.2,1), filter .55s ease",
                   transformOrigin: `${current.pointX}% ${current.pointY}%`,
@@ -3355,7 +3356,7 @@ function DombyraLessonModal({
                   position: "absolute",
                   top: `${current.pointY}%`,
                   left: `${current.pointX}%`,
-                  transform: "translate(-12%, -82%) rotate(-12deg)",
+                  transform: "translate(-40%, -88%) rotate(-18deg)",
                   fontSize: "clamp(34px, 4vw, 58px)",
                   lineHeight: 1,
                   zIndex: 6,
@@ -3411,19 +3412,19 @@ function DombyraLessonModal({
           @keyframes dombyraFingerIn {
             from {
               opacity: 0;
-              transform: translate(-12%, -82%) rotate(-12deg) scale(.72);
+              transform: translate(-40%, -88%) rotate(-18deg) scale(.72);
             }
             to {
               opacity: 1;
-              transform: translate(-12%, -82%) rotate(-12deg) scale(1);
+              transform: translate(-40%, -88%) rotate(-18deg) scale(1);
             }
           }
           @keyframes dombyraFingerFloat {
             0%, 100% {
-              transform: translate(-12%, -82%) rotate(-12deg) translateY(0);
+              transform: translate(-40%, -88%) rotate(-18deg) translateY(0);
             }
             50% {
-              transform: translate(-12%, -82%) rotate(-12deg) translateY(-5px);
+              transform: translate(-40%, -88%) rotate(-18deg) translateY(-5px);
             }
           }
           @keyframes dombyraLabel {
