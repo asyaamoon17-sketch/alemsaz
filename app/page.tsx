@@ -1,6 +1,3 @@
-In the `DombyraLessonModal` the image source is updated from `/dombyra.jpeg` to `/DDombra.jpeg`. Nothing else is changed.
-
-```tsx
 "use client";
 
 import { useEffect, useRef, useState } from "react";
@@ -3663,4 +3660,3 @@ function LessonModal({
     </div>
   );
 }
-```
