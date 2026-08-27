@@ -3218,18 +3218,18 @@ function DombyraLessonModal({
   const [step, setStep] = useState(0);
 
   const parts = [
-    // Колки — головка / tuning pegs (top-right tip)
-    { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 88, pointY: 9, labelX: 52, labelY: 7, scale: 1.12 },
-    // Мойын — mid neck
-    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 74, pointY: 27, labelX: 40, labelY: 24, scale: 1.18 },
-    // Перне — frets on neck (zoom in)
-    { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 64, pointY: 38, labelX: 30, labelY: 36, scale: 1.45 },
-    // Шанақ — body center
-    { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 40, pointY: 70, labelX: 64, labelY: 68, scale: 1.15 },
-    // Тиек — bridge on body under strings
-    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 44, pointY: 64, labelX: 68, labelY: 58, scale: 1.35 },
-    // Ішектер — strings over body
-    { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 48, pointY: 58, labelX: 72, labelY: 52, scale: 1.25 },
+    // 0 Колки — tuning pegs at head tip
+    { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 91, pointY: 11, labelX: 48, labelY: 8, scale: 1.2, anim: "pegs" as const },
+    // 1 Мойын — neck (finger slides along)
+    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 72, pointY: 32, labelX: 38, labelY: 22, scale: 1.22, anim: "neck" as const },
+    // 2 Перне — frets (zoom on fret markers)
+    { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 66, pointY: 36, labelX: 28, labelY: 30, scale: 1.55, anim: "frets" as const },
+    // 3 Шанақ — body (keep full body in frame)
+    { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 42, pointY: 62, labelX: 66, labelY: 55, scale: 1.08, anim: "body" as const },
+    // 4 Тиек — bridge (small piece under strings on body)
+    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 41, pointY: 76, labelX: 62, labelY: 68, scale: 1.48, anim: "bridge" as const },
+    // 5 Ішектер — strings along neck→body
+    { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 52, pointY: 52, labelX: 70, labelY: 44, scale: 1.28, anim: "strings" as const },
   ];
 
   const current = parts[step];
@@ -3347,9 +3347,14 @@ function DombyraLessonModal({
                   height: "100%",
                   maxHeight: "min(62vh, 610px)",
                   objectFit: "cover",
-                  objectPosition: "center 35%",
+                  objectPosition:
+                    current.anim === "body" || current.anim === "bridge"
+                      ? "center 55%"
+                      : current.anim === "pegs"
+                      ? "78% 12%"
+                      : "center 40%",
                   display: "block",
-                  transition: "transform .85s cubic-bezier(.22,.8,.2,1), filter .55s ease",
+                  transition: "transform .9s cubic-bezier(.22,.8,.2,1), filter .55s ease, object-position .9s ease",
                   transformOrigin: `${current.pointX}% ${current.pointY}%`,
                   transform: `scale(${current.scale})`,
                   filter: "drop-shadow(0 18px 28px rgba(0,0,0,.16))",
@@ -3369,7 +3374,9 @@ function DombyraLessonModal({
                   pointerEvents: "none",
                   filter: "drop-shadow(0 6px 9px rgba(0,0,0,.25))",
                   animation:
-                    "dombyraFingerIn .65s cubic-bezier(.22,.8,.2,1) both, dombyraFingerFloat 1.8s ease-in-out .65s infinite",
+                    current.anim === "neck"
+                      ? "dombyraFingerIn .55s cubic-bezier(.22,.8,.2,1) both, dombyraFingerAlongNeck 2.4s ease-in-out .55s infinite alternate"
+                      : "dombyraFingerIn .65s cubic-bezier(.22,.8,.2,1) both, dombyraFingerFloat 1.8s ease-in-out .65s infinite",
                 }}
                 aria-hidden="true"
               >
@@ -3380,8 +3387,8 @@ function DombyraLessonModal({
                 key={`label-${step}`}
                 style={{
                   position: "absolute",
-                  top: current.labelY,
-                  left: current.labelX,
+                  top: `${current.labelY}%`,
+                  left: `${current.labelX}%`,
                   transform: "translateY(-50%)",
                   background: "rgba(24,21,18,.94)",
                   color: "#fff",
@@ -3431,6 +3438,14 @@ function DombyraLessonModal({
             }
             50% {
               transform: translate(-45%, -92%) rotate(-14deg) translateY(-5px);
+            }
+          }
+          @keyframes dombyraFingerAlongNeck {
+            0% {
+              transform: translate(-45%, -92%) rotate(-14deg) translate(28px, -36px);
+            }
+            100% {
+              transform: translate(-45%, -92%) rotate(-14deg) translate(-22px, 42px);
             }
           }
           @keyframes dombyraLabel {
