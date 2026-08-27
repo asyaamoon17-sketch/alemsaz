@@ -3340,7 +3340,7 @@ function DombyraLessonModal({
               }}
             >
               <img
-                src="/DDombra.jpeg"
+                src="/dombyra.jpeg"
                 alt={t.dombyraLessonSubtitle}
                 style={{
                   width: "100%",
