@@ -134,21 +134,21 @@ const translations = {
     dombyraPart1: "Құлақ — Колки",
     dombyraPart1Text:
       "Колки — верхняя часть домбры, предназначенная для настройки инструмента. Они регулируют натяжение струн и помогают точно настроить домбру.",
-    dombyraPart2: "Шея (гриф)",
+    dombyraPart2: "Мойын — Шея (гриф)",
     dombyraPart2Text:
-      "Мойын — домбрының құлақтары орналасқан жоғарғы бөлігін шанақпен жалғастыратын ұзын ағаш бөлік. Оның бойында ішектер мен пернелер орналасады.",
-    dombyraPart3: "Лады",
+      "Мойын — длинная деревянная часть, которая соединяет верхнюю часть домбры с корпусом. Вдоль неё проходят струны и располагаются лады.",
+    dombyraPart3: "Перне — Лады",
     dombyraPart3Text:
-      "Перне — мойын бойында орналасқан ладтар. Олар дыбыстың биіктігін анықтауға және қажетті нотаны дәл табуға көмектеседі.",
-    dombyraPart4: "Корпус",
+      "Перне — отмеченные места вдоль грифа. Они помогают определить высоту каждого звука и позволяют исполнителю точно найти нужную ноту.",
+    dombyraPart4: "Шанақ — Корпус",
     dombyraPart4Text:
-      "Шанақ — домбрының негізгі көлемді корпусы. Ол ішектердің тербелісінен пайда болған дыбысты күшейтіп, аспаптың өзіне тән үнін қалыптастырады.",
-    dombyraPart5: "Подставка",
+      "Шанақ — основной объёмный корпус домбры. Он усиливает звук, возникающий от колебания струн, и формирует характерный тембр инструмента.",
+    dombyraPart5: "Тиек — Подставка",
     dombyraPart5Text:
-      "Тиек — домбрының шанағының үстінде орналасқан кішкентай ағаш бөлік. Ол ішектерді ұстап тұрады және олардың тербелісін аспаптың шанағына жеткізеді.",
+      "Тиек — небольшая деревянная деталь, расположенная на корпусе. Она удерживает струны и передаёт их колебания на корпус домбры.",
     dombyraPart6: "Ішектер — струны",
     dombyraPart6Text:
-      "Домбырада екі ішек бар. Оларды саусақпен шерткенде тербеліс пайда болып, аспаптың үні шығады.",
+      "На домбре две струны. При щипке пальцем они колеблются и издают звук инструмента.",
 
     kyuiQuiz: "KYUI QUIZ",
     guessKyui: "Угадай кюй",
@@ -3218,12 +3218,18 @@ function DombyraLessonModal({
   const [step, setStep] = useState(0);
 
   const parts = [
-    { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 82, pointY: 10, labelX: 58, labelY: 8, scale: 1.0 },
-    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 68, pointY: 28, labelX: 42, labelY: 26, scale: 1.0 },
-    { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 58, pointY: 40, labelX: 32, labelY: 38, scale: 1.0 },
-    { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 38, pointY: 66, labelX: 62, labelY: 64, scale: 1.0 },
-    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 48, pointY: 58, labelX: 70, labelY: 56, scale: 1.0 },
-    { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 55, pointY: 48, labelX: 78, labelY: 46, scale: 1.0 },
+    // Колки — головка / tuning pegs (top-right tip)
+    { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 88, pointY: 9, labelX: 52, labelY: 7, scale: 1.12 },
+    // Мойын — mid neck
+    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 74, pointY: 27, labelX: 40, labelY: 24, scale: 1.18 },
+    // Перне — frets on neck (zoom in)
+    { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 64, pointY: 38, labelX: 30, labelY: 36, scale: 1.45 },
+    // Шанақ — body center
+    { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 40, pointY: 70, labelX: 64, labelY: 68, scale: 1.15 },
+    // Тиек — bridge on body under strings
+    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 44, pointY: 64, labelX: 68, labelY: 58, scale: 1.35 },
+    // Ішектер — strings over body
+    { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 48, pointY: 58, labelX: 72, labelY: 52, scale: 1.25 },
   ];
 
   const current = parts[step];
@@ -3315,7 +3321,7 @@ function DombyraLessonModal({
               overflow: "hidden",
               background: "linear-gradient(145deg, #f4eee6, #ebe2d6)",
               boxShadow: "inset 0 0 0 1px rgba(24,21,18,.06)",
-              padding: "8px",
+              padding: "0",
               boxSizing: "border-box",
             }}
           >
@@ -3340,8 +3346,8 @@ function DombyraLessonModal({
                   width: "100%",
                   height: "100%",
                   maxHeight: "min(62vh, 610px)",
-                  objectFit: "contain",
-                  objectPosition: "center center",
+                  objectFit: "cover",
+                  objectPosition: "center 35%",
                   display: "block",
                   transition: "transform .85s cubic-bezier(.22,.8,.2,1), filter .55s ease",
                   transformOrigin: `${current.pointX}% ${current.pointY}%`,
@@ -3356,7 +3362,7 @@ function DombyraLessonModal({
                   position: "absolute",
                   top: `${current.pointY}%`,
                   left: `${current.pointX}%`,
-                  transform: "translate(-40%, -88%) rotate(-18deg)",
+                  transform: "translate(-45%, -92%) rotate(-14deg)",
                   fontSize: "clamp(34px, 4vw, 58px)",
                   lineHeight: 1,
                   zIndex: 6,
@@ -3412,19 +3418,19 @@ function DombyraLessonModal({
           @keyframes dombyraFingerIn {
             from {
               opacity: 0;
-              transform: translate(-40%, -88%) rotate(-18deg) scale(.72);
+              transform: translate(-45%, -92%) rotate(-14deg) scale(.72);
             }
             to {
               opacity: 1;
-              transform: translate(-40%, -88%) rotate(-18deg) scale(1);
+              transform: translate(-45%, -92%) rotate(-14deg) scale(1);
             }
           }
           @keyframes dombyraFingerFloat {
             0%, 100% {
-              transform: translate(-40%, -88%) rotate(-18deg) translateY(0);
+              transform: translate(-45%, -92%) rotate(-14deg) translateY(0);
             }
             50% {
-              transform: translate(-40%, -88%) rotate(-18deg) translateY(-5px);
+              transform: translate(-45%, -92%) rotate(-14deg) translateY(-5px);
             }
           }
           @keyframes dombyraLabel {
