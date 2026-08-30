@@ -3220,8 +3220,8 @@ function DombyraLessonModal({
   const parts = [
     // 0 Колки — палец на колок (стрелка), без пустоты сверху
     { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 86, pointY: 18, labelX: 42, labelY: 10, scale: 1.55, anim: "pegs" as const },
-    // 1 Мойын — палец вдоль грифа (стрелки), без верхней пустоты
-    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 68, pointY: 30, labelX: 32, labelY: 20, scale: 1.38, anim: "neck" as const },
+    // 1 Мойын — палец прямо по шее туда-сюда (как красные стрелки)
+    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 62, pointY: 38, labelX: 30, labelY: 24, scale: 1.38, anim: "neck" as const },
     // 2 Перне — frets (zoom on fret markers)
     { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 66, pointY: 36, labelX: 28, labelY: 30, scale: 1.55, anim: "frets" as const },
     // 3 Шанақ — без пустоты снизу
@@ -3446,10 +3446,10 @@ function DombyraLessonModal({
           }
           @keyframes dombyraFingerAlongNeck {
             0% {
-              transform: translate(-45%, -92%) rotate(-14deg) translate(28px, -36px);
+              transform: translate(-45%, -92%) rotate(-14deg) translate(42px, -55px);
             }
             100% {
-              transform: translate(-45%, -92%) rotate(-14deg) translate(-22px, 42px);
+              transform: translate(-45%, -92%) rotate(-14deg) translate(-38px, 58px);
             }
           }
           @keyframes dombyraLabel {
