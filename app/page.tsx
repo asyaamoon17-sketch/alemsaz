@@ -3218,16 +3218,16 @@ function DombyraLessonModal({
   const [step, setStep] = useState(0);
 
   const parts = [
-    // 0 Колки — tuning pegs at head tip
-    { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 91, pointY: 11, labelX: 48, labelY: 8, scale: 1.2, anim: "pegs" as const },
-    // 1 Мойын — neck (finger slides along)
-    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 72, pointY: 32, labelX: 38, labelY: 22, scale: 1.22, anim: "neck" as const },
+    // 0 Колки — палец на колок (стрелка), без пустоты сверху
+    { title: t.dombyraPart1, text: t.dombyraPart1Text, pointX: 86, pointY: 18, labelX: 42, labelY: 10, scale: 1.55, anim: "pegs" as const },
+    // 1 Мойын — палец вдоль грифа (стрелки), без верхней пустоты
+    { title: t.dombyraPart2, text: t.dombyraPart2Text, pointX: 68, pointY: 30, labelX: 32, labelY: 20, scale: 1.38, anim: "neck" as const },
     // 2 Перне — frets (zoom on fret markers)
     { title: t.dombyraPart3, text: t.dombyraPart3Text, pointX: 66, pointY: 36, labelX: 28, labelY: 30, scale: 1.55, anim: "frets" as const },
-    // 3 Шанақ — body (keep full body in frame)
-    { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 42, pointY: 62, labelX: 66, labelY: 55, scale: 1.08, anim: "body" as const },
-    // 4 Тиек — bridge (small piece under strings on body)
-    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 41, pointY: 76, labelX: 62, labelY: 68, scale: 1.48, anim: "bridge" as const },
+    // 3 Шанақ — без пустоты снизу
+    { title: t.dombyraPart4, text: t.dombyraPart4Text, pointX: 40, pointY: 58, labelX: 68, labelY: 52, scale: 1.28, anim: "body" as const },
+    // 4 Тиек — палец точно на подставку (обведено + стрелки)
+    { title: t.dombyraPart5, text: t.dombyraPart5Text, pointX: 34, pointY: 82, labelX: 58, labelY: 72, scale: 1.75, anim: "bridge" as const },
     // 5 Ішектер — strings along neck→body
     { title: t.dombyraPart6, text: t.dombyraPart6Text, pointX: 52, pointY: 52, labelX: 70, labelY: 44, scale: 1.28, anim: "strings" as const },
   ];
@@ -3348,10 +3348,14 @@ function DombyraLessonModal({
                   maxHeight: "min(62vh, 610px)",
                   objectFit: "cover",
                   objectPosition:
-                    current.anim === "body" || current.anim === "bridge"
-                      ? "center 55%"
+                    current.anim === "body"
+                      ? "center 62%"
+                      : current.anim === "bridge"
+                      ? "center 78%"
                       : current.anim === "pegs"
-                      ? "78% 12%"
+                      ? "82% 8%"
+                      : current.anim === "neck"
+                      ? "center 28%"
                       : "center 40%",
                   display: "block",
                   transition: "transform .9s cubic-bezier(.22,.8,.2,1), filter .55s ease, object-position .9s ease",
